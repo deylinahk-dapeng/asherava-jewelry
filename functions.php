@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.1.6' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.1.7' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 
@@ -26,36 +26,73 @@ function asherava_get_page_link( $slug ) {
 }
 
 /**
- * Mobile drawer primary extras + footer links (LZJ-style).
+ * Resolve a menu URL from page slug(s) or a fallback path.
+ *
+ * @param array<int, string> $slugs        Candidate page slugs (first match wins).
+ * @param string             $fallback_path Path under home URL, e.g. /about-us/.
+ */
+function asherava_resolve_menu_url( array $slugs, $fallback_path = '' ) {
+	foreach ( $slugs as $slug ) {
+		$url = asherava_get_page_link( $slug );
+		if ( $url ) {
+			return $url;
+		}
+	}
+
+	if ( $fallback_path ) {
+		return home_url( $fallback_path );
+	}
+
+	return '';
+}
+
+/**
+ * Blog / posts archive URL for drawer menu.
+ */
+function asherava_get_blog_url() {
+	$posts_page_id = (int) get_option( 'page_for_posts' );
+
+	if ( $posts_page_id ) {
+		return get_permalink( $posts_page_id );
+	}
+
+	foreach ( array( 'blog', 'blogs' ) as $slug ) {
+		$url = asherava_get_page_link( $slug );
+		if ( $url ) {
+			return $url;
+		}
+	}
+
+	return home_url( '/blog/' );
+}
+
+/**
+ * LZJ-style mobile drawer links after Shop (always shown).
  *
  * @return array<int, array{label: string, url: string, icon?: string}>
  */
 function asherava_get_drawer_primary_links() {
-	$links  = array();
-	$slugs  = array(
-		'about-us' => __( 'About Us', 'asherava-jaxxon' ),
-		'about'    => __( 'About Us', 'asherava-jaxxon' ),
-		'contact-us' => __( 'Contact Us', 'asherava-jaxxon' ),
-		'contact'  => __( 'Contact Us', 'asherava-jaxxon' ),
+	return array(
+		array(
+			'label' => __( 'About Us', 'asherava-jaxxon' ),
+			'url'   => asherava_resolve_menu_url( array( 'about-us', 'about' ), '/about-us/' ),
+		),
+		array(
+			'label' => __( 'Contact Us', 'asherava-jaxxon' ),
+			'url'   => asherava_resolve_menu_url( array( 'contact-us', 'contact' ), '/contact-us/' ),
+		),
+		array(
+			'label' => __( 'Blogs', 'asherava-jaxxon' ),
+			'url'   => asherava_get_blog_url(),
+		),
+		array(
+			'label' => __( 'Silver Chain Guides & Resources', 'asherava-jaxxon' ),
+			'url'   => asherava_resolve_menu_url(
+				array( 'silver-chain-guides', 'silver-chain-guides-resources', 'chain-guides', 'guides' ),
+				'/silver-chain-guides/'
+			),
+		),
 	);
-	$seen   = array();
-
-	foreach ( $slugs as $slug => $label ) {
-		if ( isset( $seen[ $label ] ) ) {
-			continue;
-		}
-
-		$url = asherava_get_page_link( $slug );
-		if ( $url ) {
-			$links[]       = array(
-				'label' => $label,
-				'url'   => $url,
-			);
-			$seen[ $label ] = true;
-		}
-	}
-
-	return $links;
 }
 
 /**

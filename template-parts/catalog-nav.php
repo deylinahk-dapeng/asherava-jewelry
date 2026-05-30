@@ -110,8 +110,17 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 					</ul>
 				</li>
 				<?php foreach ( $drawer_primary_extra as $link ) : ?>
+					<?php
+					$link_classes = array();
+					if ( asherava_is_current_menu_link( $link['url'] ) ) {
+						$link_classes[] = 'is-current';
+					}
+					if ( false !== strpos( $link['label'], '&' ) || strlen( $link['label'] ) > 18 ) {
+						$link_classes[] = 'av-catalog-drawer__link--long';
+					}
+					?>
 					<li>
-						<a class="<?php echo asherava_is_current_menu_link( $link['url'] ) ? 'is-current' : ''; ?>" href="<?php echo esc_url( $link['url'] ); ?>">
+						<a class="<?php echo esc_attr( implode( ' ', $link_classes ) ); ?>" href="<?php echo esc_url( $link['url'] ); ?>">
 							<?php echo esc_html( $link['label'] ); ?>
 						</a>
 					</li>

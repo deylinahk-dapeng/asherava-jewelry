@@ -526,7 +526,7 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	font-weight: 400;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	line-height: 1.2;
+	line-height: 1.35;
 	background: transparent;
 	border: 0;
 	cursor: pointer;
@@ -595,6 +595,11 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	letter-spacing: 0.1em;
 	padding-top: 16px;
 	padding-bottom: 16px;
+}
+
+.av-catalog-drawer__list a.av-catalog-drawer__link--long {
+	align-items: flex-start;
+	line-height: 1.35;
 }
 
 .av-catalog-drawer__link--login {
