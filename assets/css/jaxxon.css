@@ -23,6 +23,13 @@
 	--av-text-h2-sub-lh: 1;
 	--av-text-h3: 1.35rem;
 	--av-text-h3-lh: 1;
+	/* LZJ mobile drawer */
+	--av-drawer-bg: #1f1f1f;
+	--av-drawer-head-bg: #2e2e2e;
+	--av-drawer-active: #3a3a3a;
+	--av-drawer-sub-bg: #181818;
+	--av-drawer-text: #ffffff;
+	--av-drawer-muted: rgba(255, 255, 255, 0.72);
 }
 
 body.asherava-jaxxon {
@@ -430,30 +437,63 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	position: fixed;
 	inset: 0;
 	z-index: 9999;
-	background: rgba(0,0,0,.55);
+	background: rgba(0, 0, 0, 0.65);
 }
 
 .av-catalog-drawer__panel {
-	width: min(360px, 88vw);
+	width: min(420px, 92vw);
 	height: 100%;
-	background: var(--av-white);
+	background: var(--av-drawer-bg);
 	overflow-y: auto;
-	padding: 20px;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 .av-catalog-drawer__head {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 18px;
+	gap: 12px;
+	padding: 14px 18px;
+	background: var(--av-drawer-head-bg);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.av-catalog-drawer__brand {
+	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+}
+
+.av-catalog-drawer__brand img {
+	display: block;
+	height: 22px;
+	width: auto;
+	max-width: 150px;
+	object-fit: contain;
 }
 
 .av-catalog-drawer__close {
+	flex: 0 0 auto;
+	min-height: 36px;
+	padding: 0 14px;
 	border: 0;
-	background: transparent;
-	font-size: 28px;
+	border-radius: 2px;
+	background: var(--av-white);
+	color: var(--av-black);
+	font-family: var(--av-font-accent);
+	font-size: 11px;
+	font-weight: 700;
+	font-style: normal;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
 	line-height: 1;
 	cursor: pointer;
+}
+
+.av-catalog-drawer__close:hover {
+	background: var(--av-light);
 }
 
 .av-catalog-drawer__list,
@@ -463,8 +503,13 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	padding: 0;
 }
 
+.av-catalog-drawer__list {
+	flex: 1 1 auto;
+	padding: 6px 0 24px;
+}
+
 .av-catalog-drawer__list > li + li {
-	border-top: 1px solid var(--av-border);
+	border-top: 0;
 }
 
 .av-catalog-drawer__list a,
@@ -473,26 +518,69 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-	padding: 16px 0;
-	color: var(--av-black);
+	padding: 18px 20px;
+	color: var(--av-drawer-text);
 	text-decoration: none;
-	font-size: 14px;
-	font-weight: 600;
-	background: none;
+	font-family: var(--av-font-body);
+	font-size: 13px;
+	font-weight: 400;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	line-height: 1.2;
+	background: transparent;
 	border: 0;
 	cursor: pointer;
-	font-family: inherit;
+	outline: none;
+	transition: background 0.15s ease;
+}
+
+.av-catalog-drawer__list a:hover,
+.av-catalog-drawer__accordion-trigger:hover,
+.av-catalog-drawer__list a.is-current,
+.av-catalog-drawer__accordion.is-current > .av-catalog-drawer__accordion-trigger {
+	background: var(--av-drawer-active);
+}
+
+.av-catalog-drawer__list a:focus-visible,
+.av-catalog-drawer__accordion-trigger:focus-visible {
+	outline: 1px solid rgba(255, 255, 255, 0.35);
+	outline-offset: -1px;
+}
+
+.av-catalog-drawer__chevron {
+	flex: 0 0 auto;
+	width: 8px;
+	height: 8px;
+	margin-left: 12px;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: rotate(-45deg);
+	transition: transform 0.2s ease;
+}
+
+.av-catalog-drawer__accordion.is-open > .av-catalog-drawer__accordion-trigger .av-catalog-drawer__chevron {
+	transform: rotate(45deg);
 }
 
 .av-catalog-drawer__sub {
-	padding: 0 0 12px 12px;
+	padding: 0;
+	background: var(--av-drawer-sub-bg);
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .av-catalog-drawer__sub a {
-	padding: 10px 0;
-	font-size: 13px;
-	font-weight: 500;
-	color: var(--av-gray);
+	padding: 14px 20px 14px 28px;
+	font-size: 12px;
+	font-weight: 300;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--av-drawer-muted);
+}
+
+.av-catalog-drawer__sub a:hover {
+	color: var(--av-drawer-text);
+	background: rgba(255, 255, 255, 0.04);
 }
 
 body.av-nav-open {

@@ -15,7 +15,10 @@ $chains     = asherava_get_chain_catalog();
 $bracelets  = asherava_get_category_url( 'bracelets' );
 $pendants   = asherava_get_category_url( 'pendants' );
 $home_url   = home_url( '/' );
-$cart_count = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+$cart_count   = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+$logo_url     = get_stylesheet_directory_uri() . '/assets/images/asherava-logo-white.png';
+$is_home      = is_front_page();
+$is_shop_page = function_exists( 'is_shop' ) && ( is_shop() || is_product_category() || is_product_tag() );
 ?>
 
 <nav class="av-catalog-nav" aria-label="<?php esc_attr_e( 'Primary catalog', 'asherava-jaxxon' ); ?>">
@@ -81,15 +84,19 @@ $cart_count = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_c
 	<div class="av-catalog-drawer" id="av-catalog-drawer" hidden>
 		<div class="av-catalog-drawer__panel">
 			<div class="av-catalog-drawer__head">
-				<strong><?php esc_html_e( 'Menu', 'asherava-jaxxon' ); ?></strong>
-				<button class="av-catalog-drawer__close" type="button" aria-label="<?php esc_attr_e( 'Close menu', 'asherava-jaxxon' ); ?>">×</button>
+				<a class="av-catalog-drawer__brand" href="<?php echo esc_url( $home_url ); ?>" rel="home">
+					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="160" height="24" decoding="async" />
+				</a>
+				<button class="av-catalog-drawer__close" type="button" aria-label="<?php esc_attr_e( 'Close menu', 'asherava-jaxxon' ); ?>">
+					<?php esc_html_e( 'Close', 'asherava-jaxxon' ); ?>
+				</button>
 			</div>
 			<ul class="av-catalog-drawer__list">
-				<li><a href="<?php echo esc_url( $home_url ); ?>"><?php esc_html_e( 'Home', 'asherava-jaxxon' ); ?></a></li>
-				<li class="av-catalog-drawer__accordion">
+				<li><a class="<?php echo $is_home ? 'is-current' : ''; ?>" href="<?php echo esc_url( $home_url ); ?>"><?php esc_html_e( 'Home', 'asherava-jaxxon' ); ?></a></li>
+				<li class="av-catalog-drawer__accordion<?php echo $is_shop_page ? ' is-current' : ''; ?>">
 					<button class="av-catalog-drawer__accordion-trigger" type="button" aria-expanded="false">
 						<?php esc_html_e( 'Shop', 'asherava-jaxxon' ); ?>
-						<span aria-hidden="true">+</span>
+						<span class="av-catalog-drawer__chevron" aria-hidden="true"></span>
 					</button>
 					<ul class="av-catalog-drawer__sub" hidden>
 						<?php foreach ( $chains as $item ) : ?>

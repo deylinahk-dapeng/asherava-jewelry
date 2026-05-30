@@ -122,12 +122,12 @@
 		});
 	}
 
-	if (accordionTrigger && accordionPanel) {
+	if (accordionTrigger && accordionPanel && accordion) {
 		accordionTrigger.addEventListener('click', function () {
 			var expanded = accordionTrigger.getAttribute('aria-expanded') === 'true';
 			accordionPanel.hidden = expanded;
 			setExpanded(accordionTrigger, !expanded);
-			accordionTrigger.querySelector('span').textContent = expanded ? '+' : '−';
+			accordion.classList.toggle('is-open', !expanded);
 		});
 	}
 
