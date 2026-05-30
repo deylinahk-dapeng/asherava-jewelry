@@ -151,6 +151,10 @@ body.asherava-jaxxon .site {
 	border-bottom: 1px solid #222;
 }
 
+.av-announcement--hero {
+	display: none;
+}
+
 .av-announcement__track {
 	display: flex;
 	width: max-content;
@@ -1088,6 +1092,29 @@ body.asherava-jaxxon.home .page-header {
 
 	.av-announcement__static {
 		display: block;
+	}
+
+	/* Homepage: promo strip sits on top of hero image, below mobile header */
+	body.asherava-jaxxon.home .av-announcement--top {
+		display: none !important;
+	}
+
+	body.asherava-jaxxon.home .av-announcement--hero {
+		display: block;
+		position: absolute;
+		top: 56px;
+		left: 0;
+		right: 0;
+		z-index: 4;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	body.asherava-jaxxon.home.admin-bar .av-announcement--hero {
+		top: calc(46px + 56px);
+	}
+
+	body.asherava-jaxxon.home .av-hero__content {
+		padding-top: 120px;
 	}
 
 	body.asherava-jaxxon .inside-header {

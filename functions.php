@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.1.7' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.1.8' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 
@@ -200,22 +200,22 @@ function asherava_jaxxon_body_class( $classes ) {
 	return $classes;
 }
 
+/**
+ * Render announcement strip.
+ *
+ * @param string $placement `top` (before header) or `hero` (over homepage hero).
+ */
+function asherava_render_announcement_bar( $placement = 'top' ) {
+	get_template_part( 'template-parts/announcement', 'bar', array( 'placement' => $placement ) );
+}
+
 add_action( 'generate_before_header', 'asherava_jaxxon_announcement_bar', 5 );
 function asherava_jaxxon_announcement_bar() {
 	if ( is_admin() ) {
 		return;
 	}
-	?>
-	<div class="av-announcement" aria-label="Promotions">
-		<p class="av-announcement__static">Luxury Men's Chain Jewelry &bull; Free US Shipping</p>
-		<div class="av-announcement__track">
-			<span>UP TO 47% OFF &bull; FREE SHIPPING ON ALL US ORDERS &bull; 30-DAY RETURNS</span>
-			<span>UP TO 47% OFF &bull; FREE SHIPPING ON ALL US ORDERS &bull; 30-DAY RETURNS</span>
-			<span>UP TO 47% OFF &bull; FREE SHIPPING ON ALL US ORDERS &bull; 30-DAY RETURNS</span>
-			<span>UP TO 47% OFF &bull; FREE SHIPPING ON ALL US ORDERS &bull; 30-DAY RETURNS</span>
-		</div>
-	</div>
-	<?php
+
+	asherava_render_announcement_bar( 'top' );
 }
 
 add_filter( 'generate_site_title_output', 'asherava_jaxxon_site_title' );

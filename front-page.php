@@ -27,6 +27,7 @@ $placeholders = array(
 
 <main id="primary" class="av-home">
 	<section class="av-hero">
+		<?php asherava_render_announcement_bar( 'hero' ); ?>
 		<div class="av-hero__media" style="background-image:url('https://images.unsplash.com/photo-1617032216428-9e23d1bb0ca5?auto=format&fit=crop&w=1800&q=80');"></div>
 		<div class="av-hero__overlay"></div>
 		<div class="av-container av-hero__content">
