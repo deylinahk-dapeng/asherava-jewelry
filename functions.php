@@ -7,9 +7,113 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.1.5' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.1.6' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
+
+/**
+ * Permalink for a published page by slug, or empty string.
+ *
+ * @param string $slug Page path slug.
+ */
+function asherava_get_page_link( $slug ) {
+	$page = get_page_by_path( $slug );
+	if ( ! $page || 'publish' !== $page->post_status ) {
+		return '';
+	}
+
+	return get_permalink( $page );
+}
+
+/**
+ * Mobile drawer primary extras + footer links (LZJ-style).
+ *
+ * @return array<int, array{label: string, url: string, icon?: string}>
+ */
+function asherava_get_drawer_primary_links() {
+	$links  = array();
+	$slugs  = array(
+		'about-us' => __( 'About Us', 'asherava-jaxxon' ),
+		'about'    => __( 'About Us', 'asherava-jaxxon' ),
+		'contact-us' => __( 'Contact Us', 'asherava-jaxxon' ),
+		'contact'  => __( 'Contact Us', 'asherava-jaxxon' ),
+	);
+	$seen   = array();
+
+	foreach ( $slugs as $slug => $label ) {
+		if ( isset( $seen[ $label ] ) ) {
+			continue;
+		}
+
+		$url = asherava_get_page_link( $slug );
+		if ( $url ) {
+			$links[]       = array(
+				'label' => $label,
+				'url'   => $url,
+			);
+			$seen[ $label ] = true;
+		}
+	}
+
+	return $links;
+}
+
+/**
+ * @return array<int, array{label: string, url: string, icon?: string}>
+ */
+function asherava_get_drawer_secondary_links() {
+	$links = array();
+
+	if ( function_exists( 'wc_get_page_permalink' ) ) {
+		$account_url = wc_get_page_permalink( 'myaccount' );
+		if ( $account_url ) {
+			$links[] = array(
+				'label' => is_user_logged_in() ? __( 'My Account', 'asherava-jaxxon' ) : __( 'Login', 'asherava-jaxxon' ),
+				'url'   => $account_url,
+				'icon'  => 'login',
+			);
+		}
+	}
+
+	$policy_pages = array(
+		'shipping-policy'  => __( 'Shipping Policy', 'asherava-jaxxon' ),
+		'refund-policy'    => __( 'Refund Policy', 'asherava-jaxxon' ),
+		'faq'              => __( 'FAQ', 'asherava-jaxxon' ),
+		'privacy-policy'   => __( 'Privacy Policy', 'asherava-jaxxon' ),
+		'terms-of-service' => __( 'Terms of Service', 'asherava-jaxxon' ),
+	);
+
+	foreach ( $policy_pages as $slug => $label ) {
+		$url = asherava_get_page_link( $slug );
+		if ( $url ) {
+			$links[] = array(
+				'label' => $label,
+				'url'   => $url,
+			);
+		}
+	}
+
+	return $links;
+}
+
+/**
+ * Whether a menu URL matches the current request.
+ *
+ * @param string $url Menu link URL.
+ */
+function asherava_is_current_menu_link( $url ) {
+	if ( ! $url ) {
+		return false;
+	}
+
+	$current = home_url( add_query_arg( array() ) );
+
+	if ( is_front_page() ) {
+		$current = home_url( '/' );
+	}
+
+	return untrailingslashit( $url ) === untrailingslashit( $current );
+}
 
 add_action( 'wp_enqueue_scripts', 'asherava_jaxxon_enqueue_assets', 20 );
 function asherava_jaxxon_enqueue_assets() {

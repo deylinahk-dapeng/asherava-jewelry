@@ -17,8 +17,10 @@ $pendants   = asherava_get_category_url( 'pendants' );
 $home_url   = home_url( '/' );
 $cart_count   = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
 $logo_url     = get_stylesheet_directory_uri() . '/assets/images/asherava-logo-white.png';
-$is_home      = is_front_page();
-$is_shop_page = function_exists( 'is_shop' ) && ( is_shop() || is_product_category() || is_product_tag() );
+$is_home             = is_front_page();
+$is_shop_page        = function_exists( 'is_shop' ) && ( is_shop() || is_product_category() || is_product_tag() );
+$drawer_primary_extra = function_exists( 'asherava_get_drawer_primary_links' ) ? asherava_get_drawer_primary_links() : array();
+$drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' ) ? asherava_get_drawer_secondary_links() : array();
 ?>
 
 <nav class="av-catalog-nav" aria-label="<?php esc_attr_e( 'Primary catalog', 'asherava-jaxxon' ); ?>">
@@ -107,9 +109,31 @@ $is_shop_page = function_exists( 'is_shop' ) && ( is_shop() || is_product_catego
 						<li><a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop All', 'asherava-jaxxon' ); ?></a></li>
 					</ul>
 				</li>
-				<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
-				<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
+				<?php foreach ( $drawer_primary_extra as $link ) : ?>
+					<li>
+						<a class="<?php echo asherava_is_current_menu_link( $link['url'] ) ? 'is-current' : ''; ?>" href="<?php echo esc_url( $link['url'] ); ?>">
+							<?php echo esc_html( $link['label'] ); ?>
+						</a>
+					</li>
+				<?php endforeach; ?>
 			</ul>
+			<?php if ( ! empty( $drawer_secondary ) ) : ?>
+				<ul class="av-catalog-drawer__list av-catalog-drawer__list--secondary">
+					<?php foreach ( $drawer_secondary as $link ) : ?>
+						<li>
+							<a href="<?php echo esc_url( $link['url'] ); ?>"<?php echo ! empty( $link['icon'] ) ? ' class="av-catalog-drawer__link--login"' : ''; ?>>
+								<?php if ( ! empty( $link['icon'] ) && 'login' === $link['icon'] ) : ?>
+									<svg class="av-catalog-drawer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+										<circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.75"></circle>
+										<path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+									</svg>
+								<?php endif; ?>
+								<span><?php echo esc_html( $link['label'] ); ?></span>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 	</div>
 </nav>

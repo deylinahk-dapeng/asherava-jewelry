@@ -583,6 +583,32 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	background: rgba(255, 255, 255, 0.04);
 }
 
+.av-catalog-drawer__list--secondary {
+	margin-top: auto;
+	padding-top: 28px;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.av-catalog-drawer__list--secondary a {
+	font-size: 12px;
+	font-weight: 300;
+	letter-spacing: 0.1em;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.av-catalog-drawer__link--login {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	justify-content: flex-start;
+}
+
+.av-catalog-drawer__icon {
+	flex: 0 0 auto;
+	opacity: 0.9;
+}
+
 body.av-nav-open {
 	overflow: hidden;
 }
