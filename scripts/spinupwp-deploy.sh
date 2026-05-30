@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-# Paste this script into SpinUpWP → Site → Git → Deploy Script
-# (or run manually on the server inside .../files after a git pull).
+# Paste into SpinUpWP → Site → Git → Deploy Script
 set -euo pipefail
+
+# Run from site root (/sites/asherava.com/) or from files/ — both work.
+if [[ -d files && ! -e wp-config.php && ! -d wp-content ]]; then
+  cd files
+fi
 
 THEME_SLUG="asherava-jaxxon"
 DEST="wp-content/themes/${THEME_SLUG}"
@@ -20,7 +24,6 @@ sync_item assets
 sync_item inc
 sync_item template-parts
 
-# Remove theme files accidentally checked out at web root
 for item in style.css functions.php front-page.php assets inc template-parts; do
   if [[ -e "./${item}" && "${item}" != "wp-content" ]]; then
     rm -rf "./${item}"
@@ -28,7 +31,7 @@ for item in style.css functions.php front-page.php assets inc template-parts; do
 done
 
 if command -v wp >/dev/null 2>&1; then
-  wp cache flush --allow-root 2>/dev/null || true
+  wp cache flush --path="$(pwd)" --allow-root 2>/dev/null || true
 fi
 
 echo "Deployed theme to ${DEST}"
