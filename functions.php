@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.1.3' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.1.4' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 
