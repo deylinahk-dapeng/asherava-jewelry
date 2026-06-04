@@ -62,10 +62,21 @@
 		setExpanded(shopTrigger, false);
 	}
 
+	function syncMegaTop() {
+		if (!mega || !header) {
+			return;
+		}
+		document.documentElement.style.setProperty(
+			'--av-mega-top',
+			Math.round(header.getBoundingClientRect().bottom) + 'px'
+		);
+	}
+
 	function openMega() {
 		if (!mega) {
 			return;
 		}
+		syncMegaTop();
 		mega.hidden = false;
 		if (shopItem) {
 			shopItem.classList.add('is-open');
@@ -149,6 +160,18 @@
 		mega.addEventListener('mouseleave', function () {
 			if (desktopMega.matches) {
 				scheduleMegaClose();
+			}
+		});
+
+		window.addEventListener('scroll', function () {
+			if (!mega.hidden) {
+				syncMegaTop();
+			}
+		}, { passive: true });
+
+		window.addEventListener('resize', function () {
+			if (!mega.hidden) {
+				syncMegaTop();
 			}
 		});
 	}

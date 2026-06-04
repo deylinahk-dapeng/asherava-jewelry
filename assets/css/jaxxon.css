@@ -6,7 +6,7 @@
 	--av-charcoal: #f5f5f5;
 	--av-gray: #6b6b6b;
 	--av-light: #fafafa;
-	--av-mega-bg: #ffffff;
+	--av-mega-bg: #f0f0f0;
 	--av-nav-shop-active: rgba(0, 0, 0, 0.06);
 	--av-white: #ffffff;
 	--av-gold: #a8842f;
@@ -375,7 +375,7 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 .av-shop-mega__label {
 	font-family: var(--av-font-heading);
 	font-size: 11px;
-	font-weight: 400;
+	font-weight: 600;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
 	color: var(--av-gray);
@@ -1650,18 +1650,25 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 
 	.av-catalog-nav {
-		flex: 1 1 auto;
+		flex: 0 1 auto;
 		min-width: 0;
 		order: unset;
 		width: auto;
+		margin: 0 auto;
 	}
 
 	.av-catalog-nav__bar {
-		justify-content: space-between;
-		align-items: flex-start;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		width: 100%;
 		min-height: auto;
 		gap: 20px;
+	}
+
+	.av-catalog-nav__links--desktop {
+		justify-content: center;
 	}
 
 	.av-catalog-nav__desktop {
@@ -1693,10 +1700,19 @@ body.asherava-jaxxon.av-single-product .related.products {
 
 	.av-header-utilities {
 		display: flex !important;
+		position: absolute;
+		right: 32px;
+		top: 50%;
+		transform: translateY(-50%);
 		flex: 0 0 auto;
 		align-items: center;
 		gap: 22px;
-		margin-top: 2px;
+		margin-top: 0;
+		z-index: 2;
+	}
+
+	.av-header-utilities__link {
+		color: var(--av-black);
 	}
 
 	.av-header-utilities__label {
@@ -1708,10 +1724,11 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 
 	body.asherava-jaxxon .inside-header {
+		position: relative;
 		display: flex;
 		flex-wrap: nowrap;
-		align-items: flex-start;
-		justify-content: flex-start;
+		align-items: center;
+		justify-content: center;
 		gap: 28px;
 		max-width: none;
 		width: 100%;
@@ -1719,10 +1736,13 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 
 	body.asherava-jaxxon .site-branding {
-		position: static;
-		transform: none;
+		position: absolute;
+		left: 32px;
+		top: 50%;
+		transform: translateY(-50%);
 		flex: 0 0 auto;
-		padding-top: 8px;
+		padding-top: 0;
+		z-index: 2;
 	}
 
 	body.asherava-jaxxon.home .site-branding {
@@ -1755,9 +1775,16 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 
 	.av-shop-mega {
-		top: calc(100% + 10px);
-		width: min(1080px, calc(100vw - 64px));
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: var(--av-mega-top, 88px);
+		width: 100%;
+		max-width: none;
+		transform: none;
 		padding: 36px 0;
+		border-top: 1px solid var(--av-border);
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 	}
 
 	.av-shop-mega::before {
