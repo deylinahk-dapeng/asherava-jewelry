@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.3.0' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.4.0' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
@@ -228,7 +228,7 @@ function asherava_jaxxon_announcement_bar() {
 
 add_filter( 'generate_site_title_output', 'asherava_jaxxon_site_title' );
 function asherava_get_logo_html() {
-	$logo_url = get_stylesheet_directory_uri() . '/assets/images/asherava-logo-white.png';
+	$logo_url = get_stylesheet_directory_uri() . '/assets/images/asherava-logo.svg';
 	$home_url = esc_url( home_url( '/' ) );
 
 	return sprintf(

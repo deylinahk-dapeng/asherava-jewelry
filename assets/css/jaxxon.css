@@ -1,16 +1,17 @@
-/* Asherava — Jaxxon-inspired design system */
+/* Asherava — Layout & components only (no typography/color tokens). */
+/* Typography, colors, buttons, prices: assets/css/asherava-typography.css */
 
 :root {
 	--av-black: #121212;
-	--av-charcoal: #1a1a1a;
-	--av-gray: #7a818c;
-	--av-light: #2e2e2e;
-	--av-mega-bg: #1a1a1a;
-	--av-nav-shop-active: rgba(46, 46, 46, 0.92);
-	--av-white: #e8e6e3;
-	--av-gold: #c4a574;
-	--av-gold-dark: #a8842f;
-	--av-border: #2e2e2e;
+	--av-charcoal: #f5f5f5;
+	--av-gray: #6b6b6b;
+	--av-light: #fafafa;
+	--av-mega-bg: #ffffff;
+	--av-nav-shop-active: rgba(0, 0, 0, 0.06);
+	--av-white: #ffffff;
+	--av-gold: #a8842f;
+	--av-gold-dark: #8a6d26;
+	--av-border: #e8e8e8;
 	--av-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	--av-font-heading: var(--av-font-body);
 	--av-font-accent: var(--av-font-body);
@@ -47,109 +48,8 @@
 	--av-header-min-h: auto;
 }
 
-body.asherava-jaxxon {
-	font-family: var(--av-font-body);
-	font-weight: 300;
-	color: var(--av-black);
-	background: var(--av-white);
-	-webkit-font-smoothing: antialiased;
-}
-
-/* LZJ typography: Source Sans Pro body, Helvetica headings, Playfair buttons */
-body.asherava-jaxxon h1,
-body.asherava-jaxxon h2,
-body.asherava-jaxxon h3,
-body.asherava-jaxxon h4,
-body.asherava-jaxxon h5,
-body.asherava-jaxxon h6,
-body.asherava-jaxxon .entry-title,
-body.asherava-jaxxon .woocommerce-loop-product__title,
-.av-catalog-nav__links a,
-.av-catalog-nav__shop-trigger,
-.av-announcement__track,
-.av-announcement__static,
-.av-category-chip {
-	font-family: var(--av-font-heading);
-	font-weight: 400;
-	letter-spacing: 0;
-}
-
-/* Level 1 — hero / page titles (LZJ ~48px desktop) */
-body.asherava-jaxxon h1,
-body.asherava-jaxxon .entry-title,
-.av-hero__title {
-	font-size: var(--av-text-h1);
-	line-height: var(--av-text-h1-lh);
-}
-
-/* Level 2 — section titles (LZJ collection headings ~48px) */
-body.asherava-jaxxon h2,
-.av-section__head h2,
-.av-cta h2,
-.av-quiz h2 {
-	font-size: var(--av-text-h2);
-	line-height: var(--av-text-h2-lh);
-}
-
-/* Level 2 sub — trust / icon columns (LZJ ~19.8px) */
-.av-trust__item strong {
-	font-size: var(--av-text-h2-sub);
-	line-height: var(--av-text-h2-sub-lh);
-}
-
-/* Level 3 — cards & category tiles (LZJ ~21.6px) */
-body.asherava-jaxxon h3,
-.av-product-card h3,
-.av-category-card__label span,
-body.asherava-jaxxon .woocommerce-loop-product__title {
-	font-size: var(--av-text-h3);
-	line-height: var(--av-text-h3-lh);
-	font-weight: 400;
-}
-
-.av-btn,
-body.asherava-jaxxon .woocommerce a.button,
-body.asherava-jaxxon .woocommerce button.button,
-body.asherava-jaxxon .woocommerce input.button {
-	font-family: var(--av-font-accent);
-	font-weight: 700;
-	font-style: normal;
-	letter-spacing: 0.04em;
-	text-transform: uppercase;
-}
-
-.av-btn--ghost {
-	font-family: var(--av-font-heading);
-	font-weight: 400;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-}
-
-body.asherava-jaxxon .woocommerce .price,
-body.asherava-jaxxon .woocommerce .amount,
-.av-product-card__price {
-	font-family: var(--av-font-heading);
-	font-weight: 400;
-}
-
-.av-hero__subtitle,
-.av-section__head p,
-.av-trust__item span,
-.av-catalog-drawer__sub a,
-.av-shop-mega__grid a,
-.av-shop-mega__side a {
-	font-family: var(--av-font-body);
-	font-weight: 300;
-}
-
-.av-link,
-.av-trust__item strong {
-	font-family: var(--av-font-heading);
-	font-weight: 400;
-}
-
 body.asherava-jaxxon .site {
-	background: var(--av-white);
+	background: transparent;
 }
 
 .av-container {
@@ -160,10 +60,10 @@ body.asherava-jaxxon .site {
 
 /* Announcement bar */
 .av-announcement {
-	background: var(--av-black);
-	color: var(--av-white);
+	background: var(--av-charcoal);
+	color: var(--av-black);
 	overflow: hidden;
-	border-bottom: 1px solid #222;
+	border-bottom: 1px solid var(--av-border);
 }
 
 .av-announcement--hero {
@@ -200,8 +100,8 @@ body.asherava-jaxxon .site {
 
 /* Header */
 body.asherava-jaxxon .site-header {
-	background: var(--av-black) !important;
-	border-bottom: 1px solid #222;
+	background: var(--av-white) !important;
+	border-bottom: 1px solid var(--av-border);
 	position: sticky;
 	top: 0;
 	z-index: 100;
@@ -383,7 +283,7 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 
 .av-catalog-nav__links a,
 .av-catalog-nav__shop-trigger {
-	color: var(--av-white);
+	color: var(--av-black);
 	font-size: var(--av-nav-font-size);
 	font-weight: 600;
 	letter-spacing: var(--av-nav-letter-spacing);
@@ -415,7 +315,7 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 
 .av-catalog-nav__links a.is-current,
 .av-catalog-nav__shop.is-current .av-catalog-nav__shop-trigger {
-	box-shadow: inset 0 -2px 0 var(--av-white);
+	box-shadow: inset 0 -2px 0 var(--av-black);
 }
 
 .av-catalog-nav__desktop {
@@ -891,16 +791,7 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 }
 
 .av-hero--street .av-hero__title--wordmark {
-	font-family: var(--av-font-display);
-	font-size: clamp(2.75rem, 9vw, 5.25rem);
-	font-weight: 600;
-	line-height: 0.95;
-	letter-spacing: 0.22em;
-	text-indent: 0.22em;
-	text-transform: uppercase;
 	margin: 0 0 22px;
-	color: var(--av-white);
-	text-shadow: 0 0 48px rgba(255, 255, 255, 0.12);
 }
 
 .av-hero--street .av-hero__subtitle--product-line {
@@ -919,28 +810,6 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 	justify-content: center;
 }
 
-.av-hero--street .av-btn--primary {
-	background: var(--av-silver-highlight);
-	color: var(--av-black);
-	border: 1px solid rgba(255, 255, 255, 0.35);
-}
-
-.av-hero--street .av-btn--primary:hover,
-.av-hero--street .av-btn--primary:focus {
-	background: var(--av-white);
-}
-
-.av-hero--street .av-btn--ghost {
-	border-color: rgba(255, 255, 255, 0.35);
-	color: var(--av-white);
-}
-
-.av-hero--street .av-btn--ghost:hover,
-.av-hero--street .av-btn--ghost:focus {
-	background: rgba(255, 255, 255, 0.08);
-	border-color: rgba(255, 255, 255, 0.55);
-}
-
 .av-eyebrow {
 	font-family: var(--av-font-heading);
 	font-size: 12px;
@@ -952,8 +821,6 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 }
 
 .av-hero__title {
-	font-weight: 400;
-	letter-spacing: 0;
 	margin: 0 0 18px;
 }
 
@@ -975,40 +842,12 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 48px;
-	padding: 0 24px;
-	border-radius: 2px;
-	font-size: 12px;
-	font-weight: 700;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
 	text-decoration: none;
-	transition: .2s ease;
-}
-
-.av-btn--primary {
-	background: var(--av-white);
-	color: var(--av-black);
-}
-
-.av-btn--primary:hover {
-	background: var(--av-gold);
-	color: var(--av-black);
-}
-
-.av-btn--ghost {
-	border: 1px solid rgba(255,255,255,.45);
-	color: var(--av-white);
-}
-
-.av-btn--ghost:hover {
-	border-color: var(--av-white);
-	color: var(--av-white);
 }
 
 /* Trust row */
 .av-trust {
-	background: var(--av-white);
+	background: var(--av-charcoal);
 	border-bottom: 1px solid var(--av-border);
 }
 
@@ -1040,7 +879,7 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 
 .av-section--dark {
 	background: var(--av-charcoal);
-	color: var(--av-white);
+	color: var(--av-black);
 }
 
 .av-section--muted {
@@ -1075,7 +914,7 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 }
 
 .av-section--dark .av-section__head p {
-	color: rgba(255,255,255,.65);
+	color: var(--av-gray);
 }
 
 .av-link {
@@ -1328,8 +1167,8 @@ body.asherava-jaxxon.home .page-header {
    Product detail page (LZJ-style PDP)
    -------------------------------------------------------------------------- */
 body.asherava-jaxxon.av-single-product .site-header {
-	background: var(--av-black) !important;
-	border-bottom: 1px solid #222;
+	background: var(--av-white) !important;
+	border-bottom: 1px solid var(--av-border);
 	position: sticky;
 }
 
@@ -1438,22 +1277,10 @@ body.asherava-jaxxon.av-single-product .woocommerce div.product .woocommerce-pro
 
 .av-pdp__buybox .product_title {
 	margin: 0 0 8px;
-	font-family: var(--av-font-heading);
-	font-size: 15px;
-	font-weight: 400;
-	line-height: 1.15;
-	letter-spacing: 0;
-	text-transform: uppercase;
 }
 
 .av-pdp__material {
 	margin: 0 0 8px;
-	font-family: var(--av-font-body);
-	font-size: 10px;
-	font-weight: 300;
-	letter-spacing: 0;
-	text-transform: none;
-	color: var(--av-black);
 }
 
 .av-pdp__eyebrow {
@@ -1480,21 +1307,10 @@ body.asherava-jaxxon.av-single-product .woocommerce div.product .woocommerce-pro
 .av-pdp__buybox .av-pdp__price-display .amount,
 .av-pdp__buybox .av-pdp__price-display .woocommerce-Price-amount {
 	margin: 0 0 8px;
-	font-family: var(--av-font-heading);
-	font-size: 21px;
-	font-weight: 400;
-	line-height: 1.1;
-	color: var(--av-black) !important;
 }
 
 .av-pdp__shipping-note {
 	margin: 0 0 14px;
-	font-family: var(--av-font-body);
-	font-size: 10px;
-	font-weight: 300;
-	letter-spacing: 0;
-	text-transform: none;
-	color: var(--av-gray);
 }
 
 .av-pdp__option {
@@ -1653,19 +1469,6 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 	width: 100%;
 	min-height: 52px;
 	margin-top: 8px;
-	background: var(--av-white) !important;
-	color: var(--av-black) !important;
-	border: 1px solid var(--av-black) !important;
-	font-size: 13px !important;
-	font-weight: 700 !important;
-	letter-spacing: 0.12em !important;
-	text-transform: uppercase !important;
-	border-radius: 0 !important;
-}
-
-.av-pdp__buybox .single_add_to_cart_button:hover {
-	background: var(--av-black) !important;
-	color: var(--av-white) !important;
 }
 
 .av-pdp__buybox .woocommerce-variation-add-to-cart {

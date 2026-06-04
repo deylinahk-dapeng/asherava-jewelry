@@ -1,6 +1,7 @@
 /**
- * Asherava — Dark luxury typography (Inter only).
- * Tokens + 8 core UI roles. Loaded by child theme; paste duplicate into GP Additional CSS if needed.
+ * Asherava — SINGLE SOURCE OF TRUTH (typography + color + CTA).
+ * All brand tokens and type rules live here only. jaxxon.css = layout/structure.
+ * Do not duplicate in GeneratePress Additional CSS.
  */
 
 :root {
@@ -10,12 +11,14 @@
 	--av-bg-elevated: #222222;
 	--av-border-dark: #2e2e2e;
 
-	/* Type palette — no pure #fff */
-	--av-text-chalk: #e8e6e3;
-	--av-text-silver: #a8adb5;
+	/* Type palette — chalk white, no pure #fff / sale red */
+	--av-text-chalk: #f5f5f5;
+	--av-text-silver: #a3a3a3;
 	--av-text-muted: #7a818c;
 	--av-text-whisper: #5c636d;
 	--av-accent-gold: #c4a574;
+	--av-cta-bg: #1f1f1f;
+	--av-cta-border: #333333;
 
 	/* Inter stack */
 	--av-font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -23,10 +26,10 @@
 	/* 1 — Announcement */
 	--av-type-announce-d: 11px;
 	--av-type-announce-m: 10px;
-	--av-type-announce-w: 500;
-	--av-type-announce-ls: 0.14em;
+	--av-type-announce-w: 600;
+	--av-type-announce-ls: 0.15em;
 	--av-type-announce-lh: 1.45;
-	--av-type-announce-color: #9ba3af;
+	--av-type-announce-color: #a3a3a3;
 
 	/* 2 — Header nav */
 	--av-type-nav-d: 13px;
@@ -37,12 +40,12 @@
 	--av-type-nav-color: #c8cdd4;
 
 	/* 3 — Hero H1 */
-	--av-type-hero-h1-d: clamp(2.125rem, 5vw, 3.5rem);
-	--av-type-hero-h1-m: 2.125rem;
-	--av-type-hero-h1-w: 600;
+	--av-type-hero-h1-d: 3.5rem;
+	--av-type-hero-h1-m: 2rem;
+	--av-type-hero-h1-w: 800;
 	--av-type-hero-h1-ls: -0.03em;
-	--av-type-hero-h1-lh: 1.05;
-	--av-type-hero-h1-color: #e8e6e3;
+	--av-type-hero-h1-lh: 1.1;
+	--av-type-hero-h1-color: #f5f5f5;
 
 	/* 4 — Hero subtitle */
 	--av-type-hero-sub-d: 15px;
@@ -61,12 +64,12 @@
 	--av-type-pdp-title-color: #e8e6e3;
 
 	/* 6 — PDP price */
-	--av-type-price-d: 24px;
-	--av-type-price-m: 22px;
-	--av-type-price-w: 600;
-	--av-type-price-ls: -0.02em;
+	--av-type-price-d: 32px;
+	--av-type-price-m: 28px;
+	--av-type-price-w: 700;
+	--av-type-price-ls: -0.01em;
 	--av-type-price-lh: 1.1;
-	--av-type-price-color: #edeae6;
+	--av-type-price-color: #f5f5f5;
 
 	/* 7 — Spec / trust labels */
 	--av-type-label-d: 11px;
@@ -82,23 +85,27 @@
 	--av-type-value-w: 600;
 	--av-type-value-ls: 0.02em;
 	--av-type-value-lh: 1.35;
-	--av-type-value-color: #e8e6e3;
+	--av-type-value-color: #f5f5f5;
 }
 
-/* Global Inter + dark-mode legibility */
+/* Global base — read colors/fonts from :root only */
 body.asherava-jaxxon {
+	background-color: var(--av-bg-matte);
+	color: var(--av-text-chalk);
 	font-family: var(--av-font-inter);
 	font-weight: 400;
-	color: var(--av-text-chalk);
-	background: var(--av-bg-matte);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
 }
 
-body.asherava-jaxxon .site {
-	background: var(--av-bg-matte);
+body.asherava-jaxxon .site,
+body.asherava-jaxxon .site-content,
+body.asherava-jaxxon .content-area,
+body.asherava-jaxxon .inside-article {
+	background-color: var(--av-bg-matte);
+	color: var(--av-text-chalk);
 }
 
 body.asherava-jaxxon h1,
@@ -107,13 +114,53 @@ body.asherava-jaxxon h3,
 body.asherava-jaxxon h4,
 body.asherava-jaxxon h5,
 body.asherava-jaxxon h6,
-body.asherava-jaxxon .entry-title {
+body.asherava-jaxxon .entry-title,
+body.asherava-jaxxon .woocommerce-loop-product__title,
+.av-catalog-nav__links a,
+.av-catalog-nav__shop-trigger,
+.av-announcement__track,
+.av-announcement__static {
 	font-family: var(--av-font-inter);
 }
 
-/* 1 — Top announcement */
-.av-announcement {
-	background: var(--av-bg-matte);
+body.asherava-jaxxon h2,
+.av-section__head h2,
+.av-cta h2,
+.av-quiz h2 {
+	font-size: clamp(1.75rem, 3vw, 2.5rem);
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	line-height: 1.15;
+	color: var(--av-text-chalk);
+}
+
+body.asherava-jaxxon h3,
+.av-product-card h3 {
+	font-size: 1.25rem;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	line-height: 1.2;
+	color: var(--av-text-chalk);
+}
+
+.av-trust__item strong {
+	font-size: var(--av-type-value-d);
+	font-weight: var(--av-type-value-w);
+	color: var(--av-type-value-color);
+}
+
+.av-trust__item span,
+.av-section__head p {
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	color: var(--av-text-silver);
+}
+
+/* 1 — Top announcement (+ GP alias) */
+.av-announcement,
+.announcement-bar {
+	background-color: var(--av-bg-surface) !important;
 	border-bottom-color: var(--av-border-dark);
 }
 
@@ -161,25 +208,30 @@ body.asherava-jaxxon .main-navigation a:hover {
 	color: var(--av-text-chalk) !important;
 }
 
-/* 3 — Hero H1 */
-.av-hero__title,
+/* 3 — Hero H1 (final authority over jaxxon.css) */
+body.asherava-jaxxon h1,
+body.asherava-jaxxon .av-hero__title,
+.hero-title,
 body.asherava-jaxxon.av-home .av-hero__title,
 .av-hero--street .av-hero__title--wordmark {
 	font-family: var(--av-font-inter) !important;
-	font-size: var(--av-type-hero-h1-d);
-	font-weight: var(--av-type-hero-h1-w);
-	letter-spacing: var(--av-type-hero-h1-ls);
-	line-height: var(--av-type-hero-h1-lh);
+	font-size: 56px !important;
+	font-weight: 800 !important;
+	letter-spacing: -0.03em !important;
+	line-height: var(--av-type-hero-h1-lh) !important;
 	text-transform: uppercase;
-	color: var(--av-type-hero-h1-color);
-	text-shadow: none;
-	text-indent: 0;
+	color: var(--av-type-hero-h1-color) !important;
+	text-shadow: none !important;
+	text-indent: 0 !important;
 }
 
 @media (max-width: 768px) {
-	.av-hero__title,
+	body.asherava-jaxxon h1,
+	body.asherava-jaxxon .av-hero__title,
+	.hero-title,
 	.av-hero--street .av-hero__title--wordmark {
-		font-size: var(--av-type-hero-h1-m);
+		font-size: 32px !important;
+		letter-spacing: -0.02em !important;
 	}
 }
 
@@ -221,12 +273,13 @@ body.asherava-jaxxon.av-home .av-hero__title,
 	}
 }
 
-/* 6 — PDP price */
+/* 6 — PDP / product price (no sale red) */
+body.asherava-jaxxon.av-single-product .summary .price,
+body.asherava-jaxxon.av-single-product .summary .woocommerce-Price-amount,
 .av-pdp__buybox .price,
 .av-pdp__buybox .av-pdp__price-display,
 .av-pdp__buybox .av-pdp__price-display .amount,
-.av-pdp__buybox .av-pdp__price-display .woocommerce-Price-amount,
-body.asherava-jaxxon.av-single-product .woocommerce .price .amount {
+.av-pdp__buybox .av-pdp__price-display .woocommerce-Price-amount {
 	font-family: var(--av-font-inter);
 	font-size: var(--av-type-price-d);
 	font-weight: var(--av-type-price-w);
@@ -236,7 +289,13 @@ body.asherava-jaxxon.av-single-product .woocommerce .price .amount {
 	color: var(--av-type-price-color) !important;
 }
 
+body.asherava-jaxxon.av-single-product .summary .price del,
+body.asherava-jaxxon.av-single-product .summary .price ins {
+	color: var(--av-text-muted) !important;
+}
+
 @media (max-width: 768px) {
+	body.asherava-jaxxon.av-single-product .summary .price,
 	.av-pdp__buybox .price,
 	.av-pdp__buybox .av-pdp__price-display,
 	.av-pdp__buybox .av-pdp__price-display .amount {
@@ -367,16 +426,40 @@ body.asherava-jaxxon.av-single-product {
 	color: var(--av-bg-matte);
 }
 
-.av-pdp__single_add_to_cart_button,
-.av-pdp__buybox .single_add_to_cart_button {
-	border-color: var(--av-text-silver) !important;
+/* CTA — industrial square, hover invert */
+body.asherava-jaxxon .av-btn,
+body.asherava-jaxxon .av-btn--primary,
+body.asherava-jaxxon .av-btn--ghost,
+body.asherava-jaxxon .button.checkout,
+body.asherava-jaxxon .wp-block-button__link,
+body.asherava-jaxxon .single_add_to_cart_button,
+body.asherava-jaxxon .woocommerce a.button,
+body.asherava-jaxxon .woocommerce button.button {
+	background-color: var(--av-cta-bg) !important;
 	color: var(--av-text-chalk) !important;
-	background: transparent !important;
+	border: 1px solid var(--av-cta-border) !important;
+	border-radius: 0 !important;
+	font-family: var(--av-font-inter) !important;
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.1em !important;
+	padding: 16px 32px !important;
+	min-height: auto;
+	transition: all 0.3s ease !important;
 }
 
-.av-pdp__buybox .single_add_to_cart_button:hover {
-	background: var(--av-text-chalk) !important;
+body.asherava-jaxxon .av-btn:hover,
+body.asherava-jaxxon .av-btn--primary:hover,
+body.asherava-jaxxon .av-btn--ghost:hover,
+body.asherava-jaxxon .button.checkout:hover,
+body.asherava-jaxxon .wp-block-button__link:hover,
+body.asherava-jaxxon .single_add_to_cart_button:hover,
+body.asherava-jaxxon .woocommerce a.button:hover,
+body.asherava-jaxxon .woocommerce button.button:hover {
+	background-color: var(--av-text-chalk) !important;
 	color: var(--av-bg-matte) !important;
+	border-color: var(--av-text-chalk) !important;
 }
 
 .av-pdp__accordions {
