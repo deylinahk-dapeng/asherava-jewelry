@@ -1,0 +1,423 @@
+/**
+ * Asherava — Dark luxury typography (Inter only).
+ * Tokens + 8 core UI roles. Loaded by child theme; paste duplicate into GP Additional CSS if needed.
+ */
+
+:root {
+	/* Surfaces */
+	--av-bg-matte: #121212;
+	--av-bg-surface: #1a1a1a;
+	--av-bg-elevated: #222222;
+	--av-border-dark: #2e2e2e;
+
+	/* Type palette — no pure #fff */
+	--av-text-chalk: #e8e6e3;
+	--av-text-silver: #a8adb5;
+	--av-text-muted: #7a818c;
+	--av-text-whisper: #5c636d;
+	--av-accent-gold: #c4a574;
+
+	/* Inter stack */
+	--av-font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+	/* 1 — Announcement */
+	--av-type-announce-d: 11px;
+	--av-type-announce-m: 10px;
+	--av-type-announce-w: 500;
+	--av-type-announce-ls: 0.14em;
+	--av-type-announce-lh: 1.45;
+	--av-type-announce-color: #9ba3af;
+
+	/* 2 — Header nav */
+	--av-type-nav-d: 13px;
+	--av-type-nav-m: 12px;
+	--av-type-nav-w: 500;
+	--av-type-nav-ls: 0.1em;
+	--av-type-nav-lh: 1.35;
+	--av-type-nav-color: #c8cdd4;
+
+	/* 3 — Hero H1 */
+	--av-type-hero-h1-d: clamp(2.125rem, 5vw, 3.5rem);
+	--av-type-hero-h1-m: 2.125rem;
+	--av-type-hero-h1-w: 600;
+	--av-type-hero-h1-ls: -0.03em;
+	--av-type-hero-h1-lh: 1.05;
+	--av-type-hero-h1-color: #e8e6e3;
+
+	/* 4 — Hero subtitle */
+	--av-type-hero-sub-d: 15px;
+	--av-type-hero-sub-m: 13px;
+	--av-type-hero-sub-w: 400;
+	--av-type-hero-sub-ls: 0.06em;
+	--av-type-hero-sub-lh: 1.65;
+	--av-type-hero-sub-color: #a8adb5;
+
+	/* 5 — PDP product title */
+	--av-type-pdp-title-d: 15px;
+	--av-type-pdp-title-m: 14px;
+	--av-type-pdp-title-w: 500;
+	--av-type-pdp-title-ls: 0.08em;
+	--av-type-pdp-title-lh: 1.2;
+	--av-type-pdp-title-color: #e8e6e3;
+
+	/* 6 — PDP price */
+	--av-type-price-d: 24px;
+	--av-type-price-m: 22px;
+	--av-type-price-w: 600;
+	--av-type-price-ls: -0.02em;
+	--av-type-price-lh: 1.1;
+	--av-type-price-color: #edeae6;
+
+	/* 7 — Spec / trust labels */
+	--av-type-label-d: 11px;
+	--av-type-label-m: 10px;
+	--av-type-label-w: 500;
+	--av-type-label-ls: 0.12em;
+	--av-type-label-lh: 1.4;
+	--av-type-label-color: #7a818c;
+
+	/* 8 — Spec / trust values */
+	--av-type-value-d: 15px;
+	--av-type-value-m: 14px;
+	--av-type-value-w: 600;
+	--av-type-value-ls: 0.02em;
+	--av-type-value-lh: 1.35;
+	--av-type-value-color: #e8e6e3;
+}
+
+/* Global Inter + dark-mode legibility */
+body.asherava-jaxxon {
+	font-family: var(--av-font-inter);
+	font-weight: 400;
+	color: var(--av-text-chalk);
+	background: var(--av-bg-matte);
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+body.asherava-jaxxon .site {
+	background: var(--av-bg-matte);
+}
+
+body.asherava-jaxxon h1,
+body.asherava-jaxxon h2,
+body.asherava-jaxxon h3,
+body.asherava-jaxxon h4,
+body.asherava-jaxxon h5,
+body.asherava-jaxxon h6,
+body.asherava-jaxxon .entry-title {
+	font-family: var(--av-font-inter);
+}
+
+/* 1 — Top announcement */
+.av-announcement {
+	background: var(--av-bg-matte);
+	border-bottom-color: var(--av-border-dark);
+}
+
+.av-announcement__track,
+.av-announcement__static {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-announce-d);
+	font-weight: var(--av-type-announce-w);
+	letter-spacing: var(--av-type-announce-ls);
+	line-height: var(--av-type-announce-lh);
+	text-transform: uppercase;
+	color: var(--av-type-announce-color);
+}
+
+@media (max-width: 768px) {
+	.av-announcement__track,
+	.av-announcement__static {
+		font-size: var(--av-type-announce-m);
+	}
+}
+
+/* 2 — Header navigation */
+.av-catalog-nav__links a,
+.av-catalog-nav__shop-trigger,
+body.asherava-jaxxon .main-navigation .main-nav ul li a {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-nav-d);
+	font-weight: var(--av-type-nav-w);
+	letter-spacing: var(--av-type-nav-ls);
+	line-height: var(--av-type-nav-lh);
+	text-transform: uppercase;
+	color: var(--av-type-nav-color) !important;
+}
+
+@media (max-width: 768px) {
+	.av-catalog-nav__links a,
+	.av-catalog-nav__shop-trigger {
+		font-size: var(--av-type-nav-m);
+	}
+}
+
+.av-catalog-nav__links a:hover,
+.av-catalog-nav__shop-trigger:hover,
+body.asherava-jaxxon .main-navigation a:hover {
+	color: var(--av-text-chalk) !important;
+}
+
+/* 3 — Hero H1 */
+.av-hero__title,
+body.asherava-jaxxon.av-home .av-hero__title,
+.av-hero--street .av-hero__title--wordmark {
+	font-family: var(--av-font-inter) !important;
+	font-size: var(--av-type-hero-h1-d);
+	font-weight: var(--av-type-hero-h1-w);
+	letter-spacing: var(--av-type-hero-h1-ls);
+	line-height: var(--av-type-hero-h1-lh);
+	text-transform: uppercase;
+	color: var(--av-type-hero-h1-color);
+	text-shadow: none;
+	text-indent: 0;
+}
+
+@media (max-width: 768px) {
+	.av-hero__title,
+	.av-hero--street .av-hero__title--wordmark {
+		font-size: var(--av-type-hero-h1-m);
+	}
+}
+
+/* 4 — Hero subtitle */
+.av-hero__subtitle,
+.av-hero--street .av-hero__subtitle--product-line {
+	font-family: var(--av-font-inter) !important;
+	font-size: var(--av-type-hero-sub-d);
+	font-weight: var(--av-type-hero-sub-w);
+	letter-spacing: var(--av-type-hero-sub-ls);
+	line-height: var(--av-type-hero-sub-lh);
+	text-transform: none;
+	color: var(--av-type-hero-sub-color);
+}
+
+@media (max-width: 768px) {
+	.av-hero__subtitle,
+	.av-hero--street .av-hero__subtitle--product-line {
+		font-size: var(--av-type-hero-sub-m);
+	}
+}
+
+/* 5 — PDP product title */
+.av-pdp__buybox .product_title,
+.av-pdp__description-heading {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-pdp-title-d);
+	font-weight: var(--av-type-pdp-title-w);
+	letter-spacing: var(--av-type-pdp-title-ls);
+	line-height: var(--av-type-pdp-title-lh);
+	text-transform: uppercase;
+	color: var(--av-type-pdp-title-color);
+}
+
+@media (max-width: 768px) {
+	.av-pdp__buybox .product_title,
+	.av-pdp__description-heading {
+		font-size: var(--av-type-pdp-title-m);
+	}
+}
+
+/* 6 — PDP price */
+.av-pdp__buybox .price,
+.av-pdp__buybox .av-pdp__price-display,
+.av-pdp__buybox .av-pdp__price-display .amount,
+.av-pdp__buybox .av-pdp__price-display .woocommerce-Price-amount,
+body.asherava-jaxxon.av-single-product .woocommerce .price .amount {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-price-d);
+	font-weight: var(--av-type-price-w);
+	letter-spacing: var(--av-type-price-ls);
+	line-height: var(--av-type-price-lh);
+	text-transform: none;
+	color: var(--av-type-price-color) !important;
+}
+
+@media (max-width: 768px) {
+	.av-pdp__buybox .price,
+	.av-pdp__buybox .av-pdp__price-display,
+	.av-pdp__buybox .av-pdp__price-display .amount {
+		font-size: var(--av-type-price-m);
+	}
+}
+
+/* 7 — Labels (specs, trust, variant labels, material eyebrow) */
+.av-type-label,
+.av-pdp__material,
+.av-pdp__option-label,
+.av-pdp__shipping-note,
+.av-pdp__accordion summary,
+.av-spec__label,
+.av-trust__item span {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-label-d);
+	font-weight: var(--av-type-label-w);
+	letter-spacing: var(--av-type-label-ls);
+	line-height: var(--av-type-label-lh);
+	text-transform: uppercase;
+	color: var(--av-type-label-color);
+}
+
+@media (max-width: 768px) {
+	.av-type-label,
+	.av-pdp__material,
+	.av-pdp__option-label,
+	.av-spec__label {
+		font-size: var(--av-type-label-m);
+	}
+}
+
+/* 8 — Values (trust headlines, spec data, swatch selection) */
+.av-type-value,
+.av-pdp__trust-title,
+.av-spec__value,
+.av-pdp__description-body strong,
+.av-pdp__size-hint-map,
+.av-trust__item strong {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-value-d);
+	font-weight: var(--av-type-value-w);
+	letter-spacing: var(--av-type-value-ls);
+	line-height: var(--av-type-value-lh);
+	text-transform: none;
+	color: var(--av-type-value-color);
+}
+
+@media (max-width: 768px) {
+	.av-type-value,
+	.av-pdp__trust-title,
+	.av-spec__value,
+	.av-trust__item strong {
+		font-size: var(--av-type-value-m);
+	}
+}
+
+/* Spec rows in buybox description (length / weight list) */
+.av-pdp__description-body ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.av-pdp__description-body li {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 16px;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--av-border-dark);
+	font-size: var(--av-type-value-m);
+	font-weight: var(--av-type-value-w);
+	letter-spacing: var(--av-type-value-ls);
+	color: var(--av-type-value-color);
+}
+
+.av-pdp__description-body li::before {
+	content: none;
+}
+
+/* PDP dark surfaces */
+body.asherava-jaxxon.av-single-product {
+	background: var(--av-bg-matte);
+}
+
+.av-pdp {
+	background: var(--av-bg-matte);
+}
+
+.av-pdp__buybox,
+.av-pdp__below {
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__description-body,
+.av-pdp__seo-body,
+.av-pdp__size-hint {
+	color: var(--av-text-silver);
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	text-transform: none;
+}
+
+.av-pdp__size-hint-map {
+	color: var(--av-type-value-color);
+}
+
+.av-pdp__crumb-trail,
+.av-pdp__crumb-trail a {
+	color: var(--av-text-muted);
+}
+
+.av-pdp__crumb-trail a:hover {
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__swatch {
+	background: var(--av-bg-surface);
+	border-color: var(--av-border-dark);
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__swatch.is-selected {
+	background: var(--av-text-chalk);
+	border-color: var(--av-text-chalk);
+	color: var(--av-bg-matte);
+}
+
+.av-pdp__single_add_to_cart_button,
+.av-pdp__buybox .single_add_to_cart_button {
+	border-color: var(--av-text-silver) !important;
+	color: var(--av-text-chalk) !important;
+	background: transparent !important;
+}
+
+.av-pdp__buybox .single_add_to_cart_button:hover {
+	background: var(--av-text-chalk) !important;
+	color: var(--av-bg-matte) !important;
+}
+
+.av-pdp__accordions {
+	border-color: var(--av-border-dark);
+}
+
+.av-pdp__accordion {
+	border-color: var(--av-border-dark);
+}
+
+.av-pdp__accordion-body {
+	color: var(--av-text-silver);
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	line-height: 1.6;
+	text-transform: none;
+}
+
+.av-pdp__trust-link {
+	color: var(--av-text-silver);
+	font-size: var(--av-type-label-d);
+	font-weight: 500;
+	letter-spacing: var(--av-type-label-ls);
+}
+
+.av-pdp__trust-link:hover {
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__trust-text {
+	font-size: 13px;
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	line-height: 1.6;
+	text-transform: none;
+	color: var(--av-text-silver);
+}
+
+@media (max-width: 768px) {
+	.av-pdp__trust-text {
+		font-size: 12px;
+	}
+}

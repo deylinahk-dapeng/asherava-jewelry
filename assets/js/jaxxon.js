@@ -10,6 +10,8 @@
 		});
 	}
 
+	initProductPage();
+
 	var nav = document.querySelector('.av-catalog-nav');
 	if (!nav) {
 		return;
@@ -94,6 +96,21 @@
 	}
 
 	if (shopTrigger && mega) {
+		var megaCloseTimer = null;
+		var desktopMega = window.matchMedia('(min-width: 769px)');
+
+		function cancelMegaClose() {
+			if (megaCloseTimer) {
+				clearTimeout(megaCloseTimer);
+				megaCloseTimer = null;
+			}
+		}
+
+		function scheduleMegaClose() {
+			cancelMegaClose();
+			megaCloseTimer = window.setTimeout(closeMega, 220);
+		}
+
 		shopTrigger.addEventListener('click', function (event) {
 			event.preventDefault();
 			if (mega.hidden) {
@@ -110,14 +127,28 @@
 		});
 
 		shopItem.addEventListener('mouseenter', function () {
-			if (window.matchMedia('(min-width: 769px)').matches) {
+			if (desktopMega.matches) {
+				cancelMegaClose();
 				openMega();
 			}
 		});
 
 		shopItem.addEventListener('mouseleave', function () {
-			if (window.matchMedia('(min-width: 769px)').matches) {
-				closeMega();
+			if (desktopMega.matches) {
+				scheduleMegaClose();
+			}
+		});
+
+		mega.addEventListener('mouseenter', function () {
+			if (desktopMega.matches) {
+				cancelMegaClose();
+				openMega();
+			}
+		});
+
+		mega.addEventListener('mouseleave', function () {
+			if (desktopMega.matches) {
+				scheduleMegaClose();
 			}
 		});
 	}
@@ -165,4 +196,41 @@
 			track.scrollLeft = scrollLeft - walk;
 		});
 	});
+
+	function initProductPage() {
+		var pdp = document.querySelector('.av-pdp');
+		if (!pdp) {
+			return;
+		}
+
+		pdp.querySelectorAll('.av-pdp__swatch').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var option = btn.closest('.av-pdp__option');
+				if (!option) {
+					return;
+				}
+				var select = option.querySelector('select');
+				if (!select) {
+					return;
+				}
+				select.value = btn.getAttribute('data-value');
+				select.dispatchEvent(new Event('change', { bubbles: true }));
+				option.querySelectorAll('.av-pdp__swatch').forEach(function (swatch) {
+					swatch.classList.toggle('is-selected', swatch === btn);
+				});
+			});
+		});
+
+		document.addEventListener('woocommerce_variation_has_changed', function () {
+			pdp.querySelectorAll('.av-pdp__option').forEach(function (option) {
+				var select = option.querySelector('select');
+				if (!select) {
+					return;
+				}
+				option.querySelectorAll('.av-pdp__swatch').forEach(function (swatch) {
+					swatch.classList.toggle('is-selected', swatch.getAttribute('data-value') === select.value);
+				});
+			});
+		});
+	}
 })();

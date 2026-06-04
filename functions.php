@@ -7,9 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.1.8' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.3.0' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
+require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
 
 /**
  * Permalink for a published page by slug, or empty string.
@@ -155,8 +156,8 @@ function asherava_is_current_menu_link( $url ) {
 add_action( 'wp_enqueue_scripts', 'asherava_jaxxon_enqueue_assets', 20 );
 function asherava_jaxxon_enqueue_assets() {
 	wp_enqueue_style(
-		'asherava-jaxxon-google-fonts',
-		'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap',
+		'asherava-jaxxon-inter',
+		'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap',
 		array(),
 		null
 	);
@@ -164,7 +165,14 @@ function asherava_jaxxon_enqueue_assets() {
 	wp_enqueue_style(
 		'asherava-jaxxon',
 		get_stylesheet_directory_uri() . '/assets/css/jaxxon.css',
-		array( 'generate-style' ),
+		array( 'generate-style', 'asherava-jaxxon-inter' ),
+		ASHERAVA_JAXXON_VERSION
+	);
+
+	wp_enqueue_style(
+		'asherava-typography',
+		get_stylesheet_directory_uri() . '/assets/css/asherava-typography.css',
+		array( 'asherava-jaxxon' ),
 		ASHERAVA_JAXXON_VERSION
 	);
 

@@ -21,6 +21,17 @@ source "$ENV_FILE"
 echo "Deploying theme from $ROOT"
 echo "  -> ${SSH_HOST}:${REMOTE_THEME_DIR}/"
 
+if ! ssh -o BatchMode=yes -o ConnectTimeout=10 "$SSH_HOST" "echo ok" >/dev/null 2>&1; then
+  echo ""
+  echo "SSH failed (publickey or passphrase)."
+  echo "  1) Unlock key once:  ssh-add ~/.ssh/asherava_deploy"
+  echo "  2) Test login:       ssh ${SSH_HOST} \"echo OK\""
+  echo "  3) If still denied:  re-add ~/.ssh/asherava_deploy.pub in SpinUpWP → Account → SSH Keys"
+  echo "  4) Or use:           bash scripts/make-theme-zip.sh  (upload zip in WP admin)"
+  echo ""
+  exit 1
+fi
+
 rsync -avz --delete \
   --exclude '.git' \
   --exclude 'deploy.env' \

@@ -54,25 +54,7 @@ git push -u origin main
 
 **Deploy Script**（复制 `scripts/spinupwp-deploy.sh` 全文粘贴到文本框）：
 
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-THEME_SLUG="asherava-jaxxon"
-DEST="wp-content/themes/${THEME_SLUG}"
-mkdir -p "$DEST"
-sync_item() { local item="$1"; [[ -e "$item" ]] || return 0; rsync -a --delete "$item" "${DEST}/"; }
-sync_item style.css
-sync_item functions.php
-sync_item front-page.php
-sync_item assets
-sync_item inc
-sync_item template-parts
-for item in style.css functions.php front-page.php assets inc template-parts; do
-  [[ -e "./${item}" && "${item}" != "wp-content" ]] && rm -rf "./${item}"
-done
-command -v wp >/dev/null && wp cache flush --allow-root 2>/dev/null || true
-echo "Deployed theme to ${DEST}"
-```
+使用仓库内最新版：**`scripts/spinupwp-deploy.sh`**（已含 `woocommerce/`）。复制该文件全文到 SpinUpWP Deploy Script 文本框，不要用手写旧片段。
 
 > 若 Deploy Script 的工作目录是站点根而非 `files`，在脚本**第一行**加：`cd files`
 

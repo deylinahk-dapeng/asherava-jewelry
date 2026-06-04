@@ -23,8 +23,9 @@ sync_item front-page.php
 sync_item assets
 sync_item inc
 sync_item template-parts
+sync_item woocommerce
 
-for item in style.css functions.php front-page.php assets inc template-parts; do
+for item in style.css functions.php front-page.php assets inc template-parts woocommerce; do
   if [[ -e "./${item}" && "${item}" != "wp-content" ]]; then
     rm -rf "./${item}"
   fi
