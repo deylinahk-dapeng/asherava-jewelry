@@ -381,7 +381,7 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	font-weight: 600;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
-	color: var(--av-gray);
+	color: var(--av-mega-muted);
 	margin: 0 0 14px;
 }
 
@@ -411,7 +411,7 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 
 .av-shop-mega__grid a:hover,
 .av-shop-mega__side a:hover {
-	color: var(--av-gold-dark);
+	color: var(--av-gold);
 }
 
 .av-shop-mega__side li + li {
@@ -1786,8 +1786,8 @@ body.asherava-jaxxon.av-single-product .related.products {
 		max-width: none;
 		transform: none;
 		padding: 36px 0;
-		border-top: 1px solid var(--av-border);
-		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+		border-top: 1px solid var(--av-mega-border);
+		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
 	}
 
 	.av-shop-mega::before {
