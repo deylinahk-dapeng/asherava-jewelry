@@ -253,14 +253,14 @@ body.asherava-jaxxon.av-home .av-hero__title,
 	color: var(--av-accent-gold);
 }
 
-/* Homepage: transparent header over dark hero */
-body.asherava-jaxxon.home .av-catalog-nav__links a,
+/* Homepage: transparent header over dark hero — top-level nav only (not mega menu links) */
+body.asherava-jaxxon.home .av-catalog-nav__links > li > a,
 body.asherava-jaxxon.home .av-catalog-nav__shop-trigger,
 body.asherava-jaxxon.home .av-header-utilities__link {
 	color: var(--av-text-inverse) !important;
 }
 
-body.asherava-jaxxon.home .av-catalog-nav__links a:hover,
+body.asherava-jaxxon.home .av-catalog-nav__links > li > a:hover,
 body.asherava-jaxxon.home .av-catalog-nav__shop-trigger:hover {
 	color: var(--av-white) !important;
 }

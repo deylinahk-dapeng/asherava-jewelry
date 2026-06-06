@@ -351,8 +351,8 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	left: 50%;
 	transform: translateX(-50%);
 	width: min(920px, calc(100vw - 48px));
-	background: var(--av-mega-bg);
-	color: var(--av-mega-text);
+	background-color: var(--av-mega-bg) !important;
+	color: var(--av-mega-text) !important;
 	border: 0;
 	box-shadow: 0 20px 56px rgba(0, 0, 0, 0.35);
 	z-index: 200;
