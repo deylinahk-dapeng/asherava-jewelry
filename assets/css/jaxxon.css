@@ -6,7 +6,10 @@
 	--av-charcoal: #f5f5f5;
 	--av-gray: #6b6b6b;
 	--av-light: #fafafa;
-	--av-mega-bg: #f0f0f0;
+	--av-mega-bg: #2d2d2d;
+	--av-mega-text: #f5f5f5;
+	--av-mega-muted: #a3a3a3;
+	--av-mega-border: #3a3a3a;
 	--av-nav-shop-active: rgba(0, 0, 0, 0.06);
 	--av-white: #ffffff;
 	--av-gold: #a8842f;
@@ -349,9 +352,9 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	transform: translateX(-50%);
 	width: min(920px, calc(100vw - 48px));
 	background: var(--av-mega-bg);
-	color: var(--av-black);
+	color: var(--av-mega-text);
 	border: 0;
-	box-shadow: 0 20px 56px rgba(0, 0, 0, 0.22);
+	box-shadow: 0 20px 56px rgba(0, 0, 0, 0.35);
 	z-index: 200;
 	padding: 28px 0;
 }
@@ -397,7 +400,7 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 
 .av-shop-mega__grid a,
 .av-shop-mega__side a {
-	color: var(--av-black);
+	color: var(--av-mega-text);
 	text-decoration: none;
 	font-size: 13px;
 	font-weight: 500;
