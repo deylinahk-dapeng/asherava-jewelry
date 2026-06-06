@@ -57,30 +57,31 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 					<?php esc_html_e( 'Shop', 'asherava-jaxxon' ); ?>
 					<span aria-hidden="true">▾</span>
 				</button>
-				<div class="av-shop-mega" id="av-shop-mega" hidden>
-					<div class="av-shop-mega__inner av-container">
-						<div class="av-shop-mega__col">
-							<p class="av-shop-mega__label"><?php esc_html_e( 'Chain Styles', 'asherava-jaxxon' ); ?></p>
-							<ul class="av-shop-mega__grid">
-								<?php foreach ( $chains as $item ) : ?>
-									<li><a href="<?php echo esc_url( asherava_get_category_url( $item['slug'] ) ); ?>"><?php echo esc_html( $item['title'] ); ?></a></li>
-								<?php endforeach; ?>
-							</ul>
-						</div>
-						<div class="av-shop-mega__col av-shop-mega__col--side">
-							<p class="av-shop-mega__label"><?php esc_html_e( 'More', 'asherava-jaxxon' ); ?></p>
-							<ul class="av-shop-mega__side">
-								<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
-								<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
-								<li><a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop All', 'asherava-jaxxon' ); ?></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
 			</li>
 			<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
 			<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
 		</ul>
+	</div>
+
+	<div class="av-shop-mega" id="av-shop-mega" hidden>
+		<div class="av-shop-mega__inner av-container">
+			<div class="av-shop-mega__col">
+				<p class="av-shop-mega__label"><?php esc_html_e( 'Chain Styles', 'asherava-jaxxon' ); ?></p>
+				<ul class="av-shop-mega__grid">
+					<?php foreach ( $chains as $item ) : ?>
+						<li><a href="<?php echo esc_url( asherava_get_category_url( $item['slug'] ) ); ?>"><?php echo esc_html( $item['title'] ); ?></a></li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			<div class="av-shop-mega__col av-shop-mega__col--side">
+				<p class="av-shop-mega__label"><?php esc_html_e( 'More', 'asherava-jaxxon' ); ?></p>
+				<ul class="av-shop-mega__side">
+					<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
+					<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
+					<li><a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop All', 'asherava-jaxxon' ); ?></a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
 	<div class="av-catalog-drawer" id="av-catalog-drawer" hidden>

@@ -346,17 +346,23 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 }
 
 .av-shop-mega {
-	position: absolute;
-	top: calc(100% + 18px);
-	left: 50%;
-	transform: translateX(-50%);
-	width: min(920px, calc(100vw - 48px));
+	display: none;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: var(--av-mega-top, 88px);
+	width: 100%;
 	background-color: var(--av-mega-bg) !important;
 	color: var(--av-mega-text) !important;
 	border: 0;
-	box-shadow: 0 20px 56px rgba(0, 0, 0, 0.35);
-	z-index: 200;
-	padding: 28px 0;
+	border-top: 1px solid var(--av-mega-border);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+	z-index: 150;
+	padding: 36px 0;
+}
+
+.av-shop-mega:not([hidden]) {
+	display: block;
 }
 
 /* Invisible bridge so cursor can reach mega menu without closing */
@@ -371,8 +377,16 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 
 .av-shop-mega__inner {
 	display: grid;
-	grid-template-columns: 1fr 180px;
-	gap: 32px;
+	grid-template-columns: minmax(0, 1fr) 200px;
+	gap: 48px;
+	padding-left: 32px;
+	padding-right: 32px;
+}
+
+.av-shop-mega__grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 10px 32px;
 }
 
 .av-shop-mega__label {
@@ -390,12 +404,6 @@ body.asherava-jaxxon .main-navigation .main-nav ul li a {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-}
-
-.av-shop-mega__grid {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 8px 20px;
 }
 
 .av-shop-mega__grid a,
@@ -1766,10 +1774,10 @@ body.asherava-jaxxon.av-single-product .related.products {
 		max-width: 200px;
 	}
 
-	/* Luke-style: solid dark block on SHOP when mega is open */
+	/* SHOP tab matches mega panel when open */
 	.av-catalog-nav__shop.is-open .av-catalog-nav__shop-trigger {
-		color: var(--av-white);
-		background: var(--av-nav-shop-active);
+		color: var(--av-mega-text) !important;
+		background: var(--av-mega-bg);
 		padding: 14px calc(var(--av-nav-link-pad-x) + 4px) 12px;
 		margin: -14px calc((var(--av-nav-link-pad-x) + 4px) * -1) -12px;
 		border-bottom: 0;
@@ -1780,20 +1788,8 @@ body.asherava-jaxxon.av-single-product .related.products {
 		box-shadow: none;
 	}
 
-	.av-shop-mega {
-		position: fixed;
-		left: 0;
-		right: 0;
-		top: var(--av-mega-top, 88px);
-		width: 100%;
-		max-width: none;
-		transform: none;
-		padding: 36px 0;
-		background-color: var(--av-mega-bg) !important;
-		color: var(--av-mega-text) !important;
-		border-top: 1px solid var(--av-mega-border);
-		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
-		z-index: 150;
+	.av-shop-mega:not([hidden]) {
+		display: block;
 	}
 
 	.av-shop-mega::before {
@@ -1846,6 +1842,11 @@ body.asherava-jaxxon.av-single-product .related.products {
 		--av-nav-font-size: 15px;
 		--av-nav-gap: 44px;
 		--av-nav-link-pad-x: 16px;
+	}
+
+	.av-shop-mega__grid {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		gap: 12px 40px;
 	}
 }
 

@@ -132,9 +132,10 @@
 		});
 
 		document.addEventListener('click', function (event) {
-			if (!shopItem.contains(event.target)) {
-				closeMega();
+			if (shopItem.contains(event.target) || mega.contains(event.target)) {
+				return;
 			}
+			closeMega();
 		});
 
 		shopItem.addEventListener('mouseenter', function () {
