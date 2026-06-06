@@ -265,11 +265,7 @@ body.asherava-jaxxon.home .av-catalog-nav__shop-trigger:hover {
 	color: var(--av-white) !important;
 }
 
-body.asherava-jaxxon.home .av-logo-img {
-	filter: brightness(0) invert(1);
-}
-
-body.asherava-jaxxon.home .av-catalog-nav__links a.is-current,
+body.asherava-jaxxon.home .av-catalog-nav__links > li > a.is-current,
 body.asherava-jaxxon.home .av-catalog-nav__shop.is-current .av-catalog-nav__shop-trigger {
 	box-shadow: inset 0 -2px 0 var(--av-white);
 }

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.4.5' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.4.6' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
@@ -228,20 +228,26 @@ function asherava_jaxxon_announcement_bar() {
 
 add_filter( 'generate_site_title_output', 'asherava_jaxxon_site_title' );
 function asherava_get_logo_html() {
-	$logo_url = get_stylesheet_directory_uri() . '/assets/images/asherava-logo.svg';
-	$home_url = esc_url( home_url( '/' ) );
+	$use_white = is_front_page();
+	$logo_file = $use_white ? 'asherava-logo-white.svg' : 'asherava-logo.svg';
+	$logo_url  = get_stylesheet_directory_uri() . '/assets/images/' . $logo_file;
+	$home_url  = esc_url( home_url( '/' ) );
+	$classes   = 'av-logo-img' . ( $use_white ? ' av-logo-img--white' : '' );
 
 	return sprintf(
-		'<a href="%1$s" class="av-logo-link" rel="home" aria-label="%2$s"><img src="%3$s" alt="%2$s" class="av-logo-img" width="220" height="32" decoding="async" /></a>',
+		'<a href="%1$s" class="av-logo-link" rel="home" aria-label="%2$s"><img src="%3$s" alt="%2$s" class="%4$s" width="220" height="32" decoding="async" /></a>',
 		$home_url,
 		esc_attr( get_bloginfo( 'name' ) ),
-		esc_url( $logo_url )
+		esc_url( $logo_url ),
+		esc_attr( $classes )
 	);
 }
 
 function asherava_jaxxon_site_title( $output ) {
 	return asherava_get_logo_html();
 }
+
+add_filter( 'generate_site_logo_output', 'asherava_jaxxon_site_title' );
 
 add_filter( 'woocommerce_product_add_to_cart_text', 'asherava_jaxxon_add_to_cart_text' );
 function asherava_jaxxon_add_to_cart_text() {
