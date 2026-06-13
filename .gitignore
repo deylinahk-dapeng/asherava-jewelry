@@ -1,0 +1,7 @@
+.DS_Store
+deploy.env
+*.zip
+dist/
+.tmp-venv/
+.venv*/
+node_modules/

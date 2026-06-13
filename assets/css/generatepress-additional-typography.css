@@ -1,0 +1,506 @@
+/**
+ * Asherava — SINGLE SOURCE OF TRUTH (typography + color + CTA).
+ * All brand tokens and type rules live here only. jaxxon.css = layout/structure.
+ * Do not duplicate in GeneratePress Additional CSS.
+ */
+
+:root {
+	/* Surfaces */
+	--av-bg-matte: #121212;
+	--av-bg-surface: #1a1a1a;
+	--av-bg-elevated: #222222;
+	--av-border-dark: #2e2e2e;
+
+	/* Type palette — chalk white, no pure #fff / sale red */
+	--av-text-chalk: #f5f5f5;
+	--av-text-silver: #a3a3a3;
+	--av-text-muted: #7a818c;
+	--av-text-whisper: #5c636d;
+	--av-accent-gold: #c4a574;
+	--av-cta-bg: #1f1f1f;
+	--av-cta-border: #333333;
+
+	/* Inter stack */
+	--av-font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+	/* 1 — Announcement */
+	--av-type-announce-d: 11px;
+	--av-type-announce-m: 10px;
+	--av-type-announce-w: 600;
+	--av-type-announce-ls: 0.15em;
+	--av-type-announce-lh: 1.45;
+	--av-type-announce-color: #a3a3a3;
+
+	/* 2 — Header nav */
+	--av-type-nav-d: 13px;
+	--av-type-nav-m: 12px;
+	--av-type-nav-w: 500;
+	--av-type-nav-ls: 0.1em;
+	--av-type-nav-lh: 1.35;
+	--av-type-nav-color: #c8cdd4;
+
+	/* 3 — Hero H1 */
+	--av-type-hero-h1-d: 3.5rem;
+	--av-type-hero-h1-m: 2rem;
+	--av-type-hero-h1-w: 800;
+	--av-type-hero-h1-ls: -0.03em;
+	--av-type-hero-h1-lh: 1.1;
+	--av-type-hero-h1-color: #f5f5f5;
+
+	/* 4 — Hero subtitle */
+	--av-type-hero-sub-d: 15px;
+	--av-type-hero-sub-m: 13px;
+	--av-type-hero-sub-w: 400;
+	--av-type-hero-sub-ls: 0.06em;
+	--av-type-hero-sub-lh: 1.65;
+	--av-type-hero-sub-color: #a8adb5;
+
+	/* 5 — PDP product title */
+	--av-type-pdp-title-d: 15px;
+	--av-type-pdp-title-m: 14px;
+	--av-type-pdp-title-w: 500;
+	--av-type-pdp-title-ls: 0.08em;
+	--av-type-pdp-title-lh: 1.2;
+	--av-type-pdp-title-color: #e8e6e3;
+
+	/* 6 — PDP price */
+	--av-type-price-d: 32px;
+	--av-type-price-m: 28px;
+	--av-type-price-w: 700;
+	--av-type-price-ls: -0.01em;
+	--av-type-price-lh: 1.1;
+	--av-type-price-color: #f5f5f5;
+
+	/* 7 — Spec / trust labels */
+	--av-type-label-d: 11px;
+	--av-type-label-m: 10px;
+	--av-type-label-w: 500;
+	--av-type-label-ls: 0.12em;
+	--av-type-label-lh: 1.4;
+	--av-type-label-color: #7a818c;
+
+	/* 8 — Spec / trust values */
+	--av-type-value-d: 15px;
+	--av-type-value-m: 14px;
+	--av-type-value-w: 600;
+	--av-type-value-ls: 0.02em;
+	--av-type-value-lh: 1.35;
+	--av-type-value-color: #f5f5f5;
+}
+
+/* Global base — read colors/fonts from :root only */
+body.asherava-jaxxon {
+	background-color: var(--av-bg-matte);
+	color: var(--av-text-chalk);
+	font-family: var(--av-font-inter);
+	font-weight: 400;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+body.asherava-jaxxon .site,
+body.asherava-jaxxon .site-content,
+body.asherava-jaxxon .content-area,
+body.asherava-jaxxon .inside-article {
+	background-color: var(--av-bg-matte);
+	color: var(--av-text-chalk);
+}
+
+body.asherava-jaxxon h1,
+body.asherava-jaxxon h2,
+body.asherava-jaxxon h3,
+body.asherava-jaxxon h4,
+body.asherava-jaxxon h5,
+body.asherava-jaxxon h6,
+body.asherava-jaxxon .entry-title,
+body.asherava-jaxxon .woocommerce-loop-product__title,
+.av-catalog-nav__links a,
+.av-catalog-nav__shop-trigger,
+.av-announcement__track,
+.av-announcement__static {
+	font-family: var(--av-font-inter);
+}
+
+body.asherava-jaxxon h2,
+.av-section__head h2,
+.av-cta h2,
+.av-quiz h2 {
+	font-size: clamp(1.75rem, 3vw, 2.5rem);
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	line-height: 1.15;
+	color: var(--av-text-chalk);
+}
+
+body.asherava-jaxxon h3,
+.av-product-card h3 {
+	font-size: 1.25rem;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	line-height: 1.2;
+	color: var(--av-text-chalk);
+}
+
+.av-trust__item strong {
+	font-size: var(--av-type-value-d);
+	font-weight: var(--av-type-value-w);
+	color: var(--av-type-value-color);
+}
+
+.av-trust__item span,
+.av-section__head p {
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	color: var(--av-text-silver);
+}
+
+/* 1 — Top announcement (+ GP alias) */
+.av-announcement,
+.announcement-bar {
+	background-color: var(--av-bg-surface) !important;
+	border-bottom-color: var(--av-border-dark);
+}
+
+.av-announcement__track,
+.av-announcement__static {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-announce-d);
+	font-weight: var(--av-type-announce-w);
+	letter-spacing: var(--av-type-announce-ls);
+	line-height: var(--av-type-announce-lh);
+	text-transform: uppercase;
+	color: var(--av-type-announce-color);
+}
+
+@media (max-width: 768px) {
+	.av-announcement__track,
+	.av-announcement__static {
+		font-size: var(--av-type-announce-m);
+	}
+}
+
+/* 2 — Header navigation */
+.av-catalog-nav__links a,
+.av-catalog-nav__shop-trigger,
+body.asherava-jaxxon .main-navigation .main-nav ul li a {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-nav-d);
+	font-weight: var(--av-type-nav-w);
+	letter-spacing: var(--av-type-nav-ls);
+	line-height: var(--av-type-nav-lh);
+	text-transform: uppercase;
+	color: var(--av-type-nav-color) !important;
+}
+
+@media (max-width: 768px) {
+	.av-catalog-nav__links a,
+	.av-catalog-nav__shop-trigger {
+		font-size: var(--av-type-nav-m);
+	}
+}
+
+.av-catalog-nav__links a:hover,
+.av-catalog-nav__shop-trigger:hover,
+body.asherava-jaxxon .main-navigation a:hover {
+	color: var(--av-text-chalk) !important;
+}
+
+/* 3 — Hero H1 (final authority over jaxxon.css) */
+body.asherava-jaxxon h1,
+body.asherava-jaxxon .av-hero__title,
+.hero-title,
+body.asherava-jaxxon.av-home .av-hero__title,
+.av-hero--street .av-hero__title--wordmark {
+	font-family: var(--av-font-inter) !important;
+	font-size: 56px !important;
+	font-weight: 800 !important;
+	letter-spacing: -0.03em !important;
+	line-height: var(--av-type-hero-h1-lh) !important;
+	text-transform: uppercase;
+	color: var(--av-type-hero-h1-color) !important;
+	text-shadow: none !important;
+	text-indent: 0 !important;
+}
+
+@media (max-width: 768px) {
+	body.asherava-jaxxon h1,
+	body.asherava-jaxxon .av-hero__title,
+	.hero-title,
+	.av-hero--street .av-hero__title--wordmark {
+		font-size: 32px !important;
+		letter-spacing: -0.02em !important;
+	}
+}
+
+/* 4 — Hero subtitle */
+.av-hero__subtitle,
+.av-hero--street .av-hero__subtitle--product-line {
+	font-family: var(--av-font-inter) !important;
+	font-size: var(--av-type-hero-sub-d);
+	font-weight: var(--av-type-hero-sub-w);
+	letter-spacing: var(--av-type-hero-sub-ls);
+	line-height: var(--av-type-hero-sub-lh);
+	text-transform: none;
+	color: var(--av-type-hero-sub-color);
+}
+
+@media (max-width: 768px) {
+	.av-hero__subtitle,
+	.av-hero--street .av-hero__subtitle--product-line {
+		font-size: var(--av-type-hero-sub-m);
+	}
+}
+
+/* 5 — PDP product title */
+.av-pdp__buybox .product_title,
+.av-pdp__description-heading {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-pdp-title-d);
+	font-weight: var(--av-type-pdp-title-w);
+	letter-spacing: var(--av-type-pdp-title-ls);
+	line-height: var(--av-type-pdp-title-lh);
+	text-transform: uppercase;
+	color: var(--av-type-pdp-title-color);
+}
+
+@media (max-width: 768px) {
+	.av-pdp__buybox .product_title,
+	.av-pdp__description-heading {
+		font-size: var(--av-type-pdp-title-m);
+	}
+}
+
+/* 6 — PDP / product price (no sale red) */
+body.asherava-jaxxon.av-single-product .summary .price,
+body.asherava-jaxxon.av-single-product .summary .woocommerce-Price-amount,
+.av-pdp__buybox .price,
+.av-pdp__buybox .av-pdp__price-display,
+.av-pdp__buybox .av-pdp__price-display .amount,
+.av-pdp__buybox .av-pdp__price-display .woocommerce-Price-amount {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-price-d);
+	font-weight: var(--av-type-price-w);
+	letter-spacing: var(--av-type-price-ls);
+	line-height: var(--av-type-price-lh);
+	text-transform: none;
+	color: var(--av-type-price-color) !important;
+}
+
+body.asherava-jaxxon.av-single-product .summary .price del,
+body.asherava-jaxxon.av-single-product .summary .price ins {
+	color: var(--av-text-muted) !important;
+}
+
+@media (max-width: 768px) {
+	body.asherava-jaxxon.av-single-product .summary .price,
+	.av-pdp__buybox .price,
+	.av-pdp__buybox .av-pdp__price-display,
+	.av-pdp__buybox .av-pdp__price-display .amount {
+		font-size: var(--av-type-price-m);
+	}
+}
+
+/* 7 — Labels (specs, trust, variant labels, material eyebrow) */
+.av-type-label,
+.av-pdp__material,
+.av-pdp__option-label,
+.av-pdp__shipping-note,
+.av-pdp__accordion summary,
+.av-spec__label,
+.av-trust__item span {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-label-d);
+	font-weight: var(--av-type-label-w);
+	letter-spacing: var(--av-type-label-ls);
+	line-height: var(--av-type-label-lh);
+	text-transform: uppercase;
+	color: var(--av-type-label-color);
+}
+
+@media (max-width: 768px) {
+	.av-type-label,
+	.av-pdp__material,
+	.av-pdp__option-label,
+	.av-spec__label {
+		font-size: var(--av-type-label-m);
+	}
+}
+
+/* 8 — Values (trust headlines, spec data, swatch selection) */
+.av-type-value,
+.av-pdp__trust-title,
+.av-spec__value,
+.av-pdp__description-body strong,
+.av-pdp__size-hint-map,
+.av-trust__item strong {
+	font-family: var(--av-font-inter);
+	font-size: var(--av-type-value-d);
+	font-weight: var(--av-type-value-w);
+	letter-spacing: var(--av-type-value-ls);
+	line-height: var(--av-type-value-lh);
+	text-transform: none;
+	color: var(--av-type-value-color);
+}
+
+@media (max-width: 768px) {
+	.av-type-value,
+	.av-pdp__trust-title,
+	.av-spec__value,
+	.av-trust__item strong {
+		font-size: var(--av-type-value-m);
+	}
+}
+
+/* Spec rows in buybox description (length / weight list) */
+.av-pdp__description-body ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.av-pdp__description-body li {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 16px;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--av-border-dark);
+	font-size: var(--av-type-value-m);
+	font-weight: var(--av-type-value-w);
+	letter-spacing: var(--av-type-value-ls);
+	color: var(--av-type-value-color);
+}
+
+.av-pdp__description-body li::before {
+	content: none;
+}
+
+/* PDP dark surfaces */
+body.asherava-jaxxon.av-single-product {
+	background: var(--av-bg-matte);
+}
+
+.av-pdp {
+	background: var(--av-bg-matte);
+}
+
+.av-pdp__buybox,
+.av-pdp__below {
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__description-body,
+.av-pdp__seo-body,
+.av-pdp__size-hint {
+	color: var(--av-text-silver);
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	text-transform: none;
+}
+
+.av-pdp__size-hint-map {
+	color: var(--av-type-value-color);
+}
+
+.av-pdp__crumb-trail,
+.av-pdp__crumb-trail a {
+	color: var(--av-text-muted);
+}
+
+.av-pdp__crumb-trail a:hover {
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__swatch {
+	background: var(--av-bg-surface);
+	border-color: var(--av-border-dark);
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__swatch.is-selected {
+	background: var(--av-text-chalk);
+	border-color: var(--av-text-chalk);
+	color: var(--av-bg-matte);
+}
+
+/* CTA — industrial square, hover invert */
+body.asherava-jaxxon .av-btn,
+body.asherava-jaxxon .av-btn--primary,
+body.asherava-jaxxon .av-btn--ghost,
+body.asherava-jaxxon .button.checkout,
+body.asherava-jaxxon .wp-block-button__link,
+body.asherava-jaxxon .single_add_to_cart_button,
+body.asherava-jaxxon .woocommerce a.button,
+body.asherava-jaxxon .woocommerce button.button {
+	background-color: var(--av-cta-bg) !important;
+	color: var(--av-text-chalk) !important;
+	border: 1px solid var(--av-cta-border) !important;
+	border-radius: 0 !important;
+	font-family: var(--av-font-inter) !important;
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.1em !important;
+	padding: 16px 32px !important;
+	min-height: auto;
+	transition: all 0.3s ease !important;
+}
+
+body.asherava-jaxxon .av-btn:hover,
+body.asherava-jaxxon .av-btn--primary:hover,
+body.asherava-jaxxon .av-btn--ghost:hover,
+body.asherava-jaxxon .button.checkout:hover,
+body.asherava-jaxxon .wp-block-button__link:hover,
+body.asherava-jaxxon .single_add_to_cart_button:hover,
+body.asherava-jaxxon .woocommerce a.button:hover,
+body.asherava-jaxxon .woocommerce button.button:hover {
+	background-color: var(--av-text-chalk) !important;
+	color: var(--av-bg-matte) !important;
+	border-color: var(--av-text-chalk) !important;
+}
+
+.av-pdp__accordions {
+	border-color: var(--av-border-dark);
+}
+
+.av-pdp__accordion {
+	border-color: var(--av-border-dark);
+}
+
+.av-pdp__accordion-body {
+	color: var(--av-text-silver);
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	line-height: 1.6;
+	text-transform: none;
+}
+
+.av-pdp__trust-link {
+	color: var(--av-text-silver);
+	font-size: var(--av-type-label-d);
+	font-weight: 500;
+	letter-spacing: var(--av-type-label-ls);
+}
+
+.av-pdp__trust-link:hover {
+	color: var(--av-text-chalk);
+}
+
+.av-pdp__trust-text {
+	font-size: 13px;
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	line-height: 1.6;
+	text-transform: none;
+	color: var(--av-text-silver);
+}
+
+@media (max-width: 768px) {
+	.av-pdp__trust-text {
+		font-size: 12px;
+	}
+}
