@@ -94,15 +94,78 @@ foreach ( $guide_posts as $slug => $title ) {
 
 if ( class_exists( 'WooCommerce' ) && class_exists( 'WC_Product_Simple' ) ) {
 	$products = array(
-		array( 'slug' => '3mm-rope-chain-sterling-silver', 'name' => '3mm Rope Chain', 'price' => '79', 'cat' => '3mm-rope-chains' ),
-		array( 'slug' => '1-8mm-rope-chain-sterling-silver', 'name' => '1.8mm Rope Chain', 'price' => '59', 'cat' => '1-8mm-rope-chains' ),
-		array( 'slug' => '4-5mm-rope-chain-sterling-silver', 'name' => '4.5mm Rope Chain', 'price' => '109', 'cat' => '4-5mm-rope-chains' ),
-		array( 'slug' => '5-5mm-rope-chain-sterling-silver', 'name' => '5.5mm Rope Chain', 'price' => '139', 'cat' => '5-5mm-rope-chains' ),
-		array( 'slug' => '4mm-rope-chain-sterling-silver', 'name' => '4mm Rope Chain', 'price' => '99', 'cat' => '4mm-rope-chains' ),
+		array( 'slug' => '3mm-rope-chain-sterling-silver', 'legacy_slugs' => array( '3mm-rope-chain' ), 'name' => '3mm Rope Chain', 'sku' => 'ASH-3MM-ROPE-SS', 'price' => '79', 'cat' => '3mm-rope-chains' ),
+		array( 'slug' => '1-8mm-rope-chain-sterling-silver', 'legacy_slugs' => array( '1-8mm-rope-chain' ), 'name' => '1.8mm Rope Chain', 'sku' => 'ASH-18MM-ROPE-SS', 'price' => '59', 'cat' => '1-8mm-rope-chains' ),
+		array( 'slug' => '4-5mm-rope-chain-sterling-silver', 'legacy_slugs' => array( '4-5mm-rope-chain' ), 'name' => '4.5mm Rope Chain', 'sku' => 'ASH-45MM-ROPE-SS', 'price' => '109', 'cat' => '4-5mm-rope-chains' ),
+		array( 'slug' => '5-5mm-rope-chain-sterling-silver', 'legacy_slugs' => array( '5-5mm-rope-chain' ), 'name' => '5.5mm Rope Chain', 'sku' => 'ASH-55MM-ROPE-SS', 'price' => '139', 'cat' => '5-5mm-rope-chains' ),
+		array( 'slug' => '4mm-rope-chain-sterling-silver', 'legacy_slugs' => array( '4mm-rope-chain' ), 'name' => '4mm Rope Chain', 'sku' => 'ASH-4MM-ROPE-SS', 'price' => '99', 'cat' => '4mm-rope-chains' ),
 	);
 
-	foreach ( $products as $item ) {
+	$legacy_draft_slugs = array(
+		'5mm-rope-chain',
+		'5mm-rope-chain-sterling-silver',
+		'8mm-cuban-link-chain',
+		'8mm-cuban-link-chain-sterling-silver',
+	);
+
+	foreach ( $legacy_draft_slugs as $legacy_slug ) {
+		$legacy = get_page_by_path( $legacy_slug, OBJECT, 'product' );
+		if ( $legacy && 'publish' !== get_post_status( $legacy->ID ) ) {
+			wp_trash_post( $legacy->ID );
+		}
+	}
+
+	$legacy_draft_titles = array(
+		'5mm Rope Chain',
+		'8mm Cuban Link Chain',
+	);
+
+	foreach ( $legacy_draft_titles as $legacy_title ) {
+		$legacy_posts = get_posts(
+			array(
+				'post_type'      => 'product',
+				'post_status'    => array( 'draft', 'pending', 'private' ),
+				'title'          => $legacy_title,
+				'posts_per_page' => 20,
+				'fields'         => 'ids',
+			)
+		);
+
+		foreach ( $legacy_posts as $legacy_id ) {
+			wp_trash_post( (int) $legacy_id );
+		}
+	}
+
+	$find_product = static function ( $item ) {
 		$existing = get_page_by_path( $item['slug'], OBJECT, 'product' );
+		if ( $existing ) {
+			return $existing;
+		}
+
+		if ( ! empty( $item['legacy_slugs'] ) ) {
+			foreach ( $item['legacy_slugs'] as $legacy_slug ) {
+				$legacy = get_page_by_path( $legacy_slug, OBJECT, 'product' );
+				if ( $legacy ) {
+					return $legacy;
+				}
+			}
+		}
+
+		$matches = get_posts(
+			array(
+				'post_type'      => 'product',
+				'post_status'    => array( 'draft', 'pending', 'private' ),
+				'title'          => $item['name'],
+				'posts_per_page' => 1,
+			)
+		);
+
+		return $matches ? $matches[0] : null;
+	};
+
+	foreach ( $products as $item ) {
+		$existing = $find_product( $item );
+
 		$product  = $existing ? wc_get_product( $existing->ID ) : new WC_Product_Simple();
 
 		if ( ! $product ) {
@@ -113,6 +176,11 @@ if ( class_exists( 'WooCommerce' ) && class_exists( 'WC_Product_Simple' ) ) {
 		$product->set_slug( $item['slug'] );
 		$product->set_status( 'draft' );
 		$product->set_catalog_visibility( 'visible' );
+		try {
+			$product->set_sku( $item['sku'] );
+		} catch ( Exception $exception ) {
+			// Keep the seed idempotent if a merchant already reused the SKU.
+		}
 		$product->set_regular_price( $item['price'] );
 		$product->set_short_description( '925 sterling silver rope chain. Final length, weight, clasp, and product photos should be completed before publishing.' );
 		$product->set_description( 'Draft product page for the Asherava launch rope chain lineup. Add final product images, measurements, weight table, clasp details, packaging, and shipping notes before publishing.' );
@@ -120,11 +188,39 @@ if ( class_exists( 'WooCommerce' ) && class_exists( 'WC_Product_Simple' ) ) {
 		$product_id = $product->save();
 		$term       = get_term_by( 'slug', $item['cat'], 'product_cat' );
 
+		if ( ! $term || is_wp_error( $term ) ) {
+			$catalog_item = null;
+			foreach ( asherava_get_product_catalog() as $category ) {
+				if ( $item['cat'] === $category['slug'] ) {
+					$catalog_item = $category;
+					break;
+				}
+			}
+
+			if ( $catalog_item ) {
+				$inserted = wp_insert_term(
+					$catalog_item['title'],
+					'product_cat',
+					array(
+						'slug' => $catalog_item['slug'],
+					)
+				);
+				if ( ! is_wp_error( $inserted ) ) {
+					$term = get_term_by( 'slug', $item['cat'], 'product_cat' );
+				}
+			}
+		}
+
 		if ( $term && ! is_wp_error( $term ) ) {
 			wp_set_object_terms( $product_id, array( (int) $term->term_id ), 'product_cat', false );
 		}
 
 		$root = get_term_by( 'slug', 'rope-chains', 'product_cat' );
+		if ( ( ! $root || is_wp_error( $root ) ) ) {
+			wp_insert_term( 'Rope Chains', 'product_cat', array( 'slug' => 'rope-chains' ) );
+			$root = get_term_by( 'slug', 'rope-chains', 'product_cat' );
+		}
+
 		if ( $root && ! is_wp_error( $root ) ) {
 			wp_set_object_terms( $product_id, array( (int) $root->term_id ), 'product_cat', true );
 		}
