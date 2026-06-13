@@ -11,18 +11,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $blocks = array(
 	array(
-		'title' => __( 'Real Silver', 'asherava-jaxxon' ),
-		'text'  => __( 'Experience the elegance and beauty of our precious metal silver jewelry, crafted to perfection for those who appreciate the finer things in life.', 'asherava-jaxxon' ),
+		'title' => __( '925 Sterling Silver', 'asherava-jaxxon' ),
+		'text'  => __( 'Our launch collection focuses on sterling silver rope chains with clear material details on every product page.', 'asherava-jaxxon' ),
 		'url'   => asherava_resolve_menu_url( array( 'silver-chain-guides', 'guides' ), '/silver-chain-guides/' ),
 	),
 	array(
-		'title' => __( 'Jump Rings Closed', 'asherava-jaxxon' ),
-		'text'  => __( 'Protect your jewelry pieces from accidental opening with strong closed jump rings.', 'asherava-jaxxon' ),
+		'title' => __( '30-Day Returns', 'asherava-jaxxon' ),
+		'text'  => __( 'A practical return window gives first-time buyers time to check fit, feel, and finish after delivery.', 'asherava-jaxxon' ),
 		'url'   => asherava_resolve_menu_url( array( 'faq' ), '/faq/' ),
 	),
 	array(
-		'title' => __( '1,000+ 5 Star Reviews', 'asherava-jaxxon' ),
-		'text'  => __( 'Discover why thousands of customers trust Asherava for men\'s sterling silver chains.', 'asherava-jaxxon' ),
+		'title' => __( 'Fair Direct Pricing', 'asherava-jaxxon' ),
+		'text'  => __( 'Asherava is built for long-term direct sales, reducing platform fees so pricing can stay more reasonable.', 'asherava-jaxxon' ),
 		'url'   => asherava_resolve_menu_url( array( 'about-us', 'about' ), '/about-us/' ),
 	),
 );

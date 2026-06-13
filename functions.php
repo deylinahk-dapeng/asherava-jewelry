@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.4.7' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.8.0' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
@@ -73,7 +73,7 @@ function asherava_get_blog_url() {
  * @return array<int, array{label: string, url: string, icon?: string}>
  */
 function asherava_get_drawer_primary_links() {
-	return array(
+	$links = array(
 		array(
 			'label' => __( 'About Us', 'asherava-jaxxon' ),
 			'url'   => asherava_resolve_menu_url( array( 'about-us', 'about' ), '/about-us/' ),
@@ -83,10 +83,6 @@ function asherava_get_drawer_primary_links() {
 			'url'   => asherava_resolve_menu_url( array( 'contact-us', 'contact' ), '/contact-us/' ),
 		),
 		array(
-			'label' => __( 'Blogs', 'asherava-jaxxon' ),
-			'url'   => asherava_get_blog_url(),
-		),
-		array(
 			'label' => __( 'Silver Chain Guides & Resources', 'asherava-jaxxon' ),
 			'url'   => asherava_resolve_menu_url(
 				array( 'silver-chain-guides', 'silver-chain-guides-resources', 'chain-guides', 'guides' ),
@@ -94,6 +90,22 @@ function asherava_get_drawer_primary_links() {
 			),
 		),
 	);
+
+	if ( asherava_should_show_blog_nav() ) {
+		$links[] = array(
+			'label' => __( 'Blogs', 'asherava-jaxxon' ),
+			'url'   => asherava_get_blog_url(),
+		);
+	}
+
+	return $links;
+}
+
+/**
+ * Blog is hidden from launch navigation until guide content is ready.
+ */
+function asherava_should_show_blog_nav() {
+	return (bool) apply_filters( 'asherava_show_blog_nav', get_option( 'asherava_show_blog_nav', false ) );
 }
 
 /**
@@ -248,6 +260,29 @@ function asherava_jaxxon_site_title( $output ) {
 }
 
 add_filter( 'generate_site_logo_output', 'asherava_jaxxon_site_title' );
+
+add_filter( 'generate_copyright', 'asherava_jaxxon_footer_copyright' );
+function asherava_jaxxon_footer_copyright() {
+	$links = array(
+		array( __( 'Contact', 'asherava-jaxxon' ), asherava_resolve_menu_url( array( 'contact-us', 'contact' ), '/contact-us/' ) ),
+		array( __( 'Shipping', 'asherava-jaxxon' ), asherava_resolve_menu_url( array( 'shipping-policy' ), '/shipping-policy/' ) ),
+		array( __( 'Returns', 'asherava-jaxxon' ), asherava_resolve_menu_url( array( 'refund-policy' ), '/refund-policy/' ) ),
+		array( __( 'FAQ', 'asherava-jaxxon' ), asherava_resolve_menu_url( array( 'faq' ), '/faq/' ) ),
+		array( __( 'Privacy', 'asherava-jaxxon' ), asherava_resolve_menu_url( array( 'privacy-policy' ), '/privacy-policy/' ) ),
+		array( __( 'Terms', 'asherava-jaxxon' ), asherava_resolve_menu_url( array( 'terms-of-service' ), '/terms-of-service/' ) ),
+	);
+
+	$output = '<span class="av-footer-brand">&copy; ' . esc_html( date_i18n( 'Y' ) ) . ' Asherava</span>';
+	$output .= '<span class="av-footer-links">';
+
+	foreach ( $links as $link ) {
+		$output .= '<a href="' . esc_url( $link[1] ) . '">' . esc_html( $link[0] ) . '</a>';
+	}
+
+	$output .= '</span>';
+
+	return $output;
+}
 
 add_filter( 'woocommerce_product_add_to_cart_text', 'asherava_jaxxon_add_to_cart_text' );
 function asherava_jaxxon_add_to_cart_text() {

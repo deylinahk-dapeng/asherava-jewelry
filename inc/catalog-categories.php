@@ -20,32 +20,18 @@ function asherava_get_product_catalog() {
 	};
 
 	return array(
-		array( 'title' => 'Rope Chains', 'slug' => 'rope-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1605100804763-247f67b3557e' ) ),
-		array( 'title' => 'Byzantine Chains', 'slug' => 'byzantine-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
-		array( 'title' => 'Figaro Chains', 'slug' => 'figaro-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
-		array( 'title' => 'Ice Link Chains', 'slug' => 'ice-link-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1515562141207-7a88fb7ce338' ) ),
-		array( 'title' => 'Franco Chains', 'slug' => 'franco-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1617032216428-9e23d1bb0ca5' ) ),
-		array( 'title' => 'Forzentina Chains', 'slug' => 'forzentina-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1602751584552-8b4b7d0e8c3a' ) ),
-		array( 'title' => 'Dollar Chains', 'slug' => 'dollar-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
-		array( 'title' => 'Cuban Chains', 'slug' => 'cuban-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
-		array( 'title' => 'Snake Chains', 'slug' => 'snake-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1605100804763-247f67b3557e' ) ),
-		array( 'title' => 'Barrel Chains', 'slug' => 'barrel-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
-		array( 'title' => 'Rock Chains', 'slug' => 'rock-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1617032216428-9e23d1bb0ca5' ) ),
-		array( 'title' => 'Box Chains', 'slug' => 'box-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1515562141207-7a88fb7ce338' ) ),
-		array( 'title' => 'Figaro Mariner Hybrid Chains', 'slug' => 'figaro-mariner-hybrid-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1605100804763-247f67b3557e' ) ),
-		array( 'title' => 'Cuban Figaro Hybrid Chains', 'slug' => 'cuban-figaro-hybrid-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
-		array( 'title' => 'Valentino Chains', 'slug' => 'valentino-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
-		array( 'title' => 'Herringbone Chains', 'slug' => 'herringbone-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1617032216428-9e23d1bb0ca5' ) ),
-		array( 'title' => 'Figarope Chains', 'slug' => 'figarope-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1605100804763-247f67b3557e' ) ),
-		array( 'title' => 'Curb Chains', 'slug' => 'curb-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
-		array( 'title' => 'Master Link Chains', 'slug' => 'master-link-chains', 'group' => 'chains', 'featured' => true, 'image' => $image( '1515562141207-7a88fb7ce338' ) ),
-		array( 'title' => 'Square Greek Box Chains', 'slug' => 'square-greek-box-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
-		array( 'title' => 'Mariner Chains', 'slug' => 'mariner-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1605100804763-247f67b3557e' ) ),
-		array( 'title' => 'Puff Link Chains', 'slug' => 'puff-link-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1617032216428-9e23d1bb0ca5' ) ),
-		array( 'title' => 'Moon Cut Chains', 'slug' => 'moon-cut-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
-		array( 'title' => 'Kids Chains', 'slug' => 'kids-chains', 'group' => 'chains', 'featured' => false, 'image' => $image( '1515562141207-7a88fb7ce338' ) ),
-		array( 'title' => 'Bracelets', 'slug' => 'bracelets', 'group' => 'accessories', 'featured' => false, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
-		array( 'title' => 'Pendants', 'slug' => 'pendants', 'group' => 'accessories', 'featured' => false, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
+		array( 'title' => 'Rope Chains', 'slug' => 'rope-chains', 'group' => 'chains', 'featured' => false, 'nav' => true, 'image' => $image( '1605100804763-247f67b3557e' ) ),
+		array( 'title' => '3mm Rope Chains', 'slug' => '3mm-rope-chains', 'group' => 'chains', 'featured' => true, 'nav' => true, 'image' => $image( '1617032216428-9e23d1bb0ca5' ) ),
+		array( 'title' => '1.8mm Rope Chains', 'slug' => '1-8mm-rope-chains', 'group' => 'chains', 'featured' => true, 'nav' => true, 'image' => $image( '1605100804763-247f67b3557e' ) ),
+		array( 'title' => '4.5mm Rope Chains', 'slug' => '4-5mm-rope-chains', 'group' => 'chains', 'featured' => true, 'nav' => true, 'image' => $image( '1515562141207-7a88fb7ce338' ) ),
+		array( 'title' => '5.5mm Rope Chains', 'slug' => '5-5mm-rope-chains', 'group' => 'chains', 'featured' => true, 'nav' => true, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
+		array( 'title' => '4mm Rope Chains', 'slug' => '4mm-rope-chains', 'group' => 'chains', 'featured' => true, 'nav' => true, 'image' => $image( '1602751584552-8b4b7d0e8c3a' ) ),
+		array( 'title' => 'Cuban Chains', 'slug' => 'cuban-chains', 'group' => 'chains', 'featured' => false, 'nav' => false, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
+		array( 'title' => 'Franco Chains', 'slug' => 'franco-chains', 'group' => 'chains', 'featured' => false, 'nav' => false, 'image' => $image( '1617032216428-9e23d1bb0ca5' ) ),
+		array( 'title' => 'Figaro Chains', 'slug' => 'figaro-chains', 'group' => 'chains', 'featured' => false, 'nav' => false, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
+		array( 'title' => 'Curb Chains', 'slug' => 'curb-chains', 'group' => 'chains', 'featured' => false, 'nav' => false, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
+		array( 'title' => 'Bracelets', 'slug' => 'bracelets', 'group' => 'accessories', 'featured' => false, 'nav' => false, 'image' => $image( '1611591437281-460bfbe1220a' ) ),
+		array( 'title' => 'Pendants', 'slug' => 'pendants', 'group' => 'accessories', 'featured' => false, 'nav' => false, 'image' => $image( '1599643478518-a784e5dc4c8f' ) ),
 	);
 }
 
@@ -75,7 +61,7 @@ function asherava_get_chain_catalog() {
 		array_filter(
 			asherava_get_product_catalog(),
 			static function ( $item ) {
-				return ( $item['group'] ?? '' ) === 'chains';
+				return ( $item['group'] ?? '' ) === 'chains' && false !== ( $item['nav'] ?? true );
 			}
 		)
 	);

@@ -14,6 +14,7 @@ $cart_url   = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_ur
 $chains     = asherava_get_chain_catalog();
 $bracelets  = asherava_get_category_url( 'bracelets' );
 $pendants   = asherava_get_category_url( 'pendants' );
+$show_accessory_nav = (bool) apply_filters( 'asherava_show_accessory_nav', get_option( 'asherava_show_accessory_nav', false ) );
 $home_url   = home_url( '/' );
 $cart_count   = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
 $logo_url     = get_stylesheet_directory_uri() . '/assets/images/asherava-logo-white.svg';
@@ -58,15 +59,17 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 					<span aria-hidden="true">▾</span>
 				</button>
 			</li>
-			<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
-			<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
+			<?php if ( $show_accessory_nav ) : ?>
+				<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
+				<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
+			<?php endif; ?>
 		</ul>
 	</div>
 
 	<div class="av-shop-mega" id="av-shop-mega" hidden>
 		<div class="av-shop-mega__inner av-container">
 			<div class="av-shop-mega__col">
-				<p class="av-shop-mega__label"><?php esc_html_e( 'Chain Styles', 'asherava-jaxxon' ); ?></p>
+				<p class="av-shop-mega__label"><?php esc_html_e( 'Rope Chain Launch', 'asherava-jaxxon' ); ?></p>
 				<ul class="av-shop-mega__grid">
 					<?php foreach ( $chains as $item ) : ?>
 						<li><a href="<?php echo esc_url( asherava_get_category_url( $item['slug'] ) ); ?>"><?php echo esc_html( $item['title'] ); ?></a></li>
@@ -74,11 +77,10 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 				</ul>
 			</div>
 			<div class="av-shop-mega__col av-shop-mega__col--side">
-				<p class="av-shop-mega__label"><?php esc_html_e( 'More', 'asherava-jaxxon' ); ?></p>
+				<p class="av-shop-mega__label"><?php esc_html_e( 'Launch Focus', 'asherava-jaxxon' ); ?></p>
 				<ul class="av-shop-mega__side">
-					<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
-					<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
-					<li><a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop All', 'asherava-jaxxon' ); ?></a></li>
+					<li><a href="<?php echo esc_url( asherava_get_category_url( 'rope-chains' ) ); ?>"><?php esc_html_e( 'Shop All Rope Chains', 'asherava-jaxxon' ); ?></a></li>
+					<li><a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'All Products', 'asherava-jaxxon' ); ?></a></li>
 				</ul>
 			</div>
 		</div>
@@ -105,8 +107,10 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 						<?php foreach ( $chains as $item ) : ?>
 							<li><a href="<?php echo esc_url( asherava_get_category_url( $item['slug'] ) ); ?>"><?php echo esc_html( $item['title'] ); ?></a></li>
 						<?php endforeach; ?>
-						<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
-						<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
+						<?php if ( $show_accessory_nav ) : ?>
+							<li><a href="<?php echo esc_url( $bracelets ); ?>"><?php esc_html_e( 'Bracelets', 'asherava-jaxxon' ); ?></a></li>
+							<li><a href="<?php echo esc_url( $pendants ); ?>"><?php esc_html_e( 'Pendants', 'asherava-jaxxon' ); ?></a></li>
+						<?php endif; ?>
 						<li><a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Shop All', 'asherava-jaxxon' ); ?></a></li>
 					</ul>
 				</li>

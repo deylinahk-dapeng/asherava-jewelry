@@ -999,6 +999,25 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 	color: var(--av-black);
 }
 
+.av-empty-products {
+	grid-column: 1 / -1;
+	background: #171717;
+	border: 1px solid #2a2a2a;
+	padding: 34px;
+	color: var(--av-white);
+}
+
+.av-empty-products h3 {
+	margin: 0 0 10px;
+	font-weight: 500;
+}
+
+.av-empty-products p {
+	max-width: 680px;
+	color: var(--av-gray);
+	margin: 0 0 18px;
+}
+
 .av-badge {
 	position: absolute;
 	top: 12px;
@@ -1120,6 +1139,65 @@ body.asherava-jaxxon.av-home-fullbleed .av-hero {
 	margin-top: 20px;
 }
 
+.av-story {
+	background: var(--av-white);
+}
+
+.av-story__inner {
+	display: grid;
+	grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+	gap: 48px;
+	align-items: start;
+}
+
+.av-story h2 {
+	margin: 0;
+	font-weight: 400;
+}
+
+.av-story p {
+	margin: 0 0 16px;
+	color: #343434;
+	font-size: 16px;
+	line-height: 1.75;
+}
+
+.av-confidence {
+	text-align: left;
+}
+
+.av-confidence__grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 16px;
+}
+
+.av-confidence__grid > div {
+	border: 1px solid rgba(255,255,255,.18);
+	padding: 22px;
+	min-height: 128px;
+	background: rgba(255,255,255,.04);
+}
+
+.av-confidence__grid strong,
+.av-confidence__grid span {
+	display: block;
+}
+
+.av-confidence__grid strong {
+	font-family: var(--av-font-heading);
+	font-weight: 400;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+	color: var(--av-white);
+}
+
+.av-confidence__grid span {
+	color: rgba(255,255,255,.68);
+	line-height: 1.55;
+}
+
 /* Footer */
 body.asherava-jaxxon .site-footer {
 	background: var(--av-black);
@@ -1137,6 +1215,18 @@ body.asherava-jaxxon .site-info {
 	margin: 0 auto;
 	padding-left: 24px;
 	padding-right: 24px;
+}
+
+.av-footer-brand,
+.av-footer-links {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	flex-wrap: wrap;
+}
+
+.av-footer-links {
+	margin-left: 18px;
 }
 
 /* WooCommerce shop */
@@ -1861,6 +1951,11 @@ body.asherava-jaxxon.av-single-product .related.products {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
+	.av-story__inner,
+	.av-confidence__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
 	.av-shop-mega__inner {
 		grid-template-columns: 1fr;
 	}
@@ -2034,7 +2129,9 @@ body.asherava-jaxxon.av-single-product .related.products {
 
 	.av-product-grid,
 	.av-category-grid,
-	.av-trust__grid {
+	.av-trust__grid,
+	.av-story__inner,
+	.av-confidence__grid {
 		grid-template-columns: 1fr;
 	}
 
@@ -2046,6 +2143,11 @@ body.asherava-jaxxon.av-single-product .related.products {
 	.av-section__head--center {
 		flex-direction: column;
 		align-items: flex-start;
+	}
+
+	.av-footer-links {
+		margin-left: 0;
+		margin-top: 10px;
 	}
 }
 

@@ -14,15 +14,6 @@ get_header();
 $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop/' );
 
 $featured_categories = asherava_get_featured_catalog();
-
-$placeholders = array(
-	array( 'name' => 'Cuban Link Chain 10mm', 'price' => '$149', 'badge' => 'Best Seller' ),
-	array( 'name' => 'Cuban Link Chain 8mm', 'price' => '$119', 'badge' => 'Best Seller' ),
-	array( 'name' => 'Cuban Link Chain 5mm', 'price' => '$89', 'badge' => '' ),
-	array( 'name' => 'Rope Chain 5mm', 'price' => '$79', 'badge' => '' ),
-	array( 'name' => 'Cuban Link Bracelet 8mm', 'price' => '$99', 'badge' => 'New' ),
-	array( 'name' => 'Cuban Link Chain 3mm', 'price' => '$69', 'badge' => '' ),
-);
 ?>
 
 <main id="primary" class="av-home">
@@ -31,9 +22,9 @@ $placeholders = array(
 		<div class="av-hero__media" style="background-image:url('https://images.unsplash.com/photo-1617032216428-9e23d1bb0ca5?auto=format&fit=crop&w=1800&q=80');"></div>
 		<div class="av-hero__overlay"></div>
 		<div class="av-container av-hero__content">
-			<p class="av-eyebrow">Most Trusted Men's Chains</p>
-			<h1 class="av-hero__title">Bold Chains.<br>Built to Last.</h1>
-			<p class="av-hero__subtitle">Premium Cuban, rope, and tennis chains crafted for everyday confidence.</p>
+			<p class="av-eyebrow">Sterling Silver Chain Studio</p>
+			<h1 class="av-hero__title">925 Sterling Silver Chains</h1>
+			<p class="av-hero__subtitle">Italian-crafted rope and Cuban chains for everyday wear.</p>
 			<div class="av-hero__actions">
 				<a class="av-btn av-btn--primary" href="<?php echo esc_url( $shop_url ); ?>">Shop Chains</a>
 				<a class="av-btn av-btn--ghost" href="<?php echo esc_url( $shop_url ); ?>">Best Sellers</a>
@@ -44,20 +35,20 @@ $placeholders = array(
 	<section class="av-trust">
 		<div class="av-container av-trust__grid">
 			<div class="av-trust__item">
-				<strong>100,000+</strong>
-				<span>5-Star Reviews</span>
+				<strong>925 Silver</strong>
+				<span>Sterling silver chains</span>
 			</div>
 			<div class="av-trust__item">
 				<strong>Free Shipping</strong>
-				<span>On all US orders</span>
+				<span>US &amp; Canada</span>
 			</div>
 			<div class="av-trust__item">
 				<strong>30-Day Returns</strong>
-				<span>Hassle-free exchanges</span>
+				<span>Easy exchanges</span>
 			</div>
 			<div class="av-trust__item">
-				<strong>24/7 Support</strong>
-				<span>Dedicated customer care</span>
+				<strong>Fair Pricing</strong>
+				<span>Direct sourcing model</span>
 			</div>
 		</div>
 	</section>
@@ -65,8 +56,8 @@ $placeholders = array(
 	<section class="av-section av-section--dark">
 		<div class="av-container">
 			<div class="av-section__head">
-				<h2>Flash Sale</h2>
-				<p>This week's top deals are live — shop before they're gone.</p>
+				<h2>Best Sellers</h2>
+				<p>Launch-ready sterling silver rope chains. Product photos can be refined before publishing.</p>
 			</div>
 			<div class="av-product-grid">
 				<?php if ( function_exists( 'wc_get_products' ) ) : ?>
@@ -91,36 +82,13 @@ $placeholders = array(
 							</a>
 						<?php endforeach; ?>
 					<?php else : ?>
-						<?php foreach ( $placeholders as $item ) : ?>
-							<a class="av-product-card" href="<?php echo esc_url( $shop_url ); ?>">
-								<div class="av-product-card__image av-product-card__image--placeholder"></div>
-								<?php if ( ! empty( $item['badge'] ) ) : ?>
-									<span class="av-badge"><?php echo esc_html( $item['badge'] ); ?></span>
-								<?php endif; ?>
-								<h3><?php echo esc_html( $item['name'] ); ?></h3>
-								<p class="av-product-card__price"><?php echo esc_html( $item['price'] ); ?></p>
-							</a>
-						<?php endforeach; ?>
+						<div class="av-empty-products">
+							<h3><?php esc_html_e( 'Rope chain collection is being prepared.', 'asherava-jaxxon' ); ?></h3>
+							<p><?php esc_html_e( 'We are setting up the core 3mm, 1.8mm, 4.5mm, 5.5mm, and 4mm sterling silver rope chains before launch.', 'asherava-jaxxon' ); ?></p>
+							<a class="av-link" href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Visit shop', 'asherava-jaxxon' ); ?></a>
+						</div>
 					<?php endif; ?>
 				<?php endif; ?>
-			</div>
-		</div>
-	</section>
-
-	<section class="av-section">
-		<div class="av-container">
-			<div class="av-section__head">
-				<h2>Best Sellers</h2>
-				<a class="av-link" href="<?php echo esc_url( $shop_url ); ?>">View all</a>
-			</div>
-			<div class="av-product-grid av-product-grid--light">
-				<?php foreach ( array_slice( $placeholders, 0, 4 ) as $item ) : ?>
-					<a class="av-product-card av-product-card--light" href="<?php echo esc_url( $shop_url ); ?>">
-						<div class="av-product-card__image av-product-card__image--placeholder"></div>
-						<h3><?php echo esc_html( $item['name'] ); ?></h3>
-						<p class="av-product-card__price"><?php echo esc_html( $item['price'] ); ?></p>
-					</a>
-				<?php endforeach; ?>
 			</div>
 		</div>
 	</section>
@@ -129,10 +97,10 @@ $placeholders = array(
 		<div class="av-container">
 			<div class="av-section__head av-section__head--center">
 				<div>
-					<h2>Most Popular Collections</h2>
-					<p>Shop our best-selling chain styles — rope, Cuban, Franco, curb, and more.</p>
+					<h2>Shop Rope Chains by Width</h2>
+					<p>Start with our core sterling silver rope chain lineup: 3mm, 1.8mm, 4.5mm, 5.5mm, and 4mm.</p>
 				</div>
-				<a class="av-link" href="<?php echo esc_url( $shop_url ); ?>">Shop all chains</a>
+				<a class="av-link" href="<?php echo esc_url( asherava_get_category_url( 'rope-chains' ) ); ?>">Shop all rope chains</a>
 			</div>
 			<div class="av-featured-collections" data-av-featured-collections>
 				<?php foreach ( $featured_categories as $category ) : ?>
@@ -147,22 +115,46 @@ $placeholders = array(
 		</div>
 	</section>
 
-	<section class="av-section av-quiz">
-		<div class="av-container av-quiz__inner">
+	<section class="av-section av-story">
+		<div class="av-container av-story__inner">
 			<div>
-				<p class="av-eyebrow">Need Help Deciding?</p>
-				<h2>Find your perfect chain.</h2>
-				<p>For myself, I'm looking for a classic chain in gold.</p>
+				<p class="av-eyebrow">About Asherava</p>
+				<h2>Built for the long run.</h2>
 			</div>
-			<a class="av-btn av-btn--primary" href="<?php echo esc_url( $shop_url ); ?>">Shop Gold Chains</a>
+			<div>
+				<p>Asherava is named after Asher and Ava, my two children. I want this brand to grow patiently, stay honest, and become something worth leaving behind.</p>
+				<p>Our jewelry background gives us access to Italian sterling silver chain supply and finishing support in Panyu, Guangzhou. Instead of building around marketplace fees, we keep the model direct and aim for fair long-term pricing.</p>
+			</div>
 		</div>
 	</section>
 
-	<section class="av-section av-section--cta">
-		<div class="av-container av-cta">
-			<h2>2026 Top Trending</h2>
-			<p>Discover this year's most-wanted chains and sets.</p>
-			<a class="av-btn av-btn--primary" href="<?php echo esc_url( $shop_url ); ?>">Shop Trending</a>
+	<section class="av-section av-section--cta av-confidence">
+		<div class="av-container">
+			<div class="av-section__head av-section__head--center">
+				<div>
+					<h2>Customer Confidence</h2>
+					<p>Simple policies and product details for first-time buyers.</p>
+				</div>
+				<a class="av-link" href="<?php echo esc_url( asherava_resolve_menu_url( array( 'faq' ), '/faq/' ) ); ?>">Read FAQ</a>
+			</div>
+			<div class="av-confidence__grid">
+				<div>
+					<strong>Secure Checkout</strong>
+					<span>Protected online payment flow.</span>
+				</div>
+				<div>
+					<strong>Shipping</strong>
+					<span>US and Canada launch coverage.</span>
+				</div>
+				<div>
+					<strong>Returns</strong>
+					<span>30-day return window.</span>
+				</div>
+				<div>
+					<strong>Material</strong>
+					<span>925 sterling silver product focus.</span>
+				</div>
+			</div>
 		</div>
 	</section>
 </main>
