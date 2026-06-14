@@ -11,6 +11,7 @@
 	}
 
 	initProductPage();
+	initLegacyOmnisendSuppressor();
 
 	var nav = document.querySelector('.av-catalog-nav');
 	if (!nav) {
@@ -256,5 +257,79 @@
 				});
 			});
 		});
+	}
+
+	function initLegacyOmnisendSuppressor() {
+		var legacyPhrases = [
+			'GET 10% OFF YOUR FIRST ORDER',
+			'AND BE THE FIRST TO HEAR ABOUT OUR NEW PRODUCT DROPS',
+			'POWERED BY OMNISEND'
+		];
+		var scheduled = false;
+		var observer = null;
+
+		function hasLegacyCopy(element) {
+			var text = (element.textContent || '').replace(/\s+/g, ' ').toUpperCase();
+			return legacyPhrases.some(function (phrase) {
+				return text.indexOf(phrase) !== -1;
+			});
+		}
+
+		function findPopupRoot(element) {
+			var root = element;
+			var current = element;
+			var depth = 0;
+
+			while (current && current !== document.body && depth < 12) {
+				var style = window.getComputedStyle(current);
+				var rect = current.getBoundingClientRect();
+				var zIndex = parseInt(style.zIndex, 10) || 0;
+				var largeOverlay = rect.width > 320 && rect.height > 240;
+
+				if ((style.position === 'fixed' || style.position === 'absolute') && (largeOverlay || zIndex > 900)) {
+					root = current;
+				}
+
+				current = current.parentElement;
+				depth += 1;
+			}
+
+			return root;
+		}
+
+		function suppressLegacyPopup() {
+			scheduled = false;
+
+			document.querySelectorAll('body div, body section, body aside, body form').forEach(function (element) {
+				if (!hasLegacyCopy(element)) {
+					return;
+				}
+
+				var root = findPopupRoot(element);
+				root.style.setProperty('display', 'none', 'important');
+				root.style.setProperty('visibility', 'hidden', 'important');
+				root.style.setProperty('pointer-events', 'none', 'important');
+				root.setAttribute('aria-hidden', 'true');
+				document.documentElement.classList.remove('omnisend-popup-open');
+				document.body.classList.remove('omnisend-popup-open');
+				document.body.style.removeProperty('overflow');
+			});
+		}
+
+		function scheduleSuppress() {
+			if (scheduled) {
+				return;
+			}
+
+			scheduled = true;
+			window.setTimeout(suppressLegacyPopup, 80);
+		}
+
+		scheduleSuppress();
+		window.setTimeout(scheduleSuppress, 800);
+		window.setTimeout(scheduleSuppress, 2200);
+
+		observer = new MutationObserver(scheduleSuppress);
+		observer.observe(document.documentElement, { childList: true, subtree: true });
 	}
 })();

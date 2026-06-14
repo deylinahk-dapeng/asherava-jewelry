@@ -2154,6 +2154,8 @@ body.asherava-jaxxon.av-single-product .related.products {
 /* Temporarily suppress the legacy Omnisend popup until the new branded form is ready. */
 #omnisend-dynamic-container,
 [id^="omnisend-form"],
+[id*="omnisend"],
+[class*="omnisend"],
 .omnisend-form,
 .omnisend-form__container {
 	display: none !important;
