@@ -338,9 +338,20 @@
 		var popup = document.querySelector('[data-av-signup-popup]');
 		var config = window.asheravaSignupPopup || {};
 
-		if (!popup || !config.ajaxUrl) {
+		if (!popup) {
+			if (!initAsheravaSignupPopup.waiting) {
+				initAsheravaSignupPopup.waiting = true;
+				window.setTimeout(initAsheravaSignupPopup, 300);
+				window.setTimeout(initAsheravaSignupPopup, 1200);
+				document.addEventListener('DOMContentLoaded', initAsheravaSignupPopup, { once: true });
+			}
 			return;
 		}
+
+		if (initAsheravaSignupPopup.initialized || !config.ajaxUrl) {
+			return;
+		}
+		initAsheravaSignupPopup.initialized = true;
 
 		var form = popup.querySelector('[data-av-signup-form]');
 		var message = popup.querySelector('[data-av-signup-message]');
@@ -375,7 +386,7 @@
 			window.setTimeout(function () {
 				popup.classList.add('is-visible');
 				document.body.classList.add('av-signup-popup-open');
-				if (email) {
+				if (email && !window.matchMedia('(max-width: 640px)').matches) {
 					email.focus({ preventScroll: true });
 				}
 			}, 30);
@@ -462,6 +473,6 @@
 			});
 		}
 
-		window.setTimeout(openPopup, isForced ? 300 : 5000);
+		window.setTimeout(openPopup, isForced ? 300 : 3500);
 	}
 })();
