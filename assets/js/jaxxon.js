@@ -348,6 +348,7 @@
 		var submit = form ? form.querySelector('button[type="submit"]') : null;
 		var closedKey = 'asheravaSignupPopupClosed';
 		var joinedKey = 'asheravaSignupPopupJoined';
+		var isForced = !!config.force;
 
 		function hasStored(key) {
 			try {
@@ -366,7 +367,7 @@
 		}
 
 		function openPopup() {
-			if (hasStored(closedKey) || hasStored(joinedKey)) {
+			if (!isForced && (hasStored(closedKey) || hasStored(joinedKey))) {
 				return;
 			}
 
@@ -461,6 +462,6 @@
 			});
 		}
 
-		window.setTimeout(openPopup, 5000);
+		window.setTimeout(openPopup, isForced ? 300 : 5000);
 	}
 })();
