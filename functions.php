@@ -245,7 +245,7 @@ function asherava_should_render_signup_popup() {
 	return true;
 }
 
-add_action( 'wp_footer', 'asherava_render_signup_popup', 30 );
+add_action( 'wp_footer', 'asherava_render_signup_popup', 5 );
 function asherava_render_signup_popup() {
 	if ( ! asherava_should_render_signup_popup() ) {
 		return;
