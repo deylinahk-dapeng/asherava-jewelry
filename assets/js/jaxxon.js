@@ -12,6 +12,7 @@
 
 	initProductPage();
 	initLegacyOmnisendSuppressor();
+	initAsheravaSignupPopup();
 
 	var nav = document.querySelector('.av-catalog-nav');
 	if (!nav) {
@@ -331,5 +332,135 @@
 
 		observer = new MutationObserver(scheduleSuppress);
 		observer.observe(document.documentElement, { childList: true, subtree: true });
+	}
+
+	function initAsheravaSignupPopup() {
+		var popup = document.querySelector('[data-av-signup-popup]');
+		var config = window.asheravaSignupPopup || {};
+
+		if (!popup || !config.ajaxUrl) {
+			return;
+		}
+
+		var form = popup.querySelector('[data-av-signup-form]');
+		var message = popup.querySelector('[data-av-signup-message]');
+		var email = form ? form.querySelector('input[name="email"]') : null;
+		var submit = form ? form.querySelector('button[type="submit"]') : null;
+		var closedKey = 'asheravaSignupPopupClosed';
+		var joinedKey = 'asheravaSignupPopupJoined';
+
+		function hasStored(key) {
+			try {
+				return window.localStorage.getItem(key) === '1';
+			} catch (error) {
+				return false;
+			}
+		}
+
+		function store(key) {
+			try {
+				window.localStorage.setItem(key, '1');
+			} catch (error) {
+				// Ignore storage restrictions.
+			}
+		}
+
+		function openPopup() {
+			if (hasStored(closedKey) || hasStored(joinedKey)) {
+				return;
+			}
+
+			popup.hidden = false;
+			window.setTimeout(function () {
+				popup.classList.add('is-visible');
+				document.body.classList.add('av-signup-popup-open');
+				if (email) {
+					email.focus({ preventScroll: true });
+				}
+			}, 30);
+		}
+
+		function closePopup() {
+			popup.classList.remove('is-visible');
+			document.body.classList.remove('av-signup-popup-open');
+			store(closedKey);
+			window.setTimeout(function () {
+				popup.hidden = true;
+			}, 240);
+		}
+
+		popup.querySelectorAll('[data-av-signup-close]').forEach(function (button) {
+			button.addEventListener('click', closePopup);
+		});
+
+		document.addEventListener('keydown', function (event) {
+			if (event.key === 'Escape' && popup.classList.contains('is-visible')) {
+				closePopup();
+			}
+		});
+
+		if (form) {
+			form.addEventListener('submit', function (event) {
+				event.preventDefault();
+
+				if (!email || !email.value) {
+					if (message) {
+						message.textContent = 'Please enter your email address.';
+						message.classList.add('is-error');
+					}
+					return;
+				}
+
+				var data = new URLSearchParams();
+				data.set('action', 'asherava_signup_popup');
+				data.set('nonce', config.nonce || '');
+				data.set('email', email.value);
+				data.set('company', form.querySelector('input[name="company"]').value || '');
+
+				if (submit) {
+					submit.disabled = true;
+					submit.textContent = 'Joining...';
+				}
+
+				fetch(config.ajaxUrl, {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: data.toString()
+				})
+					.then(function (response) {
+						return response.json();
+					})
+					.then(function (payload) {
+						if (!payload || !payload.success) {
+							throw new Error(payload && payload.data && payload.data.message ? payload.data.message : 'Please try again.');
+						}
+
+						popup.classList.add('is-complete');
+						store(joinedKey);
+						if (message) {
+							message.textContent = payload.data.message || 'Welcome to Asherava. Use code WELCOME10 at checkout.';
+							message.classList.remove('is-error');
+						}
+						if (submit) {
+							submit.textContent = 'WELCOME10';
+						}
+					})
+					.catch(function (error) {
+						if (message) {
+							message.textContent = error.message || 'Please try again.';
+							message.classList.add('is-error');
+						}
+						if (submit) {
+							submit.disabled = false;
+							submit.textContent = 'Join the List';
+						}
+					});
+			});
+		}
+
+		window.setTimeout(openPopup, 5000);
 	}
 })();
