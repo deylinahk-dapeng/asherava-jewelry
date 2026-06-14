@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.8.0' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.8.2' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
@@ -194,6 +194,136 @@ function asherava_jaxxon_enqueue_assets() {
 		array(),
 		ASHERAVA_JAXXON_VERSION,
 		true
+	);
+
+	wp_localize_script(
+		'asherava-jaxxon',
+		'asheravaSignupPopup',
+		array(
+			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'asherava_signup_popup' ),
+			'coupon'  => 'WELCOME10',
+		)
+	);
+}
+
+add_action( 'init', 'asherava_register_signup_lead_post_type' );
+function asherava_register_signup_lead_post_type() {
+	register_post_type(
+		'asherava_lead',
+		array(
+			'labels'       => array(
+				'name'          => __( 'Asherava Leads', 'asherava-jaxxon' ),
+				'singular_name' => __( 'Asherava Lead', 'asherava-jaxxon' ),
+				'menu_name'     => __( 'Asherava Leads', 'asherava-jaxxon' ),
+			),
+			'public'       => false,
+			'show_ui'      => true,
+			'show_in_menu' => true,
+			'supports'     => array( 'title' ),
+			'menu_icon'    => 'dashicons-email-alt2',
+		)
+	);
+}
+
+function asherava_should_render_signup_popup() {
+	if ( is_admin() || is_user_logged_in() ) {
+		return false;
+	}
+
+	if ( function_exists( 'is_cart' ) && ( is_cart() || is_checkout() || is_account_page() ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+add_action( 'wp_footer', 'asherava_render_signup_popup', 30 );
+function asherava_render_signup_popup() {
+	if ( ! asherava_should_render_signup_popup() ) {
+		return;
+	}
+	?>
+	<div class="av-signup-popup" data-av-signup-popup hidden>
+		<div class="av-signup-popup__backdrop" data-av-signup-close></div>
+		<section class="av-signup-popup__panel" role="dialog" aria-modal="true" aria-labelledby="av-signup-popup-title">
+			<button class="av-signup-popup__close" type="button" aria-label="<?php esc_attr_e( 'Close signup popup', 'asherava-jaxxon' ); ?>" data-av-signup-close>&times;</button>
+			<p class="av-signup-popup__eyebrow"><?php esc_html_e( 'ASHERAVA LIST', 'asherava-jaxxon' ); ?></p>
+			<h2 class="av-signup-popup__title" id="av-signup-popup-title"><?php esc_html_e( '10% Welcome Offer', 'asherava-jaxxon' ); ?></h2>
+			<p class="av-signup-popup__copy"><?php esc_html_e( '925 sterling silver chains, fair direct pricing, and first access to new rope chain drops.', 'asherava-jaxxon' ); ?></p>
+			<form class="av-signup-popup__form" data-av-signup-form novalidate>
+				<label class="screen-reader-text" for="av-signup-email"><?php esc_html_e( 'Email address', 'asherava-jaxxon' ); ?></label>
+				<input id="av-signup-email" class="av-signup-popup__input" name="email" type="email" autocomplete="email" placeholder="<?php esc_attr_e( 'Email address', 'asherava-jaxxon' ); ?>" required>
+				<input class="av-signup-popup__trap" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+				<button class="av-signup-popup__button" type="submit"><?php esc_html_e( 'Join the List', 'asherava-jaxxon' ); ?></button>
+			</form>
+			<p class="av-signup-popup__message" data-av-signup-message><?php esc_html_e( 'Use code WELCOME10 at checkout.', 'asherava-jaxxon' ); ?></p>
+			<button class="av-signup-popup__dismiss" type="button" data-av-signup-close><?php esc_html_e( 'No thanks', 'asherava-jaxxon' ); ?></button>
+		</section>
+	</div>
+	<?php
+}
+
+add_action( 'wp_ajax_nopriv_asherava_signup_popup', 'asherava_handle_signup_popup' );
+add_action( 'wp_ajax_asherava_signup_popup', 'asherava_handle_signup_popup' );
+function asherava_handle_signup_popup() {
+	check_ajax_referer( 'asherava_signup_popup', 'nonce' );
+
+	$trap = isset( $_POST['company'] ) ? sanitize_text_field( wp_unslash( $_POST['company'] ) ) : '';
+	if ( $trap ) {
+		wp_send_json_success(
+			array(
+				'message' => __( 'Use code WELCOME10 at checkout.', 'asherava-jaxxon' ),
+				'coupon'  => 'WELCOME10',
+			)
+		);
+	}
+
+	$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+	if ( ! is_email( $email ) ) {
+		wp_send_json_error(
+			array( 'message' => __( 'Please enter a valid email address.', 'asherava-jaxxon' ) ),
+			400
+		);
+	}
+
+	$existing = get_posts(
+		array(
+			'post_type'      => 'asherava_lead',
+			'post_status'    => 'private',
+			'fields'         => 'ids',
+			'posts_per_page' => 1,
+			'meta_query'     => array(
+				array(
+					'key'   => '_asherava_lead_email',
+					'value' => $email,
+				),
+			),
+		)
+	);
+
+	if ( empty( $existing ) ) {
+		$lead_id = wp_insert_post(
+			array(
+				'post_type'   => 'asherava_lead',
+				'post_status' => 'private',
+				'post_title'  => $email,
+			),
+			true
+		);
+
+		if ( ! is_wp_error( $lead_id ) ) {
+			update_post_meta( $lead_id, '_asherava_lead_email', $email );
+			update_post_meta( $lead_id, '_asherava_lead_source', 'signup_popup' );
+			update_post_meta( $lead_id, '_asherava_lead_coupon', 'WELCOME10' );
+		}
+	}
+
+	wp_send_json_success(
+		array(
+			'message' => __( 'Welcome to Asherava. Use code WELCOME10 at checkout.', 'asherava-jaxxon' ),
+			'coupon'  => 'WELCOME10',
+		)
 	);
 }
 
