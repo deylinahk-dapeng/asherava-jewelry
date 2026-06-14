@@ -2151,18 +2151,12 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 }
 
-/* Omnisend popup: keep above theme UI; enlarge close tap target (mobile) */
+/* Temporarily suppress the legacy Omnisend popup until the new branded form is ready. */
 #omnisend-dynamic-container,
-[id^="omnisend-form"] {
-	z-index: 2147483000 !important;
-}
-
-#omnisend-dynamic-container button[aria-label="Close"],
-#omnisend-dynamic-container [class*="close"],
-.omnisend-form__close {
-	pointer-events: auto !important;
-	cursor: pointer !important;
-	z-index: 3 !important;
-	min-width: 44px !important;
-	min-height: 44px !important;
+[id^="omnisend-form"],
+.omnisend-form,
+.omnisend-form__container {
+	display: none !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
 }
