@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.8.4' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.8.5' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
@@ -262,7 +262,7 @@ function asherava_render_signup_popup() {
 				<label class="screen-reader-text" for="av-signup-email"><?php esc_html_e( 'Email address', 'asherava-jaxxon' ); ?></label>
 				<input id="av-signup-email" class="av-signup-popup__input" name="email" type="email" autocomplete="email" placeholder="<?php esc_attr_e( 'Email address', 'asherava-jaxxon' ); ?>" required>
 				<input class="av-signup-popup__trap" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
-				<button class="av-signup-popup__button" type="submit"><?php esc_html_e( 'Join the List', 'asherava-jaxxon' ); ?></button>
+				<button class="av-signup-popup__button" type="submit"><?php esc_html_e( 'Get WELCOME10', 'asherava-jaxxon' ); ?></button>
 			</form>
 			<p class="av-signup-popup__message" data-av-signup-message><?php esc_html_e( 'Use code WELCOME10 at checkout.', 'asherava-jaxxon' ); ?></p>
 			<button class="av-signup-popup__dismiss" type="button" data-av-signup-close><?php esc_html_e( 'No thanks', 'asherava-jaxxon' ); ?></button>

@@ -467,7 +467,7 @@
 						}
 						if (submit) {
 							submit.disabled = false;
-							submit.textContent = 'Join the List';
+							submit.textContent = 'Get WELCOME10';
 						}
 					});
 			});
