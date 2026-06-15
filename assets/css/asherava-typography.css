@@ -40,10 +40,10 @@
 	--av-type-announce-color: #6b6b6b;
 
 	/* 2 — Header nav */
-	--av-type-nav-d: 13px;
+	--av-type-nav-d: 12px;
 	--av-type-nav-m: 12px;
 	--av-type-nav-w: 500;
-	--av-type-nav-ls: 0.1em;
+	--av-type-nav-ls: 0.09em;
 	--av-type-nav-lh: 1.35;
 	--av-type-nav-color: #121212;
 

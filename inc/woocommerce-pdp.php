@@ -18,7 +18,10 @@ function asherava_pdp_rope_slugs() {
 	return array(
 		'3mm-rope-sterling-silver-chain',
 		'3mm-rope-chain-sterling-silver',
+		'3mm-rope-chain-sterling-silver-diamond-cut',
 		'1-8mm-rope-chain-sterling-silver',
+		'4-5mm-rope-chain-sterling-silver',
+		'5-5mm-rope-chain-sterling-silver',
 		'4mm-rope-chain-sterling-silver',
 	);
 }
@@ -30,10 +33,13 @@ function asherava_pdp_rope_slugs() {
  */
 function asherava_pdp_short_name_for_slug( $slug ) {
 	$map = array(
-		'3mm-rope-sterling-silver-chain'   => __( '3mm Rope Chain', 'asherava-jaxxon' ),
-		'3mm-rope-chain-sterling-silver'   => __( '3mm Rope Chain', 'asherava-jaxxon' ),
-		'1-8mm-rope-chain-sterling-silver' => __( '1.8mm Rope Chain', 'asherava-jaxxon' ),
-		'4mm-rope-chain-sterling-silver'   => __( '4mm Rope Chain', 'asherava-jaxxon' ),
+		'3mm-rope-sterling-silver-chain'             => __( '3mm Rope Chain', 'asherava-jaxxon' ),
+		'3mm-rope-chain-sterling-silver'             => __( '3mm Rope Chain', 'asherava-jaxxon' ),
+		'3mm-rope-chain-sterling-silver-diamond-cut' => __( '3mm Rope Chain', 'asherava-jaxxon' ),
+		'1-8mm-rope-chain-sterling-silver'           => __( '1.8mm Rope Chain', 'asherava-jaxxon' ),
+		'4-5mm-rope-chain-sterling-silver'           => __( '4.5mm Rope Chain', 'asherava-jaxxon' ),
+		'5-5mm-rope-chain-sterling-silver'           => __( '5.5mm Rope Chain', 'asherava-jaxxon' ),
+		'4mm-rope-chain-sterling-silver'             => __( '4mm Rope Chain', 'asherava-jaxxon' ),
 	);
 
 	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';

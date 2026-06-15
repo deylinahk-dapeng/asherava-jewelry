@@ -229,6 +229,8 @@
 			return;
 		}
 
+		initQuantityControls(pdp);
+
 		pdp.querySelectorAll('.av-pdp__swatch').forEach(function (btn) {
 			btn.addEventListener('click', function () {
 				var option = btn.closest('.av-pdp__option');
@@ -257,6 +259,93 @@
 					swatch.classList.toggle('is-selected', swatch.getAttribute('data-value') === select.value);
 				});
 			});
+		});
+	}
+
+	function initQuantityControls(scope) {
+		scope.querySelectorAll('.quantity input.qty').forEach(function (input) {
+			var quantity = input.closest('.quantity');
+
+			if (!quantity || input.dataset.avQuantityReady === '1') {
+				return;
+			}
+
+			input.dataset.avQuantityReady = '1';
+			quantity.classList.add('av-quantity');
+
+			var minus = document.createElement('button');
+			var plus = document.createElement('button');
+
+			minus.type = 'button';
+			minus.className = 'av-quantity__button av-quantity__button--minus';
+			minus.setAttribute('aria-label', 'Decrease quantity');
+			minus.textContent = '-';
+
+			plus.type = 'button';
+			plus.className = 'av-quantity__button av-quantity__button--plus';
+			plus.setAttribute('aria-label', 'Increase quantity');
+			plus.textContent = '+';
+
+			quantity.insertBefore(minus, input);
+			quantity.appendChild(plus);
+
+			function getNumber(attribute, fallback) {
+				var value = parseFloat(input.getAttribute(attribute));
+				return Number.isFinite(value) ? value : fallback;
+			}
+
+			function getStep() {
+				var step = parseFloat(input.getAttribute('step'));
+				return Number.isFinite(step) && step > 0 ? step : 1;
+			}
+
+			function formatValue(value, step) {
+				return Number.isInteger(step) ? String(Math.round(value)) : String(parseFloat(value.toFixed(3)));
+			}
+
+			function syncButtons() {
+				var min = getNumber('min', 1);
+				var max = getNumber('max', Infinity);
+				var current = parseFloat(input.value);
+
+				if (!Number.isFinite(current)) {
+					current = min;
+				}
+
+				minus.disabled = current <= min;
+				plus.disabled = current >= max;
+			}
+
+			function updateQuantity(direction) {
+				var step = getStep();
+				var min = getNumber('min', 1);
+				var max = getNumber('max', Infinity);
+				var current = parseFloat(input.value);
+				var next;
+
+				if (!Number.isFinite(current)) {
+					current = min;
+				}
+
+				next = current + direction * step;
+				next = Math.max(min, Math.min(max, next));
+				input.value = formatValue(next, step);
+				input.dispatchEvent(new Event('input', { bubbles: true }));
+				input.dispatchEvent(new Event('change', { bubbles: true }));
+				syncButtons();
+			}
+
+			minus.addEventListener('click', function () {
+				updateQuantity(-1);
+			});
+
+			plus.addEventListener('click', function () {
+				updateQuantity(1);
+			});
+
+			input.addEventListener('input', syncButtons);
+			input.addEventListener('change', syncButtons);
+			syncButtons();
 		});
 	}
 
