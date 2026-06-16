@@ -11,6 +11,8 @@
 	}
 
 	initProductPage();
+	initLegacyOmnisendSuppressor();
+	initAsheravaSignupPopup();
 
 	var nav = document.querySelector('.av-catalog-nav');
 	if (!nav) {
@@ -227,6 +229,8 @@
 			return;
 		}
 
+		initQuantityControls(pdp);
+
 		pdp.querySelectorAll('.av-pdp__swatch').forEach(function (btn) {
 			btn.addEventListener('click', function () {
 				var option = btn.closest('.av-pdp__option');
@@ -256,5 +260,308 @@
 				});
 			});
 		});
+	}
+
+	function initQuantityControls(scope) {
+		scope.querySelectorAll('.quantity input.qty').forEach(function (input) {
+			var quantity = input.closest('.quantity');
+
+			if (!quantity || input.dataset.avQuantityReady === '1') {
+				return;
+			}
+
+			input.dataset.avQuantityReady = '1';
+			quantity.classList.add('av-quantity');
+
+			var minus = document.createElement('button');
+			var plus = document.createElement('button');
+
+			minus.type = 'button';
+			minus.className = 'av-quantity__button av-quantity__button--minus';
+			minus.setAttribute('aria-label', 'Decrease quantity');
+			minus.textContent = '-';
+
+			plus.type = 'button';
+			plus.className = 'av-quantity__button av-quantity__button--plus';
+			plus.setAttribute('aria-label', 'Increase quantity');
+			plus.textContent = '+';
+
+			quantity.insertBefore(minus, input);
+			quantity.appendChild(plus);
+
+			function getNumber(attribute, fallback) {
+				var value = parseFloat(input.getAttribute(attribute));
+				return Number.isFinite(value) ? value : fallback;
+			}
+
+			function getStep() {
+				var step = parseFloat(input.getAttribute('step'));
+				return Number.isFinite(step) && step > 0 ? step : 1;
+			}
+
+			function formatValue(value, step) {
+				return Number.isInteger(step) ? String(Math.round(value)) : String(parseFloat(value.toFixed(3)));
+			}
+
+			function syncButtons() {
+				var min = getNumber('min', 1);
+				var max = getNumber('max', Infinity);
+				var current = parseFloat(input.value);
+
+				if (!Number.isFinite(current)) {
+					current = min;
+				}
+
+				minus.disabled = current <= min;
+				plus.disabled = current >= max;
+			}
+
+			function updateQuantity(direction) {
+				var step = getStep();
+				var min = getNumber('min', 1);
+				var max = getNumber('max', Infinity);
+				var current = parseFloat(input.value);
+				var next;
+
+				if (!Number.isFinite(current)) {
+					current = min;
+				}
+
+				next = current + direction * step;
+				next = Math.max(min, Math.min(max, next));
+				input.value = formatValue(next, step);
+				input.dispatchEvent(new Event('input', { bubbles: true }));
+				input.dispatchEvent(new Event('change', { bubbles: true }));
+				syncButtons();
+			}
+
+			minus.addEventListener('click', function () {
+				updateQuantity(-1);
+			});
+
+			plus.addEventListener('click', function () {
+				updateQuantity(1);
+			});
+
+			input.addEventListener('input', syncButtons);
+			input.addEventListener('change', syncButtons);
+			syncButtons();
+		});
+	}
+
+	function initLegacyOmnisendSuppressor() {
+		var legacyPhrases = [
+			'GET 10% OFF YOUR FIRST ORDER',
+			'AND BE THE FIRST TO HEAR ABOUT OUR NEW PRODUCT DROPS',
+			'POWERED BY OMNISEND'
+		];
+		var scheduled = false;
+		var observer = null;
+
+		function hasLegacyCopy(element) {
+			var text = (element.textContent || '').replace(/\s+/g, ' ').toUpperCase();
+			return legacyPhrases.some(function (phrase) {
+				return text.indexOf(phrase) !== -1;
+			});
+		}
+
+		function findPopupRoot(element) {
+			var root = element;
+			var current = element;
+			var depth = 0;
+
+			while (current && current !== document.body && depth < 12) {
+				var style = window.getComputedStyle(current);
+				var rect = current.getBoundingClientRect();
+				var zIndex = parseInt(style.zIndex, 10) || 0;
+				var largeOverlay = rect.width > 320 && rect.height > 240;
+
+				if ((style.position === 'fixed' || style.position === 'absolute') && (largeOverlay || zIndex > 900)) {
+					root = current;
+				}
+
+				current = current.parentElement;
+				depth += 1;
+			}
+
+			return root;
+		}
+
+		function suppressLegacyPopup() {
+			scheduled = false;
+
+			document.querySelectorAll('body div, body section, body aside, body form').forEach(function (element) {
+				if (!hasLegacyCopy(element)) {
+					return;
+				}
+
+				var root = findPopupRoot(element);
+				root.style.setProperty('display', 'none', 'important');
+				root.style.setProperty('visibility', 'hidden', 'important');
+				root.style.setProperty('pointer-events', 'none', 'important');
+				root.setAttribute('aria-hidden', 'true');
+				document.documentElement.classList.remove('omnisend-popup-open');
+				document.body.classList.remove('omnisend-popup-open');
+				document.body.style.removeProperty('overflow');
+			});
+		}
+
+		function scheduleSuppress() {
+			if (scheduled) {
+				return;
+			}
+
+			scheduled = true;
+			window.setTimeout(suppressLegacyPopup, 80);
+		}
+
+		scheduleSuppress();
+		window.setTimeout(scheduleSuppress, 800);
+		window.setTimeout(scheduleSuppress, 2200);
+
+		observer = new MutationObserver(scheduleSuppress);
+		observer.observe(document.documentElement, { childList: true, subtree: true });
+	}
+
+	function initAsheravaSignupPopup() {
+		var popup = document.querySelector('[data-av-signup-popup]');
+		var config = window.asheravaSignupPopup || {};
+
+		if (!popup) {
+			if (!initAsheravaSignupPopup.waiting) {
+				initAsheravaSignupPopup.waiting = true;
+				window.setTimeout(initAsheravaSignupPopup, 300);
+				window.setTimeout(initAsheravaSignupPopup, 1200);
+				document.addEventListener('DOMContentLoaded', initAsheravaSignupPopup, { once: true });
+			}
+			return;
+		}
+
+		if (initAsheravaSignupPopup.initialized || !config.ajaxUrl) {
+			return;
+		}
+		initAsheravaSignupPopup.initialized = true;
+
+		var form = popup.querySelector('[data-av-signup-form]');
+		var message = popup.querySelector('[data-av-signup-message]');
+		var email = form ? form.querySelector('input[name="email"]') : null;
+		var submit = form ? form.querySelector('button[type="submit"]') : null;
+		var closedKey = 'asheravaSignupPopupClosed';
+		var joinedKey = 'asheravaSignupPopupJoined';
+		var isForced = !!config.force;
+
+		function hasStored(key) {
+			try {
+				return window.localStorage.getItem(key) === '1';
+			} catch (error) {
+				return false;
+			}
+		}
+
+		function store(key) {
+			try {
+				window.localStorage.setItem(key, '1');
+			} catch (error) {
+				// Ignore storage restrictions.
+			}
+		}
+
+		function openPopup() {
+			if (!isForced && (hasStored(closedKey) || hasStored(joinedKey))) {
+				return;
+			}
+
+			popup.hidden = false;
+			window.setTimeout(function () {
+				popup.classList.add('is-visible');
+				document.body.classList.add('av-signup-popup-open');
+				if (email && !window.matchMedia('(max-width: 640px)').matches) {
+					email.focus({ preventScroll: true });
+				}
+			}, 30);
+		}
+
+		function closePopup() {
+			popup.classList.remove('is-visible');
+			document.body.classList.remove('av-signup-popup-open');
+			store(closedKey);
+			window.setTimeout(function () {
+				popup.hidden = true;
+			}, 240);
+		}
+
+		popup.querySelectorAll('[data-av-signup-close]').forEach(function (button) {
+			button.addEventListener('click', closePopup);
+		});
+
+		document.addEventListener('keydown', function (event) {
+			if (event.key === 'Escape' && popup.classList.contains('is-visible')) {
+				closePopup();
+			}
+		});
+
+		if (form) {
+			form.addEventListener('submit', function (event) {
+				event.preventDefault();
+
+				if (!email || !email.value) {
+					if (message) {
+						message.textContent = 'Please enter your email address.';
+						message.classList.add('is-error');
+					}
+					return;
+				}
+
+				var data = new URLSearchParams();
+				data.set('action', 'asherava_signup_popup');
+				data.set('nonce', config.nonce || '');
+				data.set('email', email.value);
+				data.set('company', form.querySelector('input[name="company"]').value || '');
+
+				if (submit) {
+					submit.disabled = true;
+					submit.textContent = 'Joining...';
+				}
+
+				fetch(config.ajaxUrl, {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: data.toString()
+				})
+					.then(function (response) {
+						return response.json();
+					})
+					.then(function (payload) {
+						if (!payload || !payload.success) {
+							throw new Error(payload && payload.data && payload.data.message ? payload.data.message : 'Please try again.');
+						}
+
+						popup.classList.add('is-complete');
+						store(joinedKey);
+						if (message) {
+							message.textContent = payload.data.message || 'Welcome to Asherava. Use code WELCOME10 at checkout.';
+							message.classList.remove('is-error');
+						}
+						if (submit) {
+							submit.textContent = 'WELCOME10';
+						}
+					})
+					.catch(function (error) {
+						if (message) {
+							message.textContent = error.message || 'Please try again.';
+							message.classList.add('is-error');
+						}
+						if (submit) {
+							submit.disabled = false;
+							submit.textContent = 'Get WELCOME10';
+						}
+					});
+			});
+		}
+
+		window.setTimeout(openPopup, isForced ? 300 : 3500);
 	}
 })();

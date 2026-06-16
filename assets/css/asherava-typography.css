@@ -25,6 +25,12 @@
 	/* Inter stack */
 	--av-font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
+	/* Core body */
+	--av-type-body-d: 15px;
+	--av-type-body-m: 14px;
+	--av-type-body-lh: 1.65;
+	--av-type-body-ls: 0.01em;
+
 	/* 1 — Announcement */
 	--av-type-announce-d: 11px;
 	--av-type-announce-m: 10px;
@@ -34,14 +40,19 @@
 	--av-type-announce-color: #6b6b6b;
 
 	/* 2 — Header nav */
-	--av-type-nav-d: 13px;
+	--av-type-nav-d: 12px;
 	--av-type-nav-m: 12px;
 	--av-type-nav-w: 500;
-	--av-type-nav-ls: 0.1em;
+	--av-type-nav-ls: 0.09em;
 	--av-type-nav-lh: 1.35;
 	--av-type-nav-color: #121212;
 
-	/* 3 — Hero H1 (default ink; hero band overrides below) */
+	/* 3 — Page / Hero H1 */
+	--av-type-page-h1-d: clamp(2.5rem, 4.8vw, 4rem);
+	--av-type-page-h1-m: clamp(2rem, 10vw, 2.75rem);
+	--av-type-page-h1-w: 700;
+	--av-type-page-h1-ls: -0.025em;
+	--av-type-page-h1-lh: 1.06;
 	--av-type-hero-h1-d: 3.5rem;
 	--av-type-hero-h1-m: 2rem;
 	--av-type-hero-h1-w: 800;
@@ -58,16 +69,25 @@
 	--av-type-hero-sub-color: #a8adb5;
 
 	/* 5 — PDP product title */
-	--av-type-pdp-title-d: 15px;
-	--av-type-pdp-title-m: 14px;
-	--av-type-pdp-title-w: 500;
-	--av-type-pdp-title-ls: 0.08em;
-	--av-type-pdp-title-lh: 1.2;
+	--av-type-pdp-title-d: clamp(1.75rem, 3vw, 2.25rem);
+	--av-type-pdp-title-m: 1.75rem;
+	--av-type-pdp-title-w: 700;
+	--av-type-pdp-title-ls: -0.02em;
+	--av-type-pdp-title-lh: 1.08;
 	--av-type-pdp-title-color: #121212;
 
+	/* 5b — Section headings */
+	--av-type-section-title-d: clamp(1.75rem, 3vw, 2.5rem);
+	--av-type-section-title-m: 1.75rem;
+	--av-type-section-title-w: 600;
+	--av-type-section-title-ls: -0.02em;
+	--av-type-section-title-lh: 1.12;
+	--av-type-card-title-d: 1rem;
+	--av-type-card-title-m: 0.95rem;
+
 	/* 6 — PDP price */
-	--av-type-price-d: 32px;
-	--av-type-price-m: 28px;
+	--av-type-price-d: 30px;
+	--av-type-price-m: 26px;
 	--av-type-price-w: 700;
 	--av-type-price-ls: -0.01em;
 	--av-type-price-lh: 1.1;
@@ -88,6 +108,12 @@
 	--av-type-value-ls: 0.02em;
 	--av-type-value-lh: 1.35;
 	--av-type-value-color: #121212;
+
+	/* 9 — CTA */
+	--av-type-button-d: 13px;
+	--av-type-button-m: 12px;
+	--av-type-button-w: 600;
+	--av-type-button-ls: 0.12em;
 }
 
 /* Global base — read colors/fonts from :root only */
@@ -95,7 +121,10 @@ body.asherava-jaxxon {
 	background-color: var(--av-bg-matte);
 	color: var(--av-text-chalk);
 	font-family: var(--av-font-inter);
+	font-size: var(--av-type-body-d);
 	font-weight: 400;
+	letter-spacing: var(--av-type-body-ls);
+	line-height: var(--av-type-body-lh);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
@@ -129,19 +158,19 @@ body.asherava-jaxxon h2,
 .av-section__head h2,
 .av-cta h2,
 .av-quiz h2 {
-	font-size: clamp(1.75rem, 3vw, 2.5rem);
-	font-weight: 600;
-	letter-spacing: -0.02em;
-	line-height: 1.15;
+	font-size: var(--av-type-section-title-d);
+	font-weight: var(--av-type-section-title-w);
+	letter-spacing: var(--av-type-section-title-ls);
+	line-height: var(--av-type-section-title-lh);
 	color: var(--av-text-chalk);
 }
 
 body.asherava-jaxxon h3,
 .av-product-card h3 {
-	font-size: 1.25rem;
+	font-size: var(--av-type-card-title-d);
 	font-weight: 500;
-	letter-spacing: 0.02em;
-	line-height: 1.2;
+	letter-spacing: 0;
+	line-height: 1.25;
 	color: var(--av-text-chalk);
 }
 
@@ -153,9 +182,10 @@ body.asherava-jaxxon h3,
 
 .av-trust__item span,
 .av-section__head p {
-	font-size: 14px;
+	font-size: var(--av-type-body-m);
 	font-weight: 400;
-	letter-spacing: 0.03em;
+	letter-spacing: var(--av-type-body-ls);
+	line-height: var(--av-type-body-lh);
 	color: var(--av-text-silver);
 }
 
@@ -210,16 +240,27 @@ body.asherava-jaxxon .main-navigation a:hover {
 	color: var(--av-text-chalk) !important;
 }
 
-/* 3 — Hero H1 (final authority over jaxxon.css) */
+/* 3 — Page H1 and Hero H1 (final authority over jaxxon.css) */
 body.asherava-jaxxon h1,
+.hero-title {
+	font-family: var(--av-font-inter) !important;
+	font-size: var(--av-type-page-h1-d) !important;
+	font-weight: var(--av-type-page-h1-w) !important;
+	letter-spacing: var(--av-type-page-h1-ls) !important;
+	line-height: var(--av-type-page-h1-lh) !important;
+	text-transform: none;
+	color: var(--av-type-hero-h1-color) !important;
+	text-shadow: none !important;
+	text-indent: 0 !important;
+}
+
 body.asherava-jaxxon .av-hero__title,
-.hero-title,
 body.asherava-jaxxon.av-home .av-hero__title,
 .av-hero--street .av-hero__title--wordmark {
 	font-family: var(--av-font-inter) !important;
-	font-size: 56px !important;
-	font-weight: 800 !important;
-	letter-spacing: -0.03em !important;
+	font-size: var(--av-type-hero-h1-d) !important;
+	font-weight: var(--av-type-hero-h1-w) !important;
+	letter-spacing: var(--av-type-hero-h1-ls) !important;
 	line-height: var(--av-type-hero-h1-lh) !important;
 	text-transform: uppercase;
 	color: var(--av-type-hero-h1-color) !important;
@@ -229,11 +270,29 @@ body.asherava-jaxxon.av-home .av-hero__title,
 
 @media (max-width: 768px) {
 	body.asherava-jaxxon h1,
-	body.asherava-jaxxon .av-hero__title,
-	.hero-title,
-	.av-hero--street .av-hero__title--wordmark {
-		font-size: 32px !important;
+	.hero-title {
+		font-size: var(--av-type-page-h1-m) !important;
 		letter-spacing: -0.02em !important;
+	}
+
+	body.asherava-jaxxon .av-hero__title,
+	.av-hero--street .av-hero__title--wordmark {
+		font-size: var(--av-type-hero-h1-m) !important;
+		letter-spacing: -0.02em !important;
+	}
+
+	body.asherava-jaxxon h2,
+	.av-section__head h2,
+	.av-cta h2,
+	.av-quiz h2 {
+		font-size: var(--av-type-section-title-m);
+	}
+
+	body.asherava-jaxxon,
+	.av-pdp__description-body,
+	.av-pdp__seo-body,
+	.av-pdp__accordion-body {
+		font-size: var(--av-type-body-m);
 	}
 }
 
@@ -290,21 +349,33 @@ body.asherava-jaxxon.home .av-catalog-nav__shop.is-current .av-catalog-nav__shop
 }
 
 /* 5 — PDP product title */
-.av-pdp__buybox .product_title,
-.av-pdp__description-heading {
+.av-pdp__buybox .product_title {
 	font-family: var(--av-font-inter);
 	font-size: var(--av-type-pdp-title-d);
 	font-weight: var(--av-type-pdp-title-w);
 	letter-spacing: var(--av-type-pdp-title-ls);
 	line-height: var(--av-type-pdp-title-lh);
-	text-transform: uppercase;
+	text-transform: none;
+	color: var(--av-type-pdp-title-color);
+}
+
+.av-pdp__description-heading {
+	font-family: var(--av-font-inter);
+	font-size: 20px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	text-transform: none;
 	color: var(--av-type-pdp-title-color);
 }
 
 @media (max-width: 768px) {
-	.av-pdp__buybox .product_title,
-	.av-pdp__description-heading {
+	.av-pdp__buybox .product_title {
 		font-size: var(--av-type-pdp-title-m);
+	}
+
+	.av-pdp__description-heading {
+		font-size: 18px;
 	}
 }
 
@@ -430,9 +501,11 @@ body.asherava-jaxxon.av-single-product {
 .av-pdp__description-body,
 .av-pdp__seo-body,
 .av-pdp__size-hint {
+	font-size: var(--av-type-body-d);
+	line-height: var(--av-type-body-lh);
 	color: var(--av-text-silver);
 	font-weight: 400;
-	letter-spacing: 0.03em;
+	letter-spacing: var(--av-type-body-ls);
 	text-transform: none;
 }
 
@@ -475,10 +548,10 @@ body.asherava-jaxxon .woocommerce button.button {
 	border: 1px solid var(--av-cta-border) !important;
 	border-radius: 0 !important;
 	font-family: var(--av-font-inter) !important;
-	font-size: 14px !important;
-	font-weight: 600 !important;
+	font-size: var(--av-type-button-d) !important;
+	font-weight: var(--av-type-button-w) !important;
 	text-transform: uppercase !important;
-	letter-spacing: 0.1em !important;
+	letter-spacing: var(--av-type-button-ls) !important;
 	padding: 16px 32px !important;
 	min-height: auto;
 	transition: all 0.3s ease !important;
@@ -507,10 +580,10 @@ body.asherava-jaxxon .woocommerce button.button:hover {
 
 .av-pdp__accordion-body {
 	color: var(--av-text-silver);
-	font-size: 14px;
+	font-size: var(--av-type-body-m);
 	font-weight: 400;
-	letter-spacing: 0.03em;
-	line-height: 1.6;
+	letter-spacing: var(--av-type-body-ls);
+	line-height: var(--av-type-body-lh);
 	text-transform: none;
 }
 
@@ -526,15 +599,26 @@ body.asherava-jaxxon .woocommerce button.button:hover {
 }
 
 .av-pdp__trust-text {
-	font-size: 13px;
+	font-size: var(--av-type-body-m);
 	font-weight: 400;
-	letter-spacing: 0.03em;
-	line-height: 1.6;
+	letter-spacing: var(--av-type-body-ls);
+	line-height: var(--av-type-body-lh);
 	text-transform: none;
 	color: var(--av-text-silver);
 }
 
 @media (max-width: 768px) {
+	body.asherava-jaxxon .av-btn,
+	body.asherava-jaxxon .av-btn--primary,
+	body.asherava-jaxxon .av-btn--ghost,
+	body.asherava-jaxxon .button.checkout,
+	body.asherava-jaxxon .wp-block-button__link,
+	body.asherava-jaxxon .single_add_to_cart_button,
+	body.asherava-jaxxon .woocommerce a.button,
+	body.asherava-jaxxon .woocommerce button.button {
+		font-size: var(--av-type-button-m) !important;
+	}
+
 	.av-pdp__trust-text {
 		font-size: 12px;
 	}

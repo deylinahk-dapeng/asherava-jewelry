@@ -18,7 +18,10 @@ function asherava_pdp_rope_slugs() {
 	return array(
 		'3mm-rope-sterling-silver-chain',
 		'3mm-rope-chain-sterling-silver',
+		'3mm-rope-chain-sterling-silver-diamond-cut',
 		'1-8mm-rope-chain-sterling-silver',
+		'4-5mm-rope-chain-sterling-silver',
+		'5-5mm-rope-chain-sterling-silver',
 		'4mm-rope-chain-sterling-silver',
 	);
 }
@@ -30,10 +33,13 @@ function asherava_pdp_rope_slugs() {
  */
 function asherava_pdp_short_name_for_slug( $slug ) {
 	$map = array(
-		'3mm-rope-sterling-silver-chain'   => __( '3mm Rope Chain', 'asherava-jaxxon' ),
-		'3mm-rope-chain-sterling-silver'   => __( '3mm Rope Chain', 'asherava-jaxxon' ),
-		'1-8mm-rope-chain-sterling-silver' => __( '1.8mm Rope Chain', 'asherava-jaxxon' ),
-		'4mm-rope-chain-sterling-silver'   => __( '4mm Rope Chain', 'asherava-jaxxon' ),
+		'3mm-rope-sterling-silver-chain'             => __( '3mm Rope Chain', 'asherava-jaxxon' ),
+		'3mm-rope-chain-sterling-silver'             => __( '3mm Rope Chain', 'asherava-jaxxon' ),
+		'3mm-rope-chain-sterling-silver-diamond-cut' => __( '3mm Rope Chain', 'asherava-jaxxon' ),
+		'1-8mm-rope-chain-sterling-silver'           => __( '1.8mm Rope Chain', 'asherava-jaxxon' ),
+		'4-5mm-rope-chain-sterling-silver'           => __( '4.5mm Rope Chain', 'asherava-jaxxon' ),
+		'5-5mm-rope-chain-sterling-silver'           => __( '5.5mm Rope Chain', 'asherava-jaxxon' ),
+		'4mm-rope-chain-sterling-silver'             => __( '4mm Rope Chain', 'asherava-jaxxon' ),
 	);
 
 	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';
@@ -108,7 +114,6 @@ function asherava_pdp_setup_hooks() {
 	add_action( 'woocommerce_after_single_product', 'asherava_pdp_close_wrapper', 99 );
 
 	add_filter( 'woocommerce_product_description_heading', 'asherava_pdp_description_heading' );
-	add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'asherava_pdp_variation_buttons', 20, 2 );
 	add_filter( 'woocommerce_product_tabs', 'asherava_pdp_remove_tabs', 99 );
 	add_filter( 'woocommerce_product_is_visible', 'asherava_pdp_visible_during_coming_soon', 10, 2 );
 	add_filter( 'generate_show_breadcrumb', 'asherava_pdp_hide_theme_breadcrumb' );
