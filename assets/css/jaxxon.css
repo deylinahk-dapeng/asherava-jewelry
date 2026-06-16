@@ -1501,27 +1501,61 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 }
 
 .av-pdp__buybox table.variations {
-	display: block;
+	display: table;
 	width: 100%;
 	margin: 0 0 18px;
 	border: 0;
 }
 
-.av-pdp__buybox table.variations tbody,
-.av-pdp__buybox table.variations tr,
-.av-pdp__buybox table.variations td {
-	display: block;
+.av-pdp__buybox table.variations tbody {
+	display: table-row-group;
 	width: 100%;
-	padding: 0;
+	border: 0;
+}
+
+.av-pdp__buybox table.variations tr {
+	display: table-row;
+	width: 100%;
 	border: 0;
 }
 
 .av-pdp__buybox table.variations th.label {
-	display: none;
+	display: block;
+	width: 100%;
+	padding: 0 0 10px;
+	border: 0;
+	text-align: left;
 }
 
-.av-pdp__buybox table.variations .value {
+.av-pdp__buybox table.variations td.value {
+	display: block;
 	position: relative;
+	width: 100%;
+	padding: 0 0 12px;
+	border: 0;
+}
+
+.av-pdp__buybox table.variations label {
+	margin: 0;
+	color: var(--av-muted);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.av-pdp__buybox table.variations select {
+	width: 100%;
+	min-height: 52px;
+	border: 1px solid rgba(18, 18, 18, 0.28);
+	background: var(--av-white);
+	color: var(--av-black);
+	font-family: var(--av-font-body);
+	font-size: 14px;
+	letter-spacing: 0.04em;
+	padding: 0 16px;
+	text-transform: uppercase;
 }
 
 .av-pdp__buybox table.variations .reset_variations {
@@ -1531,6 +1565,11 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 	font-size: 12px;
 	text-decoration: underline;
 	text-underline-offset: 3px;
+}
+
+.av-pdp__buybox .variable-items-wrapper,
+.av-pdp__buybox .woo-variation-items-wrapper {
+	margin: 0 0 10px;
 }
 
 .av-pdp__stock {

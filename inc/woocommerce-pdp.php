@@ -114,7 +114,6 @@ function asherava_pdp_setup_hooks() {
 	add_action( 'woocommerce_after_single_product', 'asherava_pdp_close_wrapper', 99 );
 
 	add_filter( 'woocommerce_product_description_heading', 'asherava_pdp_description_heading' );
-	add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'asherava_pdp_variation_buttons', 20, 2 );
 	add_filter( 'woocommerce_product_tabs', 'asherava_pdp_remove_tabs', 99 );
 	add_filter( 'woocommerce_product_is_visible', 'asherava_pdp_visible_during_coming_soon', 10, 2 );
 	add_filter( 'generate_show_breadcrumb', 'asherava_pdp_hide_theme_breadcrumb' );
