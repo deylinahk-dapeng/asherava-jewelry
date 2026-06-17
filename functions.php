@@ -7,10 +7,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.9.4' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.9.6' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
+
+/**
+ * Shared line icon set for the Asherava theme.
+ *
+ * @param string $name  Icon name.
+ * @param string $class Optional extra class names.
+ */
+function asherava_icon( $name, $class = '' ) {
+	$icons = array(
+		'bag'           => '<path d="M6.5 8.5h11l-.85 11H7.35l-.85-11Z"></path><path d="M9 8.5V6.75a3 3 0 0 1 6 0V8.5"></path>',
+		'chevron-down'  => '<path d="m7 10 5 5 5-5"></path>',
+		'close'         => '<path d="M6.5 6.5l11 11"></path><path d="M17.5 6.5l-11 11"></path>',
+		'menu'          => '<path d="M4.5 7h15"></path><path d="M4.5 12h15"></path><path d="M4.5 17h15"></path>',
+		'minus'         => '<path d="M6 12h12"></path>',
+		'plus'          => '<path d="M12 6v12"></path><path d="M6 12h12"></path>',
+		'search'        => '<circle cx="11" cy="11" r="6.25"></circle><path d="m16 16 4 4"></path>',
+		'user'          => '<circle cx="12" cy="8.5" r="3.5"></circle><path d="M5.75 20a6.25 6.25 0 0 1 12.5 0"></path>',
+	);
+
+	if ( empty( $icons[ $name ] ) ) {
+		return '';
+	}
+
+	$classes = trim( 'av-icon av-icon--' . sanitize_html_class( $name ) . ' ' . $class );
+
+	return sprintf(
+		'<svg class="%1$s" viewBox="0 0 24 24" aria-hidden="true" focusable="false">%2$s</svg>',
+		esc_attr( $classes ),
+		$icons[ $name ]
+	);
+}
 
 /**
  * Permalink for a published page by slug, or empty string.
@@ -254,7 +285,7 @@ function asherava_render_signup_popup() {
 	<div class="av-signup-popup" data-av-signup-popup hidden>
 		<div class="av-signup-popup__backdrop" data-av-signup-close></div>
 		<section class="av-signup-popup__panel" role="dialog" aria-modal="true" aria-labelledby="av-signup-popup-title">
-			<button class="av-signup-popup__close" type="button" aria-label="<?php esc_attr_e( 'Close signup popup', 'asherava-jaxxon' ); ?>" data-av-signup-close>&times;</button>
+			<button class="av-signup-popup__close" type="button" aria-label="<?php esc_attr_e( 'Close signup popup', 'asherava-jaxxon' ); ?>" data-av-signup-close><?php echo asherava_icon( 'close' ); ?></button>
 			<p class="av-signup-popup__eyebrow"><?php esc_html_e( 'ASHERAVA LIST', 'asherava-jaxxon' ); ?></p>
 			<h2 class="av-signup-popup__title" id="av-signup-popup-title"><?php esc_html_e( '10% Welcome Offer', 'asherava-jaxxon' ); ?></h2>
 			<p class="av-signup-popup__copy"><?php esc_html_e( '925 sterling silver chains, fair direct pricing, and first access to new rope chain drops.', 'asherava-jaxxon' ); ?></p>
