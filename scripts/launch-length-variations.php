@@ -29,6 +29,10 @@ $length_options = array(
 $attribute_slug = 'length';
 $attribute_name = 'Length';
 $taxonomy       = wc_attribute_taxonomy_name( $attribute_slug );
+$legacy_size_attribute_keys = array(
+	'size',
+	wc_attribute_taxonomy_name( 'size' ),
+);
 
 $target_slugs = array(
 	'3mm-rope-sterling-silver-chain',
@@ -204,6 +208,33 @@ if ( ! function_exists( 'asherava_find_length_variation_id' ) ) {
 	}
 }
 
+/**
+ * Remove stale Size attributes so Length is the only launch selector.
+ *
+ * @param WC_Product_Variable $product Product object.
+ * @param string[]            $legacy_attribute_keys Old size attribute keys.
+ */
+if ( ! function_exists( 'asherava_cleanup_legacy_size_attributes' ) ) {
+	function asherava_cleanup_legacy_size_attributes( $product, $legacy_attribute_keys ) {
+		$attributes = $product->get_attributes();
+		$defaults   = $product->get_default_attributes();
+
+		foreach ( $legacy_attribute_keys as $attribute_key ) {
+			unset( $attributes[ $attribute_key ], $defaults[ $attribute_key ] );
+		}
+
+		$product->set_attributes( $attributes );
+		$product->set_default_attributes( $defaults );
+		$product->save();
+
+		foreach ( $product->get_children() as $child_id ) {
+			foreach ( $legacy_attribute_keys as $attribute_key ) {
+				delete_post_meta( $child_id, 'attribute_' . $attribute_key );
+			}
+		}
+	}
+}
+
 foreach ( $target_slugs as $slug ) {
 	$post = get_page_by_path( $slug, OBJECT, 'product' );
 
@@ -253,6 +284,9 @@ foreach ( $target_slugs as $slug ) {
 
 	$attributes = $product->get_attributes();
 	unset( $attributes['length'] );
+	foreach ( $legacy_size_attribute_keys as $legacy_attribute_key ) {
+		unset( $attributes[ $legacy_attribute_key ] );
+	}
 	$attributes[ $taxonomy ] = $attribute;
 
 	$product->set_attributes( $attributes );
@@ -262,6 +296,7 @@ foreach ( $target_slugs as $slug ) {
 		)
 	);
 	$product->save();
+	asherava_cleanup_legacy_size_attributes( $product, $legacy_size_attribute_keys );
 	wp_set_object_terms(
 		$post->ID,
 		array_map(

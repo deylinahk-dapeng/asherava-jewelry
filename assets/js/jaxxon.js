@@ -279,12 +279,12 @@
 			minus.type = 'button';
 			minus.className = 'av-quantity__button av-quantity__button--minus';
 			minus.setAttribute('aria-label', 'Decrease quantity');
-			minus.textContent = '-';
+			minus.innerHTML = '<svg class="av-icon av-icon--minus" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 12h12"></path></svg>';
 
 			plus.type = 'button';
 			plus.className = 'av-quantity__button av-quantity__button--plus';
 			plus.setAttribute('aria-label', 'Increase quantity');
-			plus.textContent = '+';
+			plus.innerHTML = '<svg class="av-icon av-icon--plus" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 6v12"></path><path d="M6 12h12"></path></svg>';
 
 			quantity.insertBefore(minus, input);
 			quantity.appendChild(plus);

@@ -27,24 +27,16 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 <nav class="av-catalog-nav" aria-label="<?php esc_attr_e( 'Primary catalog', 'asherava-jaxxon' ); ?>">
 	<div class="av-catalog-nav__bar">
 		<button class="av-catalog-nav__toggle" type="button" aria-expanded="false" aria-controls="av-catalog-drawer">
-			<span class="av-catalog-nav__toggle-icon" aria-hidden="true"></span>
+			<?php echo asherava_icon( 'menu' ); ?>
 			<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'asherava-jaxxon' ); ?></span>
 		</button>
 
 		<div class="av-header-utilities">
 			<a class="av-header-utilities__link av-header-utilities__search" href="<?php echo esc_url( $shop_url ); ?>" aria-label="<?php esc_attr_e( 'Search', 'asherava-jaxxon' ); ?>">
-				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-					<circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.75"></circle>
-					<path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
-				</svg>
+				<?php echo asherava_icon( 'search' ); ?>
 			</a>
 			<a class="av-header-utilities__link av-header-utilities__cart" href="<?php echo esc_url( $cart_url ); ?>" aria-label="<?php esc_attr_e( 'Cart', 'asherava-jaxxon' ); ?>">
-				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-					<path d="M6 6h15l-1.5 9h-12L6 6Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"></path>
-					<path d="M6 6 5 3H2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
-					<circle cx="9.5" cy="19.5" r="1.25" fill="currentColor"></circle>
-					<circle cx="17.5" cy="19.5" r="1.25" fill="currentColor"></circle>
-				</svg>
+				<?php echo asherava_icon( 'bag' ); ?>
 				<?php if ( $cart_count > 0 ) : ?>
 					<span class="av-header-utilities__count"><?php echo esc_html( (string) $cart_count ); ?></span>
 				<?php endif; ?>
@@ -56,7 +48,7 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 			<li class="av-catalog-nav__shop">
 				<button class="av-catalog-nav__shop-trigger" type="button" aria-expanded="false" aria-controls="av-shop-mega">
 					<?php esc_html_e( 'Shop', 'asherava-jaxxon' ); ?>
-					<span aria-hidden="true">▾</span>
+					<?php echo asherava_icon( 'chevron-down', 'av-catalog-nav__shop-icon' ); ?>
 				</button>
 			</li>
 			<?php if ( $show_accessory_nav ) : ?>
@@ -93,7 +85,7 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="160" height="24" decoding="async" />
 				</a>
 				<button class="av-catalog-drawer__close" type="button" aria-label="<?php esc_attr_e( 'Close menu', 'asherava-jaxxon' ); ?>">
-					<?php esc_html_e( 'Close', 'asherava-jaxxon' ); ?>
+					<?php echo asherava_icon( 'close' ); ?>
 				</button>
 			</div>
 			<ul class="av-catalog-drawer__list">
@@ -101,7 +93,7 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 				<li class="av-catalog-drawer__accordion<?php echo $is_shop_page ? ' is-current' : ''; ?>">
 					<button class="av-catalog-drawer__accordion-trigger" type="button" aria-expanded="false">
 						<?php esc_html_e( 'Shop', 'asherava-jaxxon' ); ?>
-						<span class="av-catalog-drawer__chevron" aria-hidden="true"></span>
+						<?php echo asherava_icon( 'chevron-down', 'av-catalog-drawer__chevron' ); ?>
 					</button>
 					<ul class="av-catalog-drawer__sub" hidden>
 						<?php foreach ( $chains as $item ) : ?>
@@ -137,10 +129,7 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 						<li>
 							<a href="<?php echo esc_url( $link['url'] ); ?>"<?php echo ! empty( $link['icon'] ) ? ' class="av-catalog-drawer__link--login"' : ''; ?>>
 								<?php if ( ! empty( $link['icon'] ) && 'login' === $link['icon'] ) : ?>
-									<svg class="av-catalog-drawer__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-										<circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.75"></circle>
-										<path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
-									</svg>
+									<?php echo asherava_icon( 'user', 'av-catalog-drawer__icon' ); ?>
 								<?php endif; ?>
 								<span><?php echo esc_html( $link['label'] ); ?></span>
 							</a>
