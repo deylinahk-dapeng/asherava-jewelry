@@ -295,6 +295,12 @@
 		return hasUnit || /^\d+(?:\.\d+)?$/.test(source) ? match[1] + '"' : '';
 	}
 
+	function setTextIfChanged(node, text) {
+		if (node && node.textContent !== text) {
+			node.textContent = text;
+		}
+	}
+
 	function normalizeLengthOptionNode(node) {
 		var normalized = normalizedLengthLabel(node.getAttribute('data-title') || node.getAttribute('title') || node.getAttribute('aria-label') || node.textContent);
 
@@ -307,7 +313,7 @@
 		});
 
 		if (!node.children.length || node.classList.contains('variable-item-span') || node.classList.contains('av-pdp__swatch-text')) {
-			node.textContent = normalized;
+			setTextIfChanged(node, normalized);
 		}
 	}
 
@@ -324,7 +330,7 @@
 		});
 
 		target = choice.querySelector('.variable-item-span, .variable-item-span-button, .variable-item-button, .av-pdp__swatch-text') || choice;
-		target.textContent = normalized;
+		setTextIfChanged(target, normalized);
 	}
 
 	function variationRowLabelElement(row) {
@@ -393,7 +399,7 @@
 
 	function clearSelectedVariationLabels(row) {
 		row.querySelectorAll('.woo-selected-variation-item-name, .woo-variation-selected-item-name, .wvs-selected-variation-item-name, .selected-value').forEach(function (item) {
-			item.textContent = '';
+			setTextIfChanged(item, '');
 			item.setAttribute('aria-hidden', 'true');
 			item.style.setProperty('display', 'none', 'important');
 		});
@@ -410,7 +416,7 @@
 			row.classList.add('av-pdp__variation-row--length');
 
 			if (label) {
-				label.textContent = 'Length';
+				setTextIfChanged(label, 'Length');
 			}
 
 			clearSelectedVariationLabels(row);
@@ -441,6 +447,7 @@
 			return;
 		}
 
+		var previousValue = sizeSelect.value;
 		var target = '';
 		if (lengthSelect && lengthSelect.value) {
 			target = variationOptionNumber(lengthSelect.options[lengthSelect.selectedIndex]);
@@ -468,7 +475,7 @@
 			sizeSelect.value = fallback;
 		}
 
-		if (sizeSelect.value) {
+		if (sizeSelect.value && sizeSelect.value !== previousValue) {
 			sizeSelect.dispatchEvent(new Event('change', { bubbles: true }));
 		}
 	}
