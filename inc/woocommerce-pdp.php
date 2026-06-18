@@ -119,6 +119,8 @@ function asherava_pdp_setup_hooks() {
 	add_filter( 'generate_show_breadcrumb', 'asherava_pdp_hide_theme_breadcrumb' );
 	add_filter( 'woocommerce_product_get_name', 'asherava_pdp_display_name', 10, 2 );
 	add_filter( 'the_title', 'asherava_pdp_the_title', 10, 2 );
+	add_filter( 'woocommerce_variation_option_name', 'asherava_pdp_length_option_name', 20, 4 );
+	add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'asherava_pdp_hide_duplicate_size_dropdown', 100, 2 );
 }
 
 function asherava_pdp_hide_theme_breadcrumb( $show ) {
@@ -386,7 +388,29 @@ function asherava_pdp_render_accordions() {
 }
 
 /**
- * Whether a variation attribute is chain length / size.
+ * Whether a product belongs to the launch rope chain set.
+ *
+ * @param WC_Product|null $product Product object.
+ */
+function asherava_pdp_is_rope_product( $product ) {
+	return $product instanceof WC_Product && in_array( $product->get_slug(), asherava_pdp_rope_slugs(), true );
+}
+
+/**
+ * Whether a variation attribute is chain length.
+ *
+ * @param string $attribute Raw attribute name.
+ * @param string $label     Attribute label.
+ */
+function asherava_pdp_is_length_attribute( $attribute, $label ) {
+	$slug = sanitize_title( $attribute );
+
+	return false !== strpos( $slug, 'length' )
+		|| false !== stripos( $label, 'length' );
+}
+
+/**
+ * Whether a variation attribute is chain size.
  *
  * @param string $attribute Raw attribute name.
  * @param string $label     Attribute label.
@@ -395,9 +419,105 @@ function asherava_pdp_is_size_attribute( $attribute, $label ) {
 	$slug = sanitize_title( $attribute );
 
 	return false !== strpos( $slug, 'size' )
-		|| false !== strpos( $slug, 'length' )
-		|| false !== stripos( $label, 'size' )
-		|| false !== stripos( $label, 'length' );
+		|| false !== stripos( $label, 'size' );
+}
+
+/**
+ * Whether the product already has a Length variation attribute.
+ *
+ * @param WC_Product|null $product Product object.
+ */
+function asherava_pdp_product_has_length_attribute( $product ) {
+	if ( ! $product instanceof WC_Product ) {
+		return false;
+	}
+
+	if ( $product->is_type( 'variable' ) && method_exists( $product, 'get_variation_attributes' ) ) {
+		foreach ( array_keys( (array) $product->get_variation_attributes() ) as $attribute_key ) {
+			if ( false !== strpos( sanitize_title( $attribute_key ), 'length' ) ) {
+				return true;
+			}
+		}
+	}
+
+	foreach ( $product->get_attributes() as $attribute_key => $attribute_object ) {
+		if ( false !== strpos( sanitize_title( $attribute_key ), 'length' ) ) {
+			return true;
+		}
+
+		if (
+			is_object( $attribute_object )
+			&& method_exists( $attribute_object, 'get_name' )
+			&& false !== strpos( sanitize_title( $attribute_object->get_name() ), 'length' )
+		) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Rope products should show Length only when legacy Size duplicates it.
+ *
+ * @param string          $attribute Raw attribute name.
+ * @param string          $label     Attribute label.
+ * @param WC_Product|null $product   Product object.
+ */
+function asherava_pdp_should_hide_attribute( $attribute, $label, $product ) {
+	if ( ! asherava_pdp_is_size_attribute( $attribute, $label ) || ! asherava_pdp_product_has_length_attribute( $product ) ) {
+		return false;
+	}
+
+	if ( asherava_pdp_is_rope_product( $product ) ) {
+		return true;
+	}
+
+	return $product instanceof WC_Product
+		&& false !== strpos( sanitize_title( $product->get_slug() ), 'rope' );
+}
+
+/**
+ * Format launch chain length terms as compact one-line labels.
+ *
+ * @param string          $name      Term display name.
+ * @param WP_Term|null    $term      Term object.
+ * @param string          $attribute Raw attribute name.
+ * @param WC_Product|null $product   Product object.
+ */
+function asherava_pdp_length_option_name( $name, $term = null, $attribute = '', $product = null ) {
+	$label = wc_attribute_label( $attribute, $product );
+
+	if ( ! asherava_pdp_is_length_attribute( $attribute, $label ) ) {
+		return $name;
+	}
+
+	if ( preg_match( '/^\s*(\d+(?:\.\d+)?)\s*(?:inch|inches|in|")?\s*$/i', wp_strip_all_tags( (string) $name ), $match ) ) {
+		return $match[1] . '"';
+	}
+
+	return $name;
+}
+
+/**
+ * Keep the duplicate Size dropdown present for WooCommerce matching, but hide it visually.
+ *
+ * @param string $html Default variation dropdown HTML.
+ * @param array  $args Attribute args.
+ */
+function asherava_pdp_hide_duplicate_size_dropdown( $html, $args ) {
+	if ( empty( $args['attribute'] ) ) {
+		return $html;
+	}
+
+	$product = isset( $args['product'] ) ? $args['product'] : null;
+	$label   = wc_attribute_label( $args['attribute'], $product );
+
+	if ( ! asherava_pdp_should_hide_attribute( $args['attribute'], $label, $product ) ) {
+		return $html;
+	}
+
+	return '<span class="av-pdp__hide-variation-row" data-av-hide-variation-row hidden></span><span class="av-pdp__select-hidden av-pdp__select-hidden--legacy-size" hidden aria-hidden="true">' . $html . '</span>';
 }
 
 /**
@@ -458,14 +578,19 @@ function asherava_pdp_variation_buttons( $html, $args ) {
 	$selected  = $args['selected'] ? $args['selected'] : '';
 	$label     = wc_attribute_label( $attribute, $product );
 
-	$is_size = asherava_pdp_is_size_attribute( $attribute, $label );
+	if ( asherava_pdp_should_hide_attribute( $attribute, $label, $product ) ) {
+		return '<span class="av-pdp__hide-variation-row" data-av-hide-variation-row hidden></span><span class="av-pdp__select-hidden av-pdp__select-hidden--legacy-size" hidden aria-hidden="true">' . $html . '</span>';
+	}
+
+	$is_size   = asherava_pdp_is_size_attribute( $attribute, $label );
+	$is_length = asherava_pdp_is_length_attribute( $attribute, $label );
 
 	ob_start();
 	?>
 	<div class="av-pdp__option" data-attribute="<?php echo esc_attr( $name ); ?>">
-		<p class="av-pdp__option-label av-type-label"><?php echo esc_html( sprintf( /* translators: %s: attribute label */ __( 'Select %s', 'asherava-jaxxon' ), $label ) ); ?></p>
+		<span class="screen-reader-text"><?php echo esc_html( $label ); ?></span>
 		<?php
-		if ( $is_size ) {
+		if ( $is_size && ! $is_length ) {
 			asherava_pdp_render_size_fit_hint( $args['options'] );
 		}
 		?>
@@ -477,7 +602,7 @@ function asherava_pdp_variation_buttons( $html, $args ) {
 				$active = selected( $selected, $option, false ) ? ' is-selected' : '';
 				?>
 				<button type="button" class="av-pdp__swatch<?php echo esc_attr( $active ); ?>" data-value="<?php echo $value; ?>">
-					<?php echo $text; ?>
+					<span class="av-pdp__swatch-text"><?php echo $text; ?></span>
 				</button>
 			<?php endforeach; ?>
 		</div>

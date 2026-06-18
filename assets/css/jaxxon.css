@@ -1522,22 +1522,34 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 
 .av-pdp__swatches {
 	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 8px;
+	grid-template-columns: repeat(3, minmax(52px, 1fr));
+	gap: 10px;
+	max-width: 330px;
 }
 
 .av-pdp__swatch {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	min-height: 44px;
-	padding: 10px 8px;
+	padding: 0 12px;
 	border: 1px solid #bdbdbd;
 	background: var(--av-white);
 	color: var(--av-black);
-	font-size: 11px;
-	font-weight: 600;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	line-height: 1;
+	text-transform: none;
+	white-space: nowrap;
 	cursor: pointer;
 	transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.av-pdp__swatch-text {
+	display: inline-flex;
+	align-items: center;
+	white-space: nowrap;
 }
 
 .av-pdp__swatch:hover {
@@ -1595,11 +1607,64 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 
 .av-pdp__buybox table.variations label {
 	margin: 0;
-	color: var(--av-muted);
-	font-size: 12px;
+	color: var(--av-black);
+	font-size: 13px;
 	font-weight: 700;
-	letter-spacing: 0.12em;
+	letter-spacing: 0;
 	line-height: 1.2;
+	text-transform: none;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--hidden,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--legacy-size,
+body.asherava-jaxxon.av-single-product table.variations tr.attribute_pa_size,
+body.asherava-jaxxon.av-single-product table.variations tr.attribute_size,
+body.asherava-jaxxon.av-single-product table.variations tr[class*="attribute_pa_size" i],
+body.asherava-jaxxon.av-single-product table.variations tr[class*="attribute_size" i],
+body.asherava-jaxxon.av-single-product table.variations tr[data-attribute_name*="size" i],
+body.asherava-jaxxon.av-single-product table.variations tr[data-attribute-name*="size" i],
+body.asherava-jaxxon.av-single-product table.variations tr:has(.av-pdp__hide-variation-row),
+body.asherava-jaxxon.av-single-product table.variations tr:has(.av-pdp__select-hidden--legacy-size),
+body.asherava-jaxxon.av-single-product table.variations tr:has(select[name="attribute_pa_size"]),
+body.asherava-jaxxon.av-single-product table.variations tr:has(select[name="attribute_size"]),
+body.asherava-jaxxon.av-single-product table.variations tr:has(select[name*="size" i]),
+body.asherava-jaxxon.av-single-product table.variations tr:has(select[id*="size" i]),
+body.asherava-jaxxon.av-single-product table.variations tr:has([data-attribute_name="attribute_pa_size"]),
+body.asherava-jaxxon.av-single-product table.variations tr:has([data-attribute_name="attribute_size"]),
+body.asherava-jaxxon.av-single-product table.variations tr:has([data-attribute_name*="size" i]),
+body.asherava-jaxxon.av-single-product table.variations tr:has([data-attribute-name="attribute_pa_size"]),
+body.asherava-jaxxon.av-single-product table.variations tr:has([data-attribute-name="attribute_size"]),
+body.asherava-jaxxon.av-single-product table.variations tr:has([data-attribute-name*="size" i]),
+.av-pdp__buybox table.variations tr.av-pdp__variation-row--hidden,
+.av-pdp__buybox table.variations tr.av-pdp__variation-row--legacy-size,
+.av-pdp__buybox table.variations tr:has(.av-pdp__hide-variation-row) {
+	display: none !important;
+}
+
+body.asherava-jaxxon.av-single-product table.variations .av-pdp__hide-variation-row,
+body.asherava-jaxxon.av-single-product table.variations .av-pdp__select-hidden--legacy-size,
+.av-pdp__buybox table.variations .av-pdp__hide-variation-row,
+.av-pdp__buybox table.variations .av-pdp__select-hidden--legacy-size {
+	display: none !important;
+}
+
+body.asherava-jaxxon.av-single-product table.variations .woo-selected-variation-item-name,
+body.asherava-jaxxon.av-single-product table.variations .woo-variation-selected-item-name,
+body.asherava-jaxxon.av-single-product table.variations .wvs-selected-variation-item-name,
+body.asherava-jaxxon.av-single-product table.variations .selected-value,
+.av-pdp__buybox table.variations .woo-selected-variation-item-name,
+.av-pdp__buybox table.variations .woo-variation-selected-item-name,
+.av-pdp__buybox table.variations .wvs-selected-variation-item-name,
+.av-pdp__buybox table.variations .selected-value {
+	display: none !important;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length label,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length th.label {
+	color: var(--av-black);
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
 	text-transform: uppercase;
 }
 
@@ -1629,8 +1694,8 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 .av-pdp__buybox table.variations .button-variable-items-wrapper,
 .av-pdp__buybox table.variations .woo-variation-items-wrapper {
 	display: grid !important;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 10px;
+	grid-template-columns: repeat(3, minmax(54px, 1fr));
+	gap: 8px;
 	width: 100%;
 	margin: 0 0 10px;
 	padding: 0;
@@ -1642,7 +1707,9 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 	display: inline-flex !important;
 	align-items: center;
 	justify-content: center;
-	min-height: 48px;
+	min-width: 0;
+	min-height: 42px;
+	padding: 0 8px;
 	margin: 0 !important;
 	border: 1px solid rgba(18, 18, 18, 0.24);
 	background: var(--av-white);
@@ -1650,12 +1717,14 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 	color: var(--av-black);
 	cursor: pointer;
 	font-family: var(--av-font-body);
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: 700;
-	letter-spacing: 0.08em;
-	line-height: 1.2;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0;
+	line-height: 1;
 	text-align: center;
-	text-transform: uppercase;
+	text-transform: none;
+	white-space: nowrap;
 }
 
 .av-pdp__buybox table.variations .variable-item.selected,
@@ -1673,8 +1742,57 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 	align-items: center;
 	justify-content: center;
 	width: 100%;
+	min-width: 0;
 	min-height: inherit;
 	color: inherit !important;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-items-wrapper,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .button-variable-items-wrapper,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .woo-variation-items-wrapper,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .av-pdp__swatches {
+	display: grid !important;
+	grid-template-columns: repeat(6, minmax(52px, max-content));
+	gap: 8px;
+	width: fit-content;
+	max-width: 100%;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-item,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .button-variable-item,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-item-button,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .av-pdp__swatch {
+	min-width: 52px;
+	min-height: 44px;
+	padding: 0 10px;
+	font-size: 14px;
+	letter-spacing: 0;
+	line-height: 1;
+	text-transform: none;
+	white-space: nowrap;
+	word-break: keep-all;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-item-span,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-item-span-button,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-item-contents,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-item-contents span,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .button-variable-item span,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .av-pdp__swatch-text {
+	color: inherit !important;
+	font-size: inherit !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-item *,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .button-variable-item *,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .av-pdp__swatch * {
+	line-height: 1 !important;
+	white-space: nowrap !important;
+	word-break: keep-all !important;
 }
 
 .av-pdp__buybox table.variations select.woo-variation-raw-select {
@@ -1689,7 +1807,7 @@ body.asherava-jaxxon.av-single-product .site-main > .woocommerce-breadcrumb {
 	.av-pdp__buybox table.variations .variable-items-wrapper,
 	.av-pdp__buybox table.variations .button-variable-items-wrapper,
 	.av-pdp__buybox table.variations .woo-variation-items-wrapper {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 }
 
@@ -2188,7 +2306,7 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 
 	.av-pdp__swatches {
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(52px, 1fr));
 	}
 
 	.av-pdp__swatch {
@@ -2241,7 +2359,7 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 
 	.av-pdp__swatches {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(52px, 1fr));
 	}
 }
 
