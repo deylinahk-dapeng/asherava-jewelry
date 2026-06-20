@@ -49,6 +49,8 @@
 	--av-announcement-font-size: 11px;
 	--av-header-pad-y: 14px;
 	--av-header-min-h: auto;
+	--av-header-content-width: 1280px;
+	--av-header-side-pad: 28px;
 }
 
 body.asherava-jaxxon .site {
@@ -2166,7 +2168,7 @@ body.asherava-jaxxon.av-single-product .related.products {
 	.av-header-utilities {
 		display: flex !important;
 		position: absolute;
-		right: 28px;
+		right: var(--av-header-side-pad);
 		top: 50%;
 		transform: translateY(-50%);
 		flex: 0 0 auto;
@@ -2202,15 +2204,16 @@ body.asherava-jaxxon.av-single-product .related.products {
 		align-items: center;
 		justify-content: center;
 		gap: 0;
-		max-width: none;
+		max-width: var(--av-header-content-width);
 		width: 100%;
 		min-height: var(--av-header-min-h);
-		padding: 0 28px;
+		padding: 0 var(--av-header-side-pad);
+		box-sizing: border-box;
 	}
 
 	body.asherava-jaxxon .site-branding {
 		position: absolute;
-		left: 28px;
+		left: var(--av-header-side-pad);
 		top: 50%;
 		transform: translateY(-50%);
 		flex: 0 0 auto;
@@ -2439,7 +2442,8 @@ body.asherava-jaxxon.av-single-product .related.products {
 		flex-wrap: nowrap;
 		justify-content: center;
 		min-height: 56px;
-		padding: 8px 16px;
+		padding: 6px 12px;
+		box-sizing: border-box;
 	}
 
 	body.asherava-jaxxon .site-branding {
@@ -2456,8 +2460,9 @@ body.asherava-jaxxon.av-single-product .related.products {
 	}
 
 	body.asherava-jaxxon .av-logo-img {
-		height: 20px;
-		max-width: 180px;
+		width: 124px;
+		height: auto;
+		max-width: calc(100vw - 196px);
 	}
 
 	body.asherava-jaxxon .av-catalog-nav {
@@ -2468,18 +2473,33 @@ body.asherava-jaxxon.av-single-product .related.products {
 
 	.av-catalog-nav__bar {
 		width: 100%;
+		min-width: 0;
 		justify-content: space-between;
 	}
 
 	.av-catalog-nav__toggle {
 		display: inline-flex;
-		flex: 0 0 44px;
+		flex: 0 0 40px;
+		width: 40px;
+		height: 40px;
 	}
 
 	.av-header-utilities {
 		display: flex;
 		flex: 0 0 auto;
+		gap: 0;
 		margin-left: auto;
+	}
+
+	.av-header-utilities__link,
+	.av-header-utilities__link.av-header-utilities__search {
+		width: 40px;
+		height: 40px;
+		color: var(--av-black);
+	}
+
+	body.asherava-jaxxon.home .av-header-utilities__link {
+		color: var(--av-white);
 	}
 
 	.av-catalog-nav__links--desktop {
