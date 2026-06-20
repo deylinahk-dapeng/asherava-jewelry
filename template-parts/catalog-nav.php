@@ -17,7 +17,6 @@ $pendants   = asherava_get_category_url( 'pendants' );
 $show_accessory_nav = (bool) apply_filters( 'asherava_show_accessory_nav', get_option( 'asherava_show_accessory_nav', false ) );
 $home_url   = home_url( '/' );
 $cart_count   = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
-$logo_url     = get_stylesheet_directory_uri() . '/assets/images/asherava-logo-white.svg';
 $is_home             = is_front_page();
 $is_shop_page        = function_exists( 'is_shop' ) && ( is_shop() || is_product_category() || is_product_tag() );
 $drawer_primary_extra = function_exists( 'asherava_get_drawer_primary_links' ) ? asherava_get_drawer_primary_links() : array();
@@ -82,7 +81,8 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 		<div class="av-catalog-drawer__panel">
 			<div class="av-catalog-drawer__head">
 				<a class="av-catalog-drawer__brand" href="<?php echo esc_url( $home_url ); ?>" rel="home">
-					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="160" height="24" decoding="async" />
+					<span class="av-logo-wordmark av-logo-wordmark--white" aria-hidden="true">ASHERAVA</span>
+					<span class="screen-reader-text"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
 				</a>
 				<button class="av-catalog-drawer__close" type="button" aria-label="<?php esc_attr_e( 'Close menu', 'asherava-jaxxon' ); ?>">
 					<?php echo asherava_icon( 'close' ); ?>
