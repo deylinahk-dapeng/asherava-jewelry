@@ -184,6 +184,22 @@ body.asherava-jaxxon .site-header .menu-bar-item a:hover {
 	max-width: 220px;
 }
 
+.av-logo-wordmark {
+	display: block;
+	color: var(--av-black);
+	font-family: var(--av-font-body);
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 0.42em;
+	line-height: 1;
+	text-indent: 0.42em;
+	white-space: nowrap;
+}
+
+.av-logo-wordmark--white {
+	color: var(--av-white);
+}
+
 .av-icon {
 	display: inline-block;
 	flex: 0 0 auto;
@@ -2463,6 +2479,12 @@ body.asherava-jaxxon.av-single-product .related.products {
 		width: 124px;
 		height: auto;
 		max-width: calc(100vw - 196px);
+	}
+
+	body.asherava-jaxxon .av-logo-wordmark {
+		font-size: 12px;
+		letter-spacing: 0.4em;
+		text-indent: 0.4em;
 	}
 
 	body.asherava-jaxxon .av-catalog-nav {
