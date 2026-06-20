@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.10.1' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.10.2' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
@@ -231,10 +231,14 @@ function asherava_jaxxon_enqueue_assets() {
 		'asherava-jaxxon',
 		'asheravaSignupPopup',
 		array(
-			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-			'nonce'   => wp_create_nonce( 'asherava_signup_popup' ),
-			'coupon'  => 'WELCOME10',
-			'force'   => isset( $_GET['av_popup'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['av_popup'] ) ),
+			'ajaxUrl'            => admin_url( 'admin-ajax.php' ),
+			'nonce'              => wp_create_nonce( 'asherava_signup_popup' ),
+			'coupon'             => 'WELCOME10',
+			'force'              => isset( $_GET['av_popup'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['av_popup'] ) ),
+			'desktopDelay'       => 10000,
+			'mobileDelay'        => 18000,
+			'scrollThreshold'    => 40,
+			'closedCooldownDays' => 7,
 		)
 	);
 }

@@ -742,27 +742,71 @@
 		var closedKey = 'asheravaSignupPopupClosed';
 		var joinedKey = 'asheravaSignupPopupJoined';
 		var isForced = !!config.force;
+		var desktopDelay = parseInt(config.desktopDelay, 10) || 10000;
+		var mobileDelay = parseInt(config.mobileDelay, 10) || 18000;
+		var scrollThreshold = parseInt(config.scrollThreshold, 10) || 40;
+		var closedCooldownDays = parseInt(config.closedCooldownDays, 10) || 7;
+		var closedCooldown = closedCooldownDays * 24 * 60 * 60 * 1000;
+		var openTimer = null;
+		var opened = false;
 
-		function hasStored(key) {
+		function getStored(key) {
 			try {
-				return window.localStorage.getItem(key) === '1';
+				return window.localStorage.getItem(key);
 			} catch (error) {
-				return false;
+				return null;
 			}
 		}
 
-		function store(key) {
+		function store(key, value) {
 			try {
-				window.localStorage.setItem(key, '1');
+				window.localStorage.setItem(key, value || '1');
 			} catch (error) {
 				// Ignore storage restrictions.
 			}
 		}
 
+		function hasActiveClosedCooldown() {
+			var storedClosedAt = getStored(closedKey);
+			var closedAt;
+
+			if (storedClosedAt === '1') {
+				closedAt = Date.now();
+				store(closedKey, String(closedAt));
+			} else {
+				closedAt = parseInt(storedClosedAt, 10);
+			}
+
+			if (!closedAt) {
+				return false;
+			}
+
+			if (Date.now() - closedAt < closedCooldown) {
+				return true;
+			}
+
+			try {
+				window.localStorage.removeItem(closedKey);
+			} catch (error) {
+				// Ignore storage restrictions.
+			}
+			return false;
+		}
+
+		function stopTriggers() {
+			if (openTimer) {
+				window.clearTimeout(openTimer);
+				openTimer = null;
+			}
+			window.removeEventListener('scroll', handleScroll);
+		}
+
 		function openPopup() {
-			if (!isForced && (hasStored(closedKey) || hasStored(joinedKey))) {
+			if (opened || (!isForced && (hasActiveClosedCooldown() || getStored(joinedKey) === '1'))) {
 				return;
 			}
+			opened = true;
+			stopTriggers();
 
 			popup.hidden = false;
 			window.setTimeout(function () {
@@ -777,10 +821,22 @@
 		function closePopup() {
 			popup.classList.remove('is-visible');
 			document.body.classList.remove('av-signup-popup-open');
-			store(closedKey);
+			store(closedKey, String(Date.now()));
 			window.setTimeout(function () {
 				popup.hidden = true;
 			}, 240);
+		}
+
+		function handleScroll() {
+			var documentHeight = Math.max(
+				document.body.scrollHeight,
+				document.documentElement.scrollHeight
+			);
+			var scrollableHeight = documentHeight - window.innerHeight;
+
+			if (scrollableHeight > 0 && (window.scrollY / scrollableHeight) * 100 >= scrollThreshold) {
+				openPopup();
+			}
 		}
 
 		popup.querySelectorAll('[data-av-signup-close]').forEach(function (button) {
@@ -855,6 +911,20 @@
 			});
 		}
 
-		window.setTimeout(openPopup, isForced ? 300 : 3500);
+		if (isForced) {
+			openTimer = window.setTimeout(openPopup, 300);
+			return;
+		}
+
+		if (hasActiveClosedCooldown() || getStored(joinedKey) === '1') {
+			return;
+		}
+
+		openTimer = window.setTimeout(
+			openPopup,
+			window.matchMedia('(max-width: 767px)').matches ? mobileDelay : desktopDelay
+		);
+		window.addEventListener('scroll', handleScroll, { passive: true });
+		handleScroll();
 	}
 })();
