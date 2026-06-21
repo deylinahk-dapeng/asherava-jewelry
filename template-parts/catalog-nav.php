@@ -34,6 +34,10 @@ $drawer_secondary     = function_exists( 'asherava_get_drawer_secondary_links' )
 			<a class="av-header-utilities__link av-header-utilities__search" href="<?php echo esc_url( $shop_url ); ?>" aria-label="<?php esc_attr_e( 'Search', 'asherava-jaxxon' ); ?>">
 				<?php echo asherava_icon( 'search' ); ?>
 			</a>
+			<span class="av-origin-badge" aria-label="<?php esc_attr_e( 'Made in Italy', 'asherava-jaxxon' ); ?>" role="img">
+				<span class="av-origin-badge__flag" aria-hidden="true"></span>
+				<span class="av-origin-badge__label" aria-hidden="true"><?php esc_html_e( 'Made in Italy', 'asherava-jaxxon' ); ?></span>
+			</span>
 			<a class="av-header-utilities__link av-header-utilities__cart" href="<?php echo esc_url( $cart_url ); ?>" aria-label="<?php esc_attr_e( 'Cart', 'asherava-jaxxon' ); ?>">
 				<?php echo asherava_icon( 'bag' ); ?>
 				<?php if ( $cart_count > 0 ) : ?>

@@ -24,7 +24,7 @@ asherava_sync_product_categories();
 $pages = array(
 	'about-us'         => array(
 		'title'   => 'About Asherava',
-		'content' => '<h2>Built for the long run</h2><p>Asherava is named after Asher and Ava. The brand is built with the intention of creating something honest, durable, and worth leaving behind.</p><p>We focus first on 925 sterling silver rope chains. Our jewelry background connects Italian chain supply with finishing and quality-control support in Panyu, Guangzhou.</p><p>By selling directly instead of building around marketplace fees, we aim to keep pricing fair and invest in a business designed to last.</p>',
+		'content' => '<h2>Built for the long run</h2><p>Asherava is named after Asher and Ava. The brand is built with the intention of creating something honest, durable, and worth leaving behind.</p><p>We focus first on Italian-made 925 sterling silver rope chains, supported by finishing and quality-control relationships in Panyu, Guangzhou.</p><p>By selling directly instead of building around marketplace fees, we aim to keep pricing fair and invest in a business designed to last.</p>',
 	),
 	'contact-us'       => array(
 		'title'   => 'Contact Us',
@@ -193,17 +193,6 @@ if ( class_exists( 'WooCommerce' ) && class_exists( 'WC_Product_Simple' ) ) {
 
 		if ( $existing ) {
 			$product_id = $product->get_id();
-			$origin_copy = 'Italian-sourced 925 sterling silver chain with finishing and quality-control support in Panyu, Guangzhou.';
-			$short_copy  = preg_replace( '/\bMade in Italy\.?/i', $origin_copy, $product->get_short_description() );
-			$long_copy   = preg_replace( '/\bMade in Italy\.?/i', $origin_copy, $product->get_description() );
-
-			if ( $short_copy !== $product->get_short_description() || $long_copy !== $product->get_description() ) {
-				$product->set_short_description( $short_copy );
-				$product->set_description( $long_copy );
-				$product->save();
-				echo "Corrected origin wording: {$item['slug']}\n";
-			}
-
 			echo "Preserved existing product data: {$item['slug']}\n";
 		} else {
 			$product->set_name( $item['name'] );
