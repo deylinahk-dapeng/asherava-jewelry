@@ -86,10 +86,34 @@ function asherava_pdp_split_description( $html ) {
 	return array( $html, '' );
 }
 
+/**
+ * Whether customer reviews are approved for public display.
+ */
+function asherava_product_reviews_enabled() {
+	return (bool) apply_filters(
+		'asherava_show_product_reviews',
+		get_option( 'asherava_show_product_reviews', false )
+	);
+}
+
+add_action( 'wp', 'asherava_pdp_configure_review_visibility', 5 );
+function asherava_pdp_configure_review_visibility() {
+	if ( asherava_product_reviews_enabled() ) {
+		return;
+	}
+
+	remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating', 5 );
+}
+
 add_action( 'wp', 'asherava_pdp_setup_hooks' );
 function asherava_pdp_setup_hooks() {
 	if ( ! is_product() ) {
 		return;
+	}
+
+	if ( ! asherava_product_reviews_enabled() ) {
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );
+		add_filter( 'woocommerce_structured_data_product', 'asherava_pdp_remove_unverified_rating_data', 20, 2 );
 	}
 
 	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
@@ -121,6 +145,53 @@ function asherava_pdp_setup_hooks() {
 	add_filter( 'the_title', 'asherava_pdp_the_title', 10, 2 );
 	add_filter( 'woocommerce_variation_option_name', 'asherava_pdp_length_option_name', 20, 4 );
 	add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'asherava_pdp_hide_duplicate_size_dropdown', 100, 2 );
+	add_filter( 'wp_get_attachment_image_attributes', 'asherava_pdp_product_image_alt', 20, 3 );
+}
+
+/**
+ * Keep unverified ratings out of search markup until reviews are enabled.
+ *
+ * @param array        $markup  Product structured data.
+ * @param WC_Product   $product Product object.
+ * @return array
+ */
+function asherava_pdp_remove_unverified_rating_data( $markup, $product ) {
+	unset( $markup['aggregateRating'], $markup['review'] );
+
+	return $markup;
+}
+
+/**
+ * Use the product name when a product image has no meaningful alternative text.
+ *
+ * @param array        $attr       Image attributes.
+ * @param WP_Post      $attachment Attachment post.
+ * @param string|array $size       Requested image size.
+ * @return array
+ */
+function asherava_pdp_product_image_alt( $attr, $attachment, $size ) {
+	if ( ! is_product() || ! $attachment instanceof WP_Post ) {
+		return $attr;
+	}
+
+	$current_alt = isset( $attr['alt'] ) ? trim( (string) $attr['alt'] ) : '';
+	$filename_alt = sanitize_title( $current_alt );
+	$attachment_slug = sanitize_title( $attachment->post_name );
+
+	if ( $current_alt && $filename_alt !== $attachment_slug ) {
+		return $attr;
+	}
+
+	$product = wc_get_product( get_queried_object_id() );
+	if ( $product ) {
+		$attr['alt'] = sprintf(
+			/* translators: %s: product name. */
+			__( '%s product image', 'asherava-jaxxon' ),
+			$product->get_name()
+		);
+	}
+
+	return $attr;
 }
 
 function asherava_pdp_hide_theme_breadcrumb( $show ) {

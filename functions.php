@@ -7,10 +7,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.10.4' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.11.1' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
+
+/**
+ * Output a concise meta description when no dedicated SEO plugin is active.
+ */
+add_action( 'wp_head', 'asherava_jaxxon_meta_description', 2 );
+function asherava_jaxxon_meta_description() {
+	if (
+		defined( 'WPSEO_VERSION' )
+		|| defined( 'RANK_MATH_VERSION' )
+		|| defined( 'AIOSEO_VERSION' )
+		|| class_exists( 'The_SEO_Framework\Load' )
+	) {
+		return;
+	}
+
+	$description = '';
+
+	if ( is_front_page() ) {
+		$description = 'Shop Asherava 925 sterling silver rope chains with fair direct pricing, clear product details, and a 30-day return window.';
+	} elseif ( function_exists( 'is_product' ) && is_product() ) {
+		$product = wc_get_product( get_queried_object_id() );
+		if ( $product ) {
+			$description = $product->get_short_description();
+			if ( ! $description ) {
+				$description = sprintf( 'Shop %s from Asherava. 925 sterling silver rope chains with fair direct pricing and 30-day returns.', $product->get_name() );
+			}
+		}
+	} elseif ( function_exists( 'is_product_taxonomy' ) && is_product_taxonomy() ) {
+		$term = get_queried_object();
+		if ( $term instanceof WP_Term ) {
+			$description = term_description( $term );
+			if ( ! $description ) {
+				$description = sprintf( 'Shop %s from Asherava, including 925 sterling silver rope chains in practical widths and lengths.', $term->name );
+			}
+		}
+	} elseif ( is_singular( 'page' ) ) {
+		$post = get_queried_object();
+		if ( $post instanceof WP_Post ) {
+			$description = has_excerpt( $post ) ? $post->post_excerpt : $post->post_content;
+		}
+	}
+
+	$description = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( strip_shortcodes( (string) $description ) ) ) );
+	if ( ! $description ) {
+		return;
+	}
+
+	$description = wp_html_excerpt( $description, 158, '&hellip;' );
+	echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+}
 
 /**
  * Shared line icon set for the Asherava theme.

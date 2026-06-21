@@ -24,7 +24,7 @@ $featured_categories = asherava_get_featured_catalog();
 		<div class="av-container av-hero__content">
 			<p class="av-eyebrow">Sterling Silver Chain Studio</p>
 			<h1 class="av-hero__title">925 Sterling Silver Chains</h1>
-			<p class="av-hero__subtitle">Italian-crafted rope and Cuban chains for everyday wear.</p>
+			<p class="av-hero__subtitle">Italian-made rope chains designed for everyday wear.</p>
 			<div class="av-hero__actions">
 				<a class="av-btn av-btn--primary" href="<?php echo esc_url( $shop_url ); ?>">Shop Chains</a>
 				<a class="av-btn av-btn--ghost" href="<?php echo esc_url( $shop_url ); ?>">Best Sellers</a>
@@ -39,8 +39,8 @@ $featured_categories = asherava_get_featured_catalog();
 				<span>Sterling silver chains</span>
 			</div>
 			<div class="av-trust__item">
-				<strong>Free Shipping</strong>
-				<span>US &amp; Canada</span>
+				<strong>Shipping</strong>
+				<span>US &amp; Canada coverage</span>
 			</div>
 			<div class="av-trust__item">
 				<strong>30-Day Returns</strong>
@@ -57,7 +57,7 @@ $featured_categories = asherava_get_featured_catalog();
 		<div class="av-container">
 			<div class="av-section__head">
 				<h2>Best Sellers</h2>
-				<p>Launch-ready sterling silver rope chains. Product photos can be refined before publishing.</p>
+				<p>Explore our core collection of diamond-cut 925 sterling silver rope chains.</p>
 			</div>
 			<div class="av-product-grid">
 				<?php if ( function_exists( 'wc_get_products' ) ) : ?>
@@ -123,7 +123,7 @@ $featured_categories = asherava_get_featured_catalog();
 			</div>
 			<div>
 				<p>Asherava is named after Asher and Ava, my two children. I want this brand to grow patiently, stay honest, and become something worth leaving behind.</p>
-				<p>Our jewelry background gives us access to Italian sterling silver chain supply and finishing support in Panyu, Guangzhou. Instead of building around marketplace fees, we keep the model direct and aim for fair long-term pricing.</p>
+				<p>Our jewelry background connects Italian-made sterling silver chain with finishing and quality-control support in Panyu, Guangzhou. Instead of building around marketplace fees, we keep the model direct and aim for fair long-term pricing.</p>
 			</div>
 		</div>
 	</section>

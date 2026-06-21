@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $material = get_post_meta( get_the_ID(), '_asherava_material_detail', true );
 if ( ! $material ) {
-	$material = __( '925 sterling silver chain. Final weight, length, clasp, and finish details should be completed before publishing each product.', 'asherava-jaxxon' );
+	$material = __( 'Italian-made 925 sterling silver chain. Available lengths and finish details are listed with each product. Refer to the product images for clasp construction and surface finish.', 'asherava-jaxxon' );
 }
 
 $care = get_post_meta( get_the_ID(), '_asherava_care_detail', true );
