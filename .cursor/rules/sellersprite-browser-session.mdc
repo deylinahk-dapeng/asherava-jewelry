@@ -1,0 +1,24 @@
+---
+description: SellerSprite (卖家精灵) is already logged in via the user's built-in browser. Do not treat that session as a guest.
+alwaysApply: true
+---
+
+# SellerSprite session
+
+The user keeps **卖家精灵 (SellerSprite)** logged in in Cursor's **built-in browser**. That session is a member account, not a guest.
+
+## Do
+
+- Use the already-open built-in browser tab for SellerSprite. Confirm login from the top-right account/avatar (username, 会员, VIP), then pull 选产品 / 查竞品 / 关键词 data and export if needed.
+- If two browsers exist, prefer the window the user said is logged in. Cloud VNC Chrome is a **different** profile and often shows `GUEST` / `Not Logged` even when the built-in browser is authenticated.
+
+## Don't
+
+- Do not tell the user they are a guest after they said they are logged in.
+- Do not ask for SellerSprite passwords in chat.
+- Do not log out or change the account.
+- Do not treat VNC Chrome `GUEST VISIT` as proof the user has no membership.
+
+## If the member session is not the window you control
+
+Leave SellerSprite login open in the browser you can drive. Ask the user to sign in **in that window** and reply when done. Do not paste credentials for them.
