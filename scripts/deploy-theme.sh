@@ -27,10 +27,10 @@ rsync -avz \
   functions.php \
   style.css \
   front-page.php \
-  assets/ \
-  inc/ \
-  template-parts/ \
-  woocommerce/ \
+  assets \
+  inc \
+  template-parts \
+  woocommerce \
   "${SSH_HOST}:${REMOTE_THEME_DIR}/"
 
 ssh "$SSH_HOST" "mkdir -p \"${REMOTE_THEME_DIR}/scripts\""
