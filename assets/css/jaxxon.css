@@ -1829,6 +1829,37 @@ body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row
 	white-space: nowrap;
 }
 
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .variable-items-wrapper,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .button-variable-items-wrapper,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .woo-variation-items-wrapper,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .av-pdp__swatches {
+	display: grid !important;
+	grid-template-columns: repeat(2, minmax(140px, 1fr));
+	gap: 10px;
+	width: 100%;
+	max-width: 320px;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .variable-item,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .button-variable-item,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .variable-item-button,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .av-pdp__swatch {
+	min-width: 140px;
+	padding: 0 16px;
+	overflow: visible;
+	white-space: nowrap;
+}
+
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .variable-item-span,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .variable-item-span-button,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .variable-item-contents,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .variable-item-contents span,
+body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--finish .av-pdp__swatch-text {
+	overflow: visible !important;
+	text-overflow: clip !important;
+	white-space: nowrap !important;
+}
+
 body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .variable-items-wrapper,
 body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .button-variable-items-wrapper,
 body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row--length .woo-variation-items-wrapper,
