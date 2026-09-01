@@ -35,7 +35,6 @@ $legacy_size_attribute_keys = array(
 );
 
 $target_slugs = array(
-	'3mm-rope-sterling-silver-chain',
 	'3mm-rope-chain-sterling-silver',
 	'3mm-rope-chain-sterling-silver-diamond-cut',
 	'1-8mm-rope-chain-sterling-silver',
