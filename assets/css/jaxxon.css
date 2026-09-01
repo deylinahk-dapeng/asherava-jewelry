@@ -1514,7 +1514,42 @@ body.asherava-jaxxon.av-single-product .woocommerce div.product .woocommerce-pro
 }
 
 .av-pdp__shipping-note {
-	margin: 0 0 14px;
+	margin: 0 0 12px;
+	color: var(--av-gray);
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.av-pdp__decision-points {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px 10px;
+	margin: 0 0 18px;
+	padding: 0;
+	list-style: none;
+}
+
+.av-pdp__decision-points li {
+	position: relative;
+	min-height: 38px;
+	padding: 10px 10px 10px 28px;
+	border: 1px solid rgba(18, 18, 18, 0.12);
+	background: #faf9f6;
+	color: var(--av-black);
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+.av-pdp__decision-points li::before {
+	content: "";
+	position: absolute;
+	top: 15px;
+	left: 12px;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--av-black);
 }
 
 .av-pdp__option {
@@ -1853,6 +1888,10 @@ body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row
 	.av-pdp__buybox table.variations .button-variable-items-wrapper,
 	.av-pdp__buybox table.variations .woo-variation-items-wrapper {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.av-pdp__decision-points {
+		grid-template-columns: 1fr;
 	}
 }
 

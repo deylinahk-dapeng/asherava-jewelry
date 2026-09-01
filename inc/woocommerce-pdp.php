@@ -128,6 +128,7 @@ function asherava_pdp_setup_hooks() {
 	add_action( 'woocommerce_before_single_product', 'asherava_pdp_render_breadcrumbs', 6 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_material_badge', 4 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_shipping_note', 11 );
+	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_render_decision_points', 12 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_size_guide_link', 31 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_render_description', 32 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_render_trust_blocks', 36 );
@@ -359,7 +360,25 @@ function asherava_pdp_shipping_note() {
 		return;
 	}
 
-	echo '<p class="av-pdp__shipping-note">' . esc_html__( 'Shipping calculated at checkout.', 'asherava-jaxxon' ) . '</p>';
+	echo '<p class="av-pdp__shipping-note">' . esc_html__( 'Shipping options calculated at checkout.', 'asherava-jaxxon' ) . '</p>';
+}
+
+/**
+ * Buyer decision points distilled from rope chain shopping concerns.
+ */
+function asherava_pdp_render_decision_points() {
+	$points = array(
+		__( 'Diamond-cut shine', 'asherava-jaxxon' ),
+		__( '925 sterling silver', 'asherava-jaxxon' ),
+		__( '3mm daily-wear profile', 'asherava-jaxxon' ),
+		__( 'Fair direct pricing', 'asherava-jaxxon' ),
+	);
+
+	echo '<ul class="av-pdp__decision-points">';
+	foreach ( $points as $point ) {
+		echo '<li>' . esc_html( $point ) . '</li>';
+	}
+	echo '</ul>';
 }
 
 function asherava_pdp_size_guide_link() {
@@ -372,7 +391,7 @@ function asherava_pdp_size_guide_link() {
 		return;
 	}
 
-	echo '<p class="av-pdp__size-guide"><a href="' . esc_url( $url ) . '">' . esc_html__( "Men's Rope Chain Size Guide", 'asherava-jaxxon' ) . '</a></p>';
+	echo '<p class="av-pdp__size-guide"><a href="' . esc_url( $url ) . '">' . esc_html__( 'Find your chain length', 'asherava-jaxxon' ) . '</a></p>';
 }
 
 add_filter( 'woocommerce_get_price_html', 'asherava_pdp_price_html', 20, 2 );
@@ -633,6 +652,42 @@ function asherava_pdp_render_size_fit_hint( $extra_options = array() ) {
 }
 
 /**
+ * Practical guidance for length swatches.
+ *
+ * @param array $extra_options Variation option labels.
+ */
+function asherava_pdp_render_length_fit_hint( $extra_options = array() ) {
+	$custom = get_post_meta( get_the_ID(), '_asherava_length_fit_hint', true );
+	if ( 'hide' === $custom ) {
+		return;
+	}
+
+	echo '<p class="av-pdp__size-hint">';
+	if ( $custom ) {
+		echo esc_html( $custom );
+		echo '</p>';
+		return;
+	}
+
+	echo esc_html__( '22″–24″ sits in the everyday range for most men; choose 26″+ for a lower pendant or layered look.', 'asherava-jaxxon' );
+	echo '</p>';
+
+	$has_short = false;
+	foreach ( $extra_options as $option ) {
+		if ( preg_match( '/\b(18|20)\b/', (string) $option ) ) {
+			$has_short = true;
+			break;
+		}
+	}
+
+	if ( $has_short ) {
+		echo '<p class="av-pdp__size-hint av-pdp__size-hint--long">';
+		echo esc_html__( '18″–20″ wears closer to the neck and works well for a clean, minimal chain.', 'asherava-jaxxon' );
+		echo '</p>';
+	}
+}
+
+/**
  * Render attribute options as LZJ-style button grid (hidden select for WC).
  *
  * @param string $html Default dropdown HTML.
@@ -663,6 +718,8 @@ function asherava_pdp_variation_buttons( $html, $args ) {
 		<?php
 		if ( $is_size && ! $is_length ) {
 			asherava_pdp_render_size_fit_hint( $args['options'] );
+		} elseif ( $is_length ) {
+			asherava_pdp_render_length_fit_hint( $args['options'] );
 		}
 		?>
 		<div class="av-pdp__swatches" role="group" aria-label="<?php echo esc_attr( $label ); ?>">
