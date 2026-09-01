@@ -156,8 +156,8 @@ wp_set_object_terms( $post->ID, 'variable', 'product_type' );
 $product    = new WC_Product_Variable( $post->ID );
 $attributes = $product->get_attributes();
 unset( $attributes['size'], $attributes['pa_size'], $attributes['length'], $attributes['finish'] );
-$attributes[ $length_taxonomy ] = asherava_3mm_build_attribute( 'length', $length_taxonomy, $length_terms, 0 );
-$attributes[ $finish_taxonomy ] = asherava_3mm_build_attribute( 'finish', $finish_taxonomy, $finish_terms, 1 );
+$attributes[ $finish_taxonomy ] = asherava_3mm_build_attribute( 'finish', $finish_taxonomy, $finish_terms, 0 );
+$attributes[ $length_taxonomy ] = asherava_3mm_build_attribute( 'length', $length_taxonomy, $length_terms, 1 );
 $product->set_attributes( $attributes );
 $product->set_default_attributes(
 	array(

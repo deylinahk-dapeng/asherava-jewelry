@@ -397,6 +397,16 @@
 		return marker || name.indexOf('size') !== -1 || id.indexOf('size') !== -1 || /\b(?:attribute_)?pa_size\b|\b(?:attribute_)?size\b/.test(attributeName) || labelText.indexOf('size') === 0;
 	}
 
+	function variationRowIsFinish(row) {
+		var select = variationRowSelect(row);
+		var name = select && select.name ? select.name.toLowerCase() : '';
+		var id = select && select.id ? select.id.toLowerCase() : '';
+		var attributeName = variationRowAttributeName(row);
+		var labelText = variationRowLabelText(row);
+
+		return name.indexOf('finish') !== -1 || id.indexOf('finish') !== -1 || attributeName.indexOf('finish') !== -1 || labelText.indexOf('finish') === 0;
+	}
+
 	function clearSelectedVariationLabels(row) {
 		row.querySelectorAll('.woo-selected-variation-item-name, .woo-variation-selected-item-name, .wvs-selected-variation-item-name, .selected-value').forEach(function (item) {
 			setTextIfChanged(item, '');
@@ -428,6 +438,15 @@
 			row.querySelectorAll('.av-pdp__swatch-text, .variable-item-span, .variable-item-span-button, .variable-item-contents span, .button-variable-item span').forEach(function (item) {
 				normalizeLengthOptionNode(item);
 			});
+		});
+	}
+
+	function normalizeFinishVariationRows(scope) {
+		scope.querySelectorAll('table.variations tr').forEach(function (row) {
+			if (variationRowIsFinish(row)) {
+				row.classList.add('av-pdp__variation-row--finish');
+				clearSelectedVariationLabels(row);
+			}
 		});
 	}
 
@@ -532,6 +551,7 @@
 	}
 
 	function cleanVariationRows(scope) {
+		normalizeFinishVariationRows(scope);
 		normalizeLengthVariationRows(scope);
 		hideDuplicateVariationRows(scope);
 	}
