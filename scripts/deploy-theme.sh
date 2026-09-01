@@ -37,6 +37,7 @@ ssh "$SSH_HOST" "mkdir -p \"${REMOTE_THEME_DIR}/scripts\""
 rsync -avz \
   scripts/launch-content-seed.php \
   scripts/launch-length-variations.php \
+  scripts/update-3mm-rope-options.php \
   "${SSH_HOST}:${REMOTE_THEME_DIR}/scripts/"
 
 ssh "$SSH_HOST" "cd \"${WP_ROOT}\" && wp cache flush"
