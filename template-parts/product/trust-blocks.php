@@ -12,17 +12,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 $blocks = array(
 	array(
 		'title' => __( '925 Sterling Silver', 'asherava-jaxxon' ),
-		'text'  => __( 'Our launch collection focuses on sterling silver rope chains with clear material details on every product page.', 'asherava-jaxxon' ),
+		'text'  => __( 'Clear material details and sterling silver positioning are shown plainly so buyers can check what they are getting.', 'asherava-jaxxon' ),
 		'url'   => asherava_resolve_menu_url( array( 'silver-chain-guides', 'guides' ), '/silver-chain-guides/' ),
 	),
 	array(
-		'title' => __( '30-Day Returns', 'asherava-jaxxon' ),
-		'text'  => __( 'A practical return window gives first-time buyers time to check fit, feel, and finish after delivery.', 'asherava-jaxxon' ),
-		'url'   => asherava_resolve_menu_url( array( 'faq' ), '/faq/' ),
+		'title' => __( 'Fit & Returns', 'asherava-jaxxon' ),
+		'text'  => __( 'Length guidance and a practical 30-day return window help first-time buyers check fit, feel, and finish.', 'asherava-jaxxon' ),
+		'url'   => asherava_resolve_menu_url( array( 'mens-rope-chain-size-guide', 'rope-chain-size-guide', 'size-guide' ), '/size-guide/' ),
 	),
 	array(
 		'title' => __( 'Fair Direct Pricing', 'asherava-jaxxon' ),
-		'text'  => __( 'Asherava is built for long-term direct sales, reducing platform fees so pricing can stay more reasonable.', 'asherava-jaxxon' ),
+		'text'  => __( 'Built for buyers who want a bright, durable silver chain without inflated mall-jewelry markups.', 'asherava-jaxxon' ),
 		'url'   => asherava_resolve_menu_url( array( 'about-us', 'about' ), '/about-us/' ),
 	),
 );
