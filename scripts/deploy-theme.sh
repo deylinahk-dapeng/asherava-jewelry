@@ -40,6 +40,6 @@ rsync -avz \
   scripts/update-3mm-rope-options.php \
   "${SSH_HOST}:${REMOTE_THEME_DIR}/scripts/"
 
-ssh "$SSH_HOST" "cd \"${WP_ROOT}\" && wp cache flush"
+ssh "$SSH_HOST" "cd \"${WP_ROOT}\" && wp cache flush && wp spinupwp cache purge-site"
 
-echo "Done. If the browser still shows old styles, purge SpinUpWP Page Cache."
+echo "Done. WordPress object cache and SpinUpWP page cache were purged."

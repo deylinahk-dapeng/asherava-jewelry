@@ -32,7 +32,8 @@ for item in style.css functions.php front-page.php assets inc template-parts woo
 done
 
 if command -v wp >/dev/null 2>&1; then
-  wp cache flush --path="$(pwd)" --allow-root 2>/dev/null || true
+	wp cache flush --path="$(pwd)" --allow-root 2>/dev/null || true
+	wp spinupwp cache purge-site --path="$(pwd)" --allow-root 2>/dev/null || true
 fi
 
 echo "Deployed theme to ${DEST}"
