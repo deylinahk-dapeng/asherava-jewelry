@@ -69,12 +69,12 @@
 	--av-type-hero-sub-color: #a8adb5;
 
 	/* 5 — PDP product title */
-	--av-type-pdp-title-d: clamp(1.75rem, 3vw, 2.25rem);
-	--av-type-pdp-title-m: 1.75rem;
-	--av-type-pdp-title-w: 700;
+	--av-type-pdp-title-d: 28px;
+	--av-type-pdp-title-m: 24px;
+	--av-type-pdp-title-w: 600;
 	--av-type-pdp-title-ls: -0.02em;
-	--av-type-pdp-title-lh: 1.08;
-	--av-type-pdp-title-color: #121212;
+	--av-type-pdp-title-lh: 1.15;
+	--av-type-pdp-title-color: #1d1d1f;
 
 	/* 5b — Section headings */
 	--av-type-section-title-d: clamp(1.75rem, 3vw, 2.5rem);
@@ -86,12 +86,12 @@
 	--av-type-card-title-m: 0.95rem;
 
 	/* 6 — PDP price */
-	--av-type-price-d: 30px;
-	--av-type-price-m: 26px;
-	--av-type-price-w: 700;
-	--av-type-price-ls: -0.01em;
-	--av-type-price-lh: 1.1;
-	--av-type-price-color: #121212;
+	--av-type-price-d: 21px;
+	--av-type-price-m: 19px;
+	--av-type-price-w: 500;
+	--av-type-price-ls: -0.02em;
+	--av-type-price-lh: 1.2;
+	--av-type-price-color: #1d1d1f;
 
 	/* 7 — Spec / trust labels */
 	--av-type-label-d: 11px;
@@ -349,14 +349,15 @@ body.asherava-jaxxon.home .av-catalog-nav__shop.is-current .av-catalog-nav__shop
 }
 
 /* 5 — PDP product title */
-.av-pdp__buybox .product_title {
-	font-family: var(--av-font-inter);
-	font-size: var(--av-type-pdp-title-d);
-	font-weight: var(--av-type-pdp-title-w);
-	letter-spacing: var(--av-type-pdp-title-ls);
-	line-height: var(--av-type-pdp-title-lh);
-	text-transform: none;
-	color: var(--av-type-pdp-title-color);
+body.asherava-jaxxon.av-single-product h1.product_title,
+body.asherava-jaxxon.av-single-product .av-pdp__buybox h1.product_title {
+	font-family: var(--av-font-inter) !important;
+	font-size: var(--av-type-pdp-title-d) !important;
+	font-weight: var(--av-type-pdp-title-w) !important;
+	letter-spacing: var(--av-type-pdp-title-ls) !important;
+	line-height: var(--av-type-pdp-title-lh) !important;
+	text-transform: none !important;
+	color: var(--av-type-pdp-title-color) !important;
 }
 
 .av-pdp__description-heading {
@@ -370,8 +371,8 @@ body.asherava-jaxxon.home .av-catalog-nav__shop.is-current .av-catalog-nav__shop
 }
 
 @media (max-width: 768px) {
-	.av-pdp__buybox .product_title {
-		font-size: var(--av-type-pdp-title-m);
+	body.asherava-jaxxon.av-single-product h1.product_title {
+		font-size: var(--av-type-pdp-title-m) !important;
 	}
 
 	.av-pdp__description-heading {
@@ -409,12 +410,99 @@ body.asherava-jaxxon.av-single-product .summary .price ins {
 	}
 }
 
+body.asherava-jaxxon.av-single-product .av-pdp__material,
+body.asherava-jaxxon.av-single-product .av-pdp__shipping-note,
+body.asherava-jaxxon.av-single-product .av-pdp__option-label,
+body.asherava-jaxxon.av-single-product .av-pdp__size-guide,
+body.asherava-jaxxon.av-single-product .av-pdp__swatch,
+body.asherava-jaxxon.av-single-product .av-pdp__description-body,
+body.asherava-jaxxon.av-single-product .av-pdp__spec-heading,
+body.asherava-jaxxon.av-single-product .av-pdp__accordion summary,
+body.asherava-jaxxon.av-single-product .av-pdp__accordion-body,
+body.asherava-jaxxon.av-single-product .av-pdp__post-atc-note {
+	font-family: var(--av-font-inter);
+	letter-spacing: -0.01em;
+	text-transform: none;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__material {
+	color: #6e6e73;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__shipping-note,
+body.asherava-jaxxon.av-single-product .av-pdp__post-atc-note {
+	color: #6e6e73;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__more-lengths summary {
+	color: #6e6e73;
+	font-family: var(--av-font-inter);
+	font-size: 12px;
+	font-weight: 400;
+	letter-spacing: -0.01em;
+	text-transform: none;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__option-label {
+	color: #1d1d1f;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__size-guide {
+	color: #6e6e73;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__swatch {
+	color: #1d1d1f;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__swatch.is-selected {
+	font-weight: 500;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__swatch-note {
+	color: #6e6e73;
+	font-size: 10px;
+	font-weight: 500;
+	letter-spacing: -0.01em;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__description-body {
+	color: #6b6b6b;
+	font-size: 15px;
+	font-weight: 400;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__spec-heading,
+body.asherava-jaxxon.av-single-product .av-pdp__accordion summary {
+	color: #1d1d1f;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+body.asherava-jaxxon.av-single-product .av-pdp__accordion-body {
+	color: #6b6b6b;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+@media (max-width: 768px) {
+	body.asherava-jaxxon.av-single-product .av-pdp__description-body {
+		font-size: 14px;
+	}
+}
+
 /* 7 — Labels (specs, trust, variant labels, material eyebrow) */
 .av-type-label,
-.av-pdp__material,
-.av-pdp__option-label,
-.av-pdp__shipping-note,
-.av-pdp__accordion summary,
 .av-spec__label,
 .av-trust__item span {
 	font-family: var(--av-font-inter);
@@ -428,8 +516,6 @@ body.asherava-jaxxon.av-single-product .summary .price ins {
 
 @media (max-width: 768px) {
 	.av-type-label,
-	.av-pdp__material,
-	.av-pdp__option-label,
 	.av-spec__label {
 		font-size: var(--av-type-label-m);
 	}
@@ -523,15 +609,15 @@ body.asherava-jaxxon.av-single-product {
 }
 
 .av-pdp__swatch {
-	background: var(--av-bg-surface);
-	border-color: var(--av-border-dark);
-	color: var(--av-text-chalk);
+	background: #ffffff;
+	border-color: #d2d2d7;
+	color: #1d1d1f;
 }
 
 .av-pdp__swatch.is-selected {
-	background: var(--av-text-chalk);
-	border-color: var(--av-text-chalk);
-	color: var(--av-bg-matte);
+	background: #f5f5f7;
+	border-color: #1d1d1f;
+	color: #1d1d1f;
 }
 
 /* CTA — industrial square, hover invert */
@@ -555,6 +641,16 @@ body.asherava-jaxxon .woocommerce button.button {
 	padding: 16px 32px !important;
 	min-height: auto;
 	transition: all 0.3s ease !important;
+}
+
+body.asherava-jaxxon.av-single-product .single_add_to_cart_button {
+	border-radius: 8px !important;
+	font-size: 15px !important;
+	font-weight: 500 !important;
+	text-transform: none !important;
+	letter-spacing: -0.01em !important;
+	min-height: 48px;
+	padding: 12px 24px !important;
 }
 
 body.asherava-jaxxon .av-btn:hover,

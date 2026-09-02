@@ -161,7 +161,7 @@ $attributes[ $length_taxonomy ] = asherava_3mm_build_attribute( 'length', $lengt
 $product->set_attributes( $attributes );
 $product->set_default_attributes(
 	array(
-		$length_taxonomy => $length_terms['20 inch']->slug,
+		$length_taxonomy => $length_terms['22 inch']->slug,
 		$finish_taxonomy => $finish_terms['Bare Silver']->slug,
 	)
 );

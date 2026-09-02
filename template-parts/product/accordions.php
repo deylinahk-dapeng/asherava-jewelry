@@ -11,25 +11,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $material = get_post_meta( get_the_ID(), '_asherava_material_detail', true );
 if ( ! $material ) {
-	$material = __( 'Italian-made 925 sterling silver rope chain with a diamond-cut finish for a brighter surface reflection. Available lengths and approximate gram weights are listed with each product when configured.', 'asherava-jaxxon' );
+	$material = __( '925 sterling silver (92.5% silver). Two finishes: <strong>Plated</strong> — rhodium over 925. <strong>Bare silver</strong> — unplated 925.', 'asherava-jaxxon' );
 }
 
 $fit = get_post_meta( get_the_ID(), '_asherava_fit_detail', true );
 if ( ! $fit ) {
-	$fit = __( '3mm is a balanced daily-wear width: visible enough to stand on its own, restrained enough for a clean everyday look, and easy to layer with pendants or finer chains. For most men, 22″–24″ is the safest everyday range; 18″–20″ wears closer, while 26″+ sits lower.', 'asherava-jaxxon' );
+	$fit = __( '20″ sits near the collarbone. 22″ sits just below it and is the everyday choice for most men. 24″ sits lower on the chest.', 'asherava-jaxxon' );
 }
 
 $care = get_post_meta( get_the_ID(), '_asherava_care_detail', true );
 if ( ! $care ) {
 	$care_url = asherava_resolve_menu_url( array( 'silver-chain-guides', 'guides' ), '/silver-chain-guides/' );
-	$care     = __( 'Sterling silver naturally responds to moisture, sweat, and chemicals. Keep the chain dry when possible, avoid perfumes and chlorine, store it separately in a soft pouch, and use a silver polishing cloth when the shine needs a refresh.', 'asherava-jaxxon' );
+	$care     = __( 'Sterling silver naturally responds to moisture, sweat, and chemicals. Bare silver can oxidize over time; this is normal. Keep the chain dry when possible, avoid perfumes and chlorine, store it separately in a soft pouch, and use a silver polishing cloth when the shine needs a refresh.', 'asherava-jaxxon' );
 	if ( $care_url ) {
 		$care .= ' <a href="' . esc_url( $care_url ) . '">' . esc_html__( 'Learn More', 'asherava-jaxxon' ) . '</a>';
 	}
 }
 ?>
 <div class="av-pdp__accordions">
-	<details class="av-pdp__accordion" open>
+	<details class="av-pdp__accordion">
 		<summary><?php esc_html_e( 'Material', 'asherava-jaxxon' ); ?></summary>
 		<div class="av-pdp__accordion-body">
 			<?php echo wp_kses_post( wpautop( $material ) ); ?>

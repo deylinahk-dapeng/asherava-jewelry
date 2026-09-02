@@ -128,10 +128,8 @@ function asherava_pdp_setup_hooks() {
 	add_action( 'woocommerce_before_single_product', 'asherava_pdp_render_breadcrumbs', 6 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_material_badge', 4 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_shipping_note', 11 );
-	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_render_decision_points', 12 );
-	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_size_guide_link', 31 );
+	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_post_atc_note', 31 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_render_description', 32 );
-	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_render_trust_blocks', 36 );
 	add_action( 'woocommerce_single_product_summary', 'asherava_pdp_render_accordions', 40 );
 	add_action( 'woocommerce_after_single_product_summary', 'asherava_pdp_open_below', 1 );
 	add_action( 'woocommerce_after_single_product_summary', 'asherava_pdp_render_seo_description', 8 );
@@ -145,6 +143,7 @@ function asherava_pdp_setup_hooks() {
 	add_filter( 'woocommerce_product_get_name', 'asherava_pdp_display_name', 10, 2 );
 	add_filter( 'the_title', 'asherava_pdp_the_title', 10, 2 );
 	add_filter( 'woocommerce_variation_option_name', 'asherava_pdp_length_option_name', 20, 4 );
+	add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'asherava_pdp_variation_buttons', 20, 2 );
 	add_filter( 'woocommerce_dropdown_variation_attribute_options_html', 'asherava_pdp_hide_duplicate_size_dropdown', 100, 2 );
 	add_filter( 'wp_get_attachment_image_attributes', 'asherava_pdp_product_image_alt', 20, 3 );
 }
@@ -345,9 +344,10 @@ function asherava_pdp_close_wrapper() {
 }
 
 function asherava_pdp_material_badge() {
-	$material = get_post_meta( get_the_ID(), '_asherava_material_label', true );
+	$slug     = get_post_field( 'post_name', get_the_ID() );
+	$material = in_array( $slug, asherava_pdp_rope_slugs(), true ) ? '' : get_post_meta( get_the_ID(), '_asherava_material_label', true );
 	if ( ! $material ) {
-		$material = __( 'Sterling Silver 925', 'asherava-jaxxon' );
+		$material = __( 'Sterling silver 925', 'asherava-jaxxon' );
 	}
 
 	echo '<p class="av-pdp__material av-type-label">' . esc_html( $material ) . '</p>';
@@ -360,38 +360,20 @@ function asherava_pdp_shipping_note() {
 		return;
 	}
 
-	echo '<p class="av-pdp__shipping-note">' . esc_html__( 'Shipping options calculated at checkout.', 'asherava-jaxxon' ) . '</p>';
+	echo '<p class="av-pdp__shipping-note">' . esc_html__( 'Free shipping in the US & Canada.', 'asherava-jaxxon' ) . '</p>';
 }
 
-/**
- * Buyer decision points distilled from rope chain shopping concerns.
- */
-function asherava_pdp_render_decision_points() {
-	$points = array(
-		__( 'Diamond-cut shine', 'asherava-jaxxon' ),
-		__( '925 sterling silver', 'asherava-jaxxon' ),
-		__( '3mm daily-wear profile', 'asherava-jaxxon' ),
-		__( 'Fair direct pricing', 'asherava-jaxxon' ),
-	);
-
-	echo '<ul class="av-pdp__decision-points">';
-	foreach ( $points as $point ) {
-		echo '<li>' . esc_html( $point ) . '</li>';
-	}
-	echo '</ul>';
-}
-
-function asherava_pdp_size_guide_link() {
+function asherava_pdp_size_guide_url() {
 	$url = asherava_resolve_menu_url(
 		array( 'mens-rope-chain-size-guide', 'rope-chain-size-guide', 'size-guide' ),
 		'/size-guide/'
 	);
 
-	if ( ! $url ) {
-		return;
-	}
+	return $url;
+}
 
-	echo '<p class="av-pdp__size-guide"><a href="' . esc_url( $url ) . '">' . esc_html__( 'Find your chain length', 'asherava-jaxxon' ) . '</a></p>';
+function asherava_pdp_post_atc_note() {
+	echo '<p class="av-pdp__post-atc-note">' . esc_html__( '30-day returns. Most men wear 22″.', 'asherava-jaxxon' ) . '</p>';
 }
 
 add_filter( 'woocommerce_get_price_html', 'asherava_pdp_price_html', 20, 2 );
@@ -413,6 +395,54 @@ function asherava_pdp_price_html( $price, $product ) {
 /**
  * Buybox description (LZJ: below Add to cart, inside right column).
  */
+function asherava_pdp_rope_buybox_description_html( $slug ) {
+	$three_mm_slugs = array(
+		'3mm-rope-sterling-silver-chain',
+		'3mm-rope-chain-sterling-silver',
+		'3mm-rope-chain-sterling-silver-diamond-cut',
+	);
+
+	if ( ! in_array( $slug, $three_mm_slugs, true ) ) {
+		return '';
+	}
+
+	$weights = array(
+		'18″' => '16.5',
+		'20″' => '18',
+		'22″' => '19.5',
+		'24″' => '22',
+		'26″' => '24',
+		'28″' => '26',
+		'30″' => '27',
+		'32″' => '29',
+	);
+
+	ob_start();
+	?>
+	<p class="av-pdp__description-intro"><?php esc_html_e( '3mm rope in 925 sterling silver. 22″ is the everyday length for most men.', 'asherava-jaxxon' ); ?></p>
+	<h3 class="av-pdp__spec-heading"><?php esc_html_e( "Men's Rope Chain Size Guide", 'asherava-jaxxon' ); ?></h3>
+	<ul class="av-pdp__spec-list">
+		<?php foreach ( $weights as $length => $grams ) : ?>
+			<li>
+				<span class="av-pdp__spec-length"><?php echo esc_html( $length ); ?></span>
+				<span class="av-pdp__spec-weight">
+					<?php
+					printf(
+						/* translators: %s: approximate gram weight */
+						esc_html__( 'weights approx. %s grams', 'asherava-jaxxon' ),
+						esc_html( $grams )
+					);
+					?>
+				</span>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+	<p class="av-pdp__spec-note"><?php esc_html_e( 'All chain weights are approximate. Final chain weight may vary.', 'asherava-jaxxon' ); ?></p>
+	<p class="av-pdp__spec-note"><?php esc_html_e( 'Plated: rhodium over 925. Bare silver: unplated 925.', 'asherava-jaxxon' ); ?></p>
+	<?php
+	return ob_get_clean();
+}
+
 function asherava_pdp_render_description() {
 	global $product;
 
@@ -420,9 +450,12 @@ function asherava_pdp_render_description() {
 		return;
 	}
 
-	$body = $product->get_short_description();
+	$body = asherava_pdp_rope_buybox_description_html( $product->get_slug() );
 	if ( ! $body ) {
-		list( $body, ) = asherava_pdp_split_description( $product->get_description() );
+		$body = $product->get_short_description();
+		if ( ! $body ) {
+			list( $body, ) = asherava_pdp_split_description( $product->get_description() );
+		}
 	}
 
 	$body = trim( (string) $body );
@@ -431,7 +464,6 @@ function asherava_pdp_render_description() {
 	}
 
 	echo '<section class="av-pdp__description av-pdp__description--buybox">';
-	echo '<h2 class="av-pdp__description-heading">' . esc_html( $product->get_name() ) . '</h2>';
 	echo '<div class="av-pdp__description-body">' . wp_kses_post( $body ) . '</div>';
 	echo '</section>';
 }
@@ -610,80 +642,62 @@ function asherava_pdp_hide_duplicate_size_dropdown( $html, $args ) {
 	return '<span class="av-pdp__hide-variation-row" data-av-hide-variation-row hidden></span><span class="av-pdp__select-hidden av-pdp__select-hidden--legacy-size" hidden aria-hidden="true">' . $html . '</span>';
 }
 
-/**
- * T-shirt ↔ chain length hint above size swatches (JAXXON-style).
- */
-function asherava_pdp_render_size_fit_hint( $extra_options = array() ) {
-	$custom = get_post_meta( get_the_ID(), '_asherava_size_fit_hint', true );
-	if ( 'hide' === $custom ) {
-		return;
-	}
+function asherava_pdp_is_finish_attribute( $attribute, $label ) {
+	$slug = sanitize_title( $attribute );
 
-	echo '<p class="av-pdp__size-hint">';
-
-	if ( $custom && 'hide' !== $custom ) {
-		echo esc_html( $custom );
-		echo '</p>';
-		return;
-	}
-
-	echo esc_html__( 'Start with your usual t-shirt size.', 'asherava-jaxxon' );
-	echo ' <span class="av-pdp__size-hint-map" aria-hidden="true">';
-	echo '<span class="av-pdp__size-hint-item"><abbr title="' . esc_attr__( 'Small', 'asherava-jaxxon' ) . '">S</abbr> (18&Prime;)</span>';
-	echo ' <span class="av-pdp__size-hint-item"><abbr title="' . esc_attr__( 'Medium', 'asherava-jaxxon' ) . '">M</abbr> (20&Prime;)</span>';
-	echo ' <span class="av-pdp__size-hint-item"><abbr title="' . esc_attr__( 'Large', 'asherava-jaxxon' ) . '">L</abbr> (22&Prime;)</span>';
-	echo ' <span class="av-pdp__size-hint-item"><abbr title="' . esc_attr__( 'Extra large', 'asherava-jaxxon' ) . '">XL</abbr> (24&Prime;)</span>';
-	echo '</span>';
-	echo '</p>';
-
-	$has_long = false;
-	foreach ( $extra_options as $option ) {
-		if ( preg_match( '/\b(2[6-9]|3[0-2])\b/', (string) $option ) ) {
-			$has_long = true;
-			break;
-		}
-	}
-
-	if ( $has_long ) {
-		echo '<p class="av-pdp__size-hint av-pdp__size-hint--long">';
-		echo esc_html__( 'Need more length? 26″–32″ sizes are listed below.', 'asherava-jaxxon' );
-		echo '</p>';
-	}
+	return false !== strpos( $slug, 'finish' )
+		|| false !== strpos( $slug, 'plating' )
+		|| false !== stripos( $label, 'finish' )
+		|| false !== stripos( $label, 'plating' );
 }
 
-/**
- * Practical guidance for length swatches.
- *
- * @param array $extra_options Variation option labels.
- */
-function asherava_pdp_render_length_fit_hint( $extra_options = array() ) {
-	$custom = get_post_meta( get_the_ID(), '_asherava_length_fit_hint', true );
-	if ( 'hide' === $custom ) {
-		return;
+function asherava_pdp_render_finish_hint() {
+	echo '<p class="av-pdp__size-hint">' . esc_html__( 'Plated: rhodium over 925, brighter, slower to tarnish. Bare silver: unplated 925.', 'asherava-jaxxon' ) . '</p>';
+}
+
+function asherava_pdp_option_number( $option ) {
+	if ( preg_match( '/(\d+(?:\.\d+)?)/', (string) $option, $match ) ) {
+		return (float) $match[1];
 	}
 
-	echo '<p class="av-pdp__size-hint">';
-	if ( $custom ) {
-		echo esc_html( $custom );
-		echo '</p>';
-		return;
+	return null;
+}
+
+function asherava_pdp_format_swatch_label( $text, $is_length ) {
+	$key = strtolower( trim( str_replace( array( '-', '_' ), ' ', (string) $text ) ) );
+	$finish_map = array(
+		'rhodium plated' => __( 'Plated', 'asherava-jaxxon' ),
+		'plated'         => __( 'Plated', 'asherava-jaxxon' ),
+		'bare sterling'  => __( 'Bare silver', 'asherava-jaxxon' ),
+		'bare silver'    => __( 'Bare silver', 'asherava-jaxxon' ),
+		'unplated'       => __( 'Bare silver', 'asherava-jaxxon' ),
+	);
+
+	if ( isset( $finish_map[ $key ] ) ) {
+		return $finish_map[ $key ];
 	}
 
-	echo esc_html__( '22″–24″ sits in the everyday range for most men; choose 26″+ for a lower pendant or layered look.', 'asherava-jaxxon' );
-	echo '</p>';
-
-	$has_short = false;
-	foreach ( $extra_options as $option ) {
-		if ( preg_match( '/\b(18|20)\b/', (string) $option ) ) {
-			$has_short = true;
-			break;
-		}
+	if ( $is_length && preg_match( '/(\d+(?:\.\d+)?)/', (string) $text, $match ) ) {
+		return $match[1] . '″';
 	}
 
-	if ( $has_short ) {
-		echo '<p class="av-pdp__size-hint av-pdp__size-hint--long">';
-		echo esc_html__( '18″–20″ wears closer to the neck and works well for a clean, minimal chain.', 'asherava-jaxxon' );
-		echo '</p>';
+	return $text;
+}
+
+function asherava_pdp_render_swatch_buttons( $options, $selected, $attribute, $product, $is_length ) {
+	foreach ( $options as $option ) {
+		$raw_text = apply_filters( 'woocommerce_variation_option_name', $option, null, $attribute, $product );
+		$text     = asherava_pdp_format_swatch_label( $raw_text, $is_length );
+		$active   = selected( $selected, $option, false ) ? ' is-selected' : '';
+		$number   = asherava_pdp_option_number( $option );
+		?>
+		<button type="button" class="av-pdp__swatch<?php echo esc_attr( $active ); ?>" data-value="<?php echo esc_attr( $option ); ?>">
+			<span class="av-pdp__swatch-text"><?php echo esc_html( $text ); ?></span>
+			<?php if ( $is_length && 22.0 === $number ) : ?>
+				<span class="av-pdp__swatch-note"><?php esc_html_e( 'Top Pick', 'asherava-jaxxon' ); ?></span>
+			<?php endif; ?>
+		</button>
+		<?php
 	}
 }
 
@@ -710,30 +724,46 @@ function asherava_pdp_variation_buttons( $html, $args ) {
 
 	$is_size   = asherava_pdp_is_size_attribute( $attribute, $label );
 	$is_length = asherava_pdp_is_length_attribute( $attribute, $label );
+	$is_finish = asherava_pdp_is_finish_attribute( $attribute, $label );
+	$is_length = $is_length || $is_size;
+	$primary   = array();
+	$more      = array();
+
+	if ( $is_length ) {
+		foreach ( $args['options'] as $option ) {
+			if ( in_array( asherava_pdp_option_number( $option ), array( 20.0, 22.0, 24.0 ), true ) ) {
+				$primary[] = $option;
+			} else {
+				$more[] = $option;
+			}
+		}
+	} else {
+		$primary = $args['options'];
+	}
 
 	ob_start();
 	?>
 	<div class="av-pdp__option" data-attribute="<?php echo esc_attr( $name ); ?>">
-		<span class="screen-reader-text"><?php echo esc_html( $label ); ?></span>
-		<?php
-		if ( $is_size && ! $is_length ) {
-			asherava_pdp_render_size_fit_hint( $args['options'] );
-		} elseif ( $is_length ) {
-			asherava_pdp_render_length_fit_hint( $args['options'] );
-		}
-		?>
-		<div class="av-pdp__swatches" role="group" aria-label="<?php echo esc_attr( $label ); ?>">
-			<?php
-			foreach ( $args['options'] as $option ) :
-				$value  = esc_attr( $option );
-				$text   = esc_html( apply_filters( 'woocommerce_variation_option_name', $option, null, $attribute, $product ) );
-				$active = selected( $selected, $option, false ) ? ' is-selected' : '';
-				?>
-				<button type="button" class="av-pdp__swatch<?php echo esc_attr( $active ); ?>" data-value="<?php echo $value; ?>">
-					<span class="av-pdp__swatch-text"><?php echo $text; ?></span>
-				</button>
-			<?php endforeach; ?>
+		<p class="av-pdp__option-label<?php echo $is_length ? ' av-pdp__option-label--length' : ''; ?>">
+			<span><?php echo esc_html( $is_length ? __( 'Length', 'asherava-jaxxon' ) : ( $is_finish ? __( 'Finish', 'asherava-jaxxon' ) : $label ) ); ?></span>
+			<?php if ( $is_length && asherava_pdp_size_guide_url() ) : ?>
+				<a class="av-pdp__size-guide" href="<?php echo esc_url( asherava_pdp_size_guide_url() ); ?>"><?php esc_html_e( 'Size guide', 'asherava-jaxxon' ); ?></a>
+			<?php endif; ?>
+		</p>
+		<div class="av-pdp__swatches<?php echo $is_length ? ' av-pdp__swatches--size' : ( $is_finish ? ' av-pdp__swatches--finish' : '' ); ?>" role="group" aria-label="<?php echo esc_attr( $label ); ?>">
+			<?php asherava_pdp_render_swatch_buttons( $primary, $selected, $attribute, $product, $is_length ); ?>
 		</div>
+		<?php if ( $is_length && $more ) : ?>
+			<details class="av-pdp__more-lengths"<?php echo in_array( $selected, $more, true ) ? ' open' : ''; ?>>
+				<summary><?php esc_html_e( 'More lengths', 'asherava-jaxxon' ); ?></summary>
+				<div class="av-pdp__swatches av-pdp__swatches--size" role="group" aria-label="<?php esc_attr_e( 'More lengths', 'asherava-jaxxon' ); ?>">
+					<?php asherava_pdp_render_swatch_buttons( $more, $selected, $attribute, $product, true ); ?>
+				</div>
+			</details>
+		<?php endif; ?>
+		<?php if ( $is_finish ) : ?>
+			<?php asherava_pdp_render_finish_hint(); ?>
+		<?php endif; ?>
 		<div class="av-pdp__select-hidden">
 			<?php
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WC core template.
@@ -743,6 +773,29 @@ function asherava_pdp_variation_buttons( $html, $args ) {
 	</div>
 	<?php
 	return ob_get_clean();
+}
+
+add_filter( 'woocommerce_product_get_default_attributes', 'asherava_pdp_default_rope_length', 10, 2 );
+function asherava_pdp_default_rope_length( $defaults, $product ) {
+	if ( ! asherava_pdp_is_rope_product( $product ) || ! method_exists( $product, 'get_variation_attributes' ) ) {
+		return $defaults;
+	}
+
+	foreach ( (array) $product->get_variation_attributes() as $attribute => $options ) {
+		$attribute_label = wc_attribute_label( $attribute, $product );
+		if ( ! asherava_pdp_is_length_attribute( $attribute, $attribute_label ) && ! asherava_pdp_is_size_attribute( $attribute, $attribute_label ) ) {
+			continue;
+		}
+
+		foreach ( (array) $options as $option ) {
+			if ( 22.0 === asherava_pdp_option_number( $option ) ) {
+				$defaults[ $attribute ] = $option;
+				break 2;
+			}
+		}
+	}
+
+	return $defaults;
 }
 
 add_filter( 'generate_sidebar_layout', 'asherava_pdp_sidebar_layout' );
@@ -770,6 +823,10 @@ function asherava_pdp_add_to_cart_text( $text ) {
 
 add_filter( 'woocommerce_get_stock_html', 'asherava_pdp_stock_badge', 10, 2 );
 function asherava_pdp_stock_badge( $html, $product ) {
+	if ( is_product() ) {
+		return '';
+	}
+
 	if ( ! $product || ! $product->is_in_stock() ) {
 		return $html;
 	}
