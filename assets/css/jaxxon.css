@@ -3013,9 +3013,9 @@ body.asherava-jaxxon.av-storefront-home .av-announcement--top {
 
 .av-store-hero__media {
 	background-image: url("../images/products/3mm-rope-chain-black.png");
-	background-position: center 42%;
+	background-position: center;
 	background-repeat: no-repeat;
-	background-size: min(820px, 72vw) auto;
+	background-size: cover;
 }
 
 .av-store-hero__overlay {
@@ -3331,34 +3331,43 @@ body.asherava-jaxxon.av-storefront-home .av-announcement--top {
 
 @media (min-width: 769px) {
 	body.asherava-jaxxon.av-storefront-home .inside-header {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-		gap: 24px;
+		position: relative;
+		display: flex;
+		flex-wrap: nowrap;
 		min-height: 70px;
 		padding: 0 28px;
 	}
 
 	body.asherava-jaxxon.av-storefront-home .site-branding {
-		grid-column: 2;
-		grid-row: 1;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 2;
+		transform: translate(-50%, -50%);
 	}
 
-	body.asherava-jaxxon.av-storefront-home .av-catalog-nav,
+	body.asherava-jaxxon.av-storefront-home .av-catalog-nav {
+		display: block;
+		width: 100%;
+		flex: 1 1 auto;
+		order: initial;
+	}
+
 	body.asherava-jaxxon.av-storefront-home .av-catalog-nav__bar {
-		display: contents;
+		display: flex;
+		justify-content: space-between;
 	}
 
 	body.asherava-jaxxon.av-storefront-home .av-catalog-nav__links--desktop {
-		grid-column: 1;
-		grid-row: 1;
-		justify-self: start;
+		order: 1;
+		justify-content: flex-start;
+		max-width: 34%;
 	}
 
 	body.asherava-jaxxon.av-storefront-home .av-header-utilities {
 		display: flex;
-		grid-column: 3;
-		grid-row: 1;
-		justify-self: end;
+		order: 2;
+		margin-left: auto;
 	}
 }
 
@@ -3395,8 +3404,8 @@ body.asherava-jaxxon.av-storefront-home .av-announcement--top {
 	}
 
 	.av-store-hero__media {
-		background-position: 52% 28%;
-		background-size: 720px auto;
+		background-position: center;
+		background-size: cover;
 	}
 
 	.av-store-hero__overlay {
@@ -3465,8 +3474,8 @@ body.asherava-jaxxon.av-storefront-home .av-announcement--top {
 
 @media (max-width: 480px) {
 	.av-store-hero__media {
-		background-position: 51% 22%;
-		background-size: 610px auto;
+		background-position: center;
+		background-size: cover;
 	}
 
 	.av-store-hero__actions .av-btn {
