@@ -2995,6 +2995,21 @@ body.asherava-jaxxon.av-storefront-home .av-announcement--top {
 	display: block !important;
 }
 
+body.asherava-jaxxon.av-storefront-home #page,
+body.asherava-jaxxon.av-storefront-home .site,
+body.asherava-jaxxon.av-storefront-home .site-content,
+body.asherava-jaxxon.av-storefront-home .content-area,
+body.asherava-jaxxon.av-storefront-home .site-main,
+body.asherava-jaxxon.av-storefront-home .av-home,
+body.asherava-jaxxon.av-storefront-home .grid-container {
+	width: 100% !important;
+	max-width: none !important;
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+	padding-right: 0 !important;
+	padding-left: 0 !important;
+}
+
 .av-store-hero {
 	position: relative;
 	display: flex;
@@ -3359,15 +3374,23 @@ body.asherava-jaxxon.av-storefront-home .av-announcement--top {
 	}
 
 	body.asherava-jaxxon.av-storefront-home .av-catalog-nav__links--desktop {
+		position: static;
+		left: auto;
+		top: auto;
 		order: 1;
 		justify-content: flex-start;
 		max-width: 34%;
+		transform: none;
 	}
 
 	body.asherava-jaxxon.av-storefront-home .av-header-utilities {
 		display: flex;
+		position: static;
+		right: auto;
+		top: auto;
 		order: 2;
 		margin-left: auto;
+		transform: none;
 	}
 }
 
