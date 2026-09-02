@@ -726,20 +726,6 @@ function asherava_pdp_variation_buttons( $html, $args ) {
 	$is_length = asherava_pdp_is_length_attribute( $attribute, $label );
 	$is_finish = asherava_pdp_is_finish_attribute( $attribute, $label );
 	$is_length = $is_length || $is_size;
-	$primary   = array();
-	$more      = array();
-
-	if ( $is_length ) {
-		foreach ( $args['options'] as $option ) {
-			if ( in_array( asherava_pdp_option_number( $option ), array( 20.0, 22.0, 24.0 ), true ) ) {
-				$primary[] = $option;
-			} else {
-				$more[] = $option;
-			}
-		}
-	} else {
-		$primary = $args['options'];
-	}
 
 	ob_start();
 	?>
@@ -751,16 +737,8 @@ function asherava_pdp_variation_buttons( $html, $args ) {
 			<?php endif; ?>
 		</p>
 		<div class="av-pdp__swatches<?php echo $is_length ? ' av-pdp__swatches--size' : ( $is_finish ? ' av-pdp__swatches--finish' : '' ); ?>" role="group" aria-label="<?php echo esc_attr( $label ); ?>">
-			<?php asherava_pdp_render_swatch_buttons( $primary, $selected, $attribute, $product, $is_length ); ?>
+			<?php asherava_pdp_render_swatch_buttons( $args['options'], $selected, $attribute, $product, $is_length ); ?>
 		</div>
-		<?php if ( $is_length && $more ) : ?>
-			<details class="av-pdp__more-lengths"<?php echo in_array( $selected, $more, true ) ? ' open' : ''; ?>>
-				<summary><?php esc_html_e( 'More lengths', 'asherava-jaxxon' ); ?></summary>
-				<div class="av-pdp__swatches av-pdp__swatches--size" role="group" aria-label="<?php esc_attr_e( 'More lengths', 'asherava-jaxxon' ); ?>">
-					<?php asherava_pdp_render_swatch_buttons( $more, $selected, $attribute, $product, true ); ?>
-				</div>
-			</details>
-		<?php endif; ?>
 		<?php if ( $is_finish ) : ?>
 			<?php asherava_pdp_render_finish_hint(); ?>
 		<?php endif; ?>
