@@ -730,6 +730,7 @@ body.asherava-jaxxon.av-storefront-home .av-store-hero h1 {
 	letter-spacing: 0 !important;
 	line-height: 1 !important;
 	text-transform: none !important;
+	color: var(--av-text-inverse) !important;
 }
 
 @media (max-width: 768px) {
