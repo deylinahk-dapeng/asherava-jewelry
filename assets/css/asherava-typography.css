@@ -710,3 +710,30 @@ body.asherava-jaxxon .woocommerce button.button:hover {
 		font-size: 12px;
 	}
 }
+
+/* Storefront header stays light while the product-led hero remains dark. */
+body.asherava-jaxxon.av-storefront-home .av-catalog-nav__links > li > a,
+body.asherava-jaxxon.av-storefront-home .av-catalog-nav__shop-trigger,
+body.asherava-jaxxon.av-storefront-home .av-header-utilities__link,
+body.asherava-jaxxon.av-storefront-home .av-logo-wordmark {
+	color: var(--av-text-chalk) !important;
+}
+
+body.asherava-jaxxon.av-storefront-home .av-catalog-nav__links > li > a.is-current,
+body.asherava-jaxxon.av-storefront-home .av-catalog-nav__shop.is-current .av-catalog-nav__shop-trigger {
+	box-shadow: inset 0 -1px 0 var(--av-text-chalk);
+}
+
+body.asherava-jaxxon.av-storefront-home .av-store-hero h1 {
+	font-size: clamp(2.625rem, 6vw, 4.75rem) !important;
+	font-weight: 700 !important;
+	letter-spacing: 0 !important;
+	line-height: 1 !important;
+	text-transform: none !important;
+}
+
+@media (max-width: 768px) {
+	body.asherava-jaxxon.av-storefront-home .av-store-hero h1 {
+		font-size: 2.75rem !important;
+	}
+}

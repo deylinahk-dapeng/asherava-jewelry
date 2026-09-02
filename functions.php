@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ASHERAVA_JAXXON_VERSION', '1.11.4' );
+define( 'ASHERAVA_JAXXON_VERSION', '1.12.0' );
 
 require_once get_stylesheet_directory() . '/inc/catalog-categories.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-pdp.php';
@@ -439,6 +439,9 @@ function asherava_jaxxon_setup() {
 add_filter( 'body_class', 'asherava_jaxxon_body_class' );
 function asherava_jaxxon_body_class( $classes ) {
 	$classes[] = 'asherava-jaxxon';
+	if ( is_front_page() ) {
+		$classes[] = 'av-storefront-home';
+	}
 	return $classes;
 }
 
@@ -462,7 +465,7 @@ function asherava_jaxxon_announcement_bar() {
 
 add_filter( 'generate_site_title_output', 'asherava_jaxxon_site_title' );
 function asherava_get_logo_html() {
-	$use_white = is_front_page();
+	$use_white = false;
 	$home_url  = esc_url( home_url( '/' ) );
 	$classes   = 'av-logo-wordmark' . ( $use_white ? ' av-logo-wordmark--white' : '' );
 
