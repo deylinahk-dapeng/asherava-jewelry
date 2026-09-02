@@ -1905,9 +1905,9 @@ body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row
 }
 
 body.asherava-jaxxon.av-single-product table.variations .av-pdp__swatches--size {
-	grid-template-columns: repeat(3, minmax(64px, 1fr)) !important;
-	width: min(100%, 330px) !important;
-	max-width: 330px !important;
+	grid-template-columns: repeat(6, minmax(52px, 1fr)) !important;
+	width: 100% !important;
+	max-width: 430px !important;
 }
 
 body.asherava-jaxxon.av-single-product .av-pdp__swatches--size .av-pdp__swatch.is-selected,
@@ -1917,23 +1917,6 @@ body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row
 	background: #f5f5f7 !important;
 	border: 1.5px solid #1d1d1f !important;
 	color: #1d1d1f !important;
-}
-
-.av-pdp__more-lengths {
-	margin-top: 12px;
-}
-
-.av-pdp__more-lengths summary {
-	display: inline-flex;
-	margin-bottom: 12px;
-	cursor: pointer;
-	list-style: none;
-	text-decoration: underline;
-	text-underline-offset: 3px;
-}
-
-.av-pdp__more-lengths summary::-webkit-details-marker {
-	display: none;
 }
 
 .av-pdp__swatch-note {
@@ -1970,6 +1953,10 @@ body.asherava-jaxxon.av-single-product table.variations tr.av-pdp__variation-row
 }
 
 @media (max-width: 520px) {
+	body.asherava-jaxxon.av-single-product table.variations .av-pdp__swatches--size {
+		grid-template-columns: repeat(4, minmax(56px, 1fr)) !important;
+	}
+
 	.av-pdp__buybox table.variations .variable-items-wrapper,
 	.av-pdp__buybox table.variations .button-variable-items-wrapper,
 	.av-pdp__buybox table.variations .woo-variation-items-wrapper {
